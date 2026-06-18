@@ -1,7 +1,211 @@
 ---
 import Layout from '../layouts/layout.astro'
+import ProjectCard from '../components/projectcards.astro'
+
+const telescopeCoatings = [
+    {
+        title: "Habitable Worlds Observatory (HWO) Project",
+        description: "He is currently leading the development of FUV broadband reflective coatings for a NASA D.19 Industrial Partnership program."
+    },
+       {
+        title: "Kepler Space Telescope",
+        description: "He developed the protected silver coating for the primary mirror of NASA's Kepler mission, which was vital for maximizing light reflectivity to discover Earth-sized exoplanets."
+    },
+       {
+        title: "Far-Ultraviolet (FUV) Broadband Coatings",
+        description: "Through ZeCoat, he designed an advanced aluminum-based physical vapor deposition coating. This technique achieved the over 90% reflectance reported in the FUV band @ Lyman-alpha."
+    },
+       {
+        title: "UV-Enhanced Protected Silver",
+        description: "He engineered a specialized, exceptionally durable silver mirror coating that maintains high reflectivity from 350-nm through the long-wavelength infrared spectrum,  designed to survive ground storage on Earth as well as space radiation environments. The coating was flown on the OCI instrument on NASA’s PACE mission."
+    },
+       {
+        title: "Moon Mineralogy Mapper (M³)",
+        description: "He created the protected silver  coatings used on the M³ imaging spectrometer, a NASA instrument carried by India's Chandrayaan-1 spacecraft that helped confirm water molecules on the Moon." 
+       }
+    ]
+
+    const spacecraftProtections = [
+       {
+        title: "Mars InSight Seismometer Cover",
+        description: "In 2014, he designed the critical thermal control coating applied to the inner and outer shield of SEIS (the seismometer) on the Mars InSight Lander, protecting the sensitive instrument from intense Martian temperature swings and reducing solar glint."
+    },
+       {
+        title: "NuSTAR Space Telescope",
+        description: "He developed x-ray transparent optics covers and solar rejection filters to block interfering sunlight while allowing high-energy X-rays to pass through safely."
+    },
+       {
+        title: "NanoSail-D Spacecraft",
+        description: " He developed a highly reflective aluminum coating deposited directly onto ultra-thin, 2-micron polyimide film for NASA's early solar sail demonstrations."
+    },
+       {
+        title: "Habitable Worlds Observatory (HWO) Project",
+        description: "He is currently leading the development of multi-layered thermal control films (low-emissivity and high-emissivity) on polymer membranes to insulate and protect next-generation deep-space observatories."
+    },
+       {
+        title: "Starshade for Planet Hunting",
+        description: "He developed a durable, ultra-black coating technology that could significantly improve NASA’s ability to directly detect and study Earth-like exoplanets by suppressing unwanted reflected light off a starshade's edges and light-blocking surfaces."  
+       }, {
+        title: "ISIS High-altitude Airship",
+        description: "He developed a roll-to-roll coating process to apply silver to thin polyimide membranes to create the reflective surface on the outside of a high-altitude airship."
+       }
+    ]
+
+    const activeinSpace = [
+       {
+        title: "Self-Coating Space Telescopes",
+        description: "Under recent NASA contracts, David Sheikh has developed a battery-powered aluminum deposition process.      This technology is built to apply or refresh high-reflectance optical  coatings autonomously while on orbit in zero gravity, utilizing the natural vacuum of space to prevent oxidation."
+        }
+    ]
 ---
 
+
+
 <Layout>
-<h1>Hello! This is my about</h1>
+<div class = "about-container">
+<h1 class = "title" >About ZeCoat Corporation</h1>
+<p>ZeCoat Corporation was founded in 2011 by David and Gillian Sheikh.  In 2012, Joshua Saadia joined ZeCoat and over the past decade, they have assembled a talented group of experts in the field of coating design, physical chemistry, electronics, mechanical design and software development to provide specialized vacuum capabilities to the astronomy community. 
+
+ZeCoat has developed a unique vacuum coating system, which utilizes a motion-controlled electron beam evaporator,  which can uniformly coat substrates up to 2-meters in diameter with exceptional layer precision   (+/- 1.5%). 
+
+In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. The Illinois facility is centered on 3-acres, and is located on the Mississippi river with direct access to a municipal barge port. 
+</p>
+</div>
+<div class = "ceo-layout">
+<div class = "ceo-image">
+<img src = "/public/dock-layout.png"/>
+</div>
+<div class = "ceo-description">
+<div class= "name-group">
+<h1>David Sheikh, MD, PhD</h1>
+<h2>CEO, Founder</h2>
+</div>
+<h3>David Sheikh has developed a wide array of highly specialized optical, thermal, and space-resilient coatings for telescopes and planetary missions. </h3>
+</div>
+</div>
+<h2>Telescope Coatings</h2>
+<div class = "project-grid">
+{
+    telescopeCoatings.map(project => {
+        return (
+        <ProjectCard
+        title = {project.title}
+        description = {project.description}
+        />
+        );
+    })
+}
+</div>
+<h2>Spacecraft Accomplishments</h2>
+<div class = "project-grid">
+{
+     spacecraftProtections.map(project => {
+        return (
+        <ProjectCard
+        title = {project.title}
+        description = {project.description}
+        />
+        );
+    })
+}
+</div>
+<h2>Active in Space</h2>
+<div class = "project-grid">
+{
+     activeinSpace.map(project => {
+        return (
+        <ProjectCard
+        title = {project.title}
+        description = {project.description}
+        />
+        );
+    })
+
+}
+</div>
 </Layout>
+
+<style>
+
+.ceo-description {
+    display:flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.ceo-image img {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;  /*Make sure that you change this to height auto later*/
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    border: 1px solid #DCE3EA;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 16px;
+}
+
+.ceo-image:hover img {
+    transform: scale(1.03);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1200px;
+    margin-bottom: 5rem;;
+}
+
+.ceo-layout {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 4vw, 150px);
+    padding-inline: 20px;
+}
+
+.title {
+    font-size: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 8rem;
+    padding-inline: 20px;
+}
+
+.about-container p {
+    max-width: 125ch;
+    margin-top: 5;
+}
+
+.name-group {
+    display: flex;
+    flex-direction: column;
+    gap: -1000rem;
+}
+
+.ceo-description h1,
+.ceo-description h2{
+    margin: 0;
+}
+
+
+@media(max-width: 1000px) {
+    .ceo-layout {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    padding-inline: 10px;
+    }
+   
+}
+
+
+</style>

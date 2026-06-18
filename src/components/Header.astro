@@ -1,8 +1,9 @@
 <script>
 let lastScrollTop = 0;
-const header = document.querySelector('header');
 
-window.addEventListener('scroll', function() {
+function handleScroll() {
+  const header = document.querySelector('header');
+
   let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   
   if (scrollTop > lastScrollTop) {
@@ -14,24 +15,38 @@ window.addEventListener('scroll', function() {
   }
   
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative values
-});
+};
+window.addEventListener('scroll', handleScroll);
+document.addEventListener('astro:page-load', handleScroll)
 </script>
 
 <header class = "header"> 
 <div class = "Logo">
- <img src = "/public/images.jpg" style="max-width: 100%; width: 150px; height:auto;"  alt = ZeCoat Logo/>
+<a href= "/"><img src = "/public/images.jpg" style="max-width: 100%"  alt = ZeCoat Logo/></a>
  </div>
- <nav class = "navigation">
+<nav class = "navigation">
 <ul>
-<li><a href = >Home</a> <!--Placeholder for image--> </li>
-<li><a href = "/coatings">Coatings</a> </li>
-<li><a href = "/index">Capabilities</a></li>
-<li><a href = "/">Tools</a> </li>
-<li><a href = "/telescope-design-calculator">Quality</a></li>
 <li><a href = "/about">About</a></li>
+<li><a href = "/coatings">Coatings</a> </li>
+<li><a href = "/">Capabilities</a></li>
+<li class="dropdown">
+<a href = "/">Tools</a>
+
+<ul class = "dropdown-menu">
+<li><a href = "/reflectivity-calculator">Reflectivity Calculator</a></li>
+<li><a href = "/telescope-design-calculator">Telescope Calculator</a></li>
+<li><a href = "/thickness-calculator">Thermal Calculator</a></li>
+</ul>
+</li>
+
+<li><a href = "/">Quality</a></li>
+
 <li><a href = "/contact">Contact</a></li>
 </ul>
 </nav>
+<button aria-label = "open-menu" class = "open-menu">
+&#9776;
+</button>
 </header>
 
 
@@ -41,25 +56,64 @@ window.addEventListener('scroll', function() {
     padding: 10px;
     background: #ffffff;
     color: #1E293B;
+    align-items: center;
     justify-content: center;
-    gap: 5rem;
+    gap: clamp(0.2rem, 4vw, 5rem);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.4s ease;
     position: sticky;
     top: 0;
+    z-index: 1000;
+  }
+
+  .open-menu {
+    display: none;
   }
 
   .header-hidden {
      transform: translateY(-100%);
   }
 
+  .dropdown {
+    position: relative;
+  }
 
-    .navigation ul {
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+
+    background: white;
+    padding: 10px;
+    min-width: 220px;
+
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+    list-style: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: flex;
+}
+
+  .Logo img {
+    width: 150px;
+    height: auto;
+  }
+
+
+
+    .navigation > ul {
         display: flex;
         font-size: 20px;
         list-style: none;
+        flex-wrap: nowrap;
         gap: 50px;
         margin: 0;
         padding: 0;
@@ -71,14 +125,14 @@ window.addEventListener('scroll', function() {
     }
     
 
-    .header a {
+    .navigation a {
         position: relative;
         color:black;
-        transition: color 0.3 ease;
+        transition: color 0.3s ease;
         text-decoration: none;
     }
 
-    .header a::after {
+    .navigation > ul > li > a::after {
         content: "";
         position: absolute;
 
@@ -96,11 +150,24 @@ window.addEventListener('scroll', function() {
         transition: transform 0.3s ease;
     }
 
-    .header a:hover::after {
+    .navigation > ul > li > a:hover::after {
         transform: scaleX(1);
     }
     .header a:hover {
         color: #103A71
+    }
+
+    @media (max-width: 768px) {
+      .navigation {
+        display: none;
+      }
+      .Logo {
+        display: none;
+      }
+
+      .open-menu {
+        display: block;
+      }
     }
 </style>
 

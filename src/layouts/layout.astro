@@ -1,11 +1,18 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
 ---
 <html>
+  <head>
+  <ClientRouter/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  </head>
+
   <body>
     <div class="page">
-      <Header />
+      <Header/>
 
       <main>
         <slot />
@@ -17,6 +24,16 @@ import Footer from '../components/Footer.astro';
 </html>
 
 <style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1.7;
+    font-family: Inter;
+  }
+
+
   .page {
     min-height: 100vh;
     display: flex;
