@@ -1,7 +1,122 @@
 ---
 import Layout from '../layouts/layout.astro'
+import CapabilitiesCards from '../components/capabilitiescards.astro'
+
+const capabilitiesLayout = [
+    {
+        imgSrc: "/public/dock-layout.png",
+        cardTitle: "Meter-class Mirror Coatings",
+        cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings."
+
+    },
+     {
+        imgSrc: "/public/dock-layout.png",
+        cardTitle: "Research & Development",
+        cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis."
+
+    },
+     {
+        imgSrc: "/public/dock-layout.png",
+        cardTitle: "Licensing Technology",
+        cardBody: "ZeCoat has over a dozen coating technologies available for sale or license, covering a wide variety of aerospace applications."
+    }
+]
 ---
 
 <Layout>
-<h1>Hello! This is my homepage</h1>
+<div class = "intro-section">
+<h1>Optical Coatings Built for Space</h1>
+<h3>ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
+<div>
+<button>Explore Our Work</button>
+<button>Contact Us</button>
+</div>
+</div>
+<div class = "capabilites-section">
+</div>
+<div class = "what-we-do-section">
+<h1>What We Do</h1>
+<h3>Three core capabilities all built on the same precision vacuum deposition process</h3>
+<div class = "cards-layout">
+{
+    capabilitiesLayout.map(capabilities => {
+        return (
+            <CapabilitiesCards
+            imgSrc = {capabilities.imgSrc}
+            cardTitle = {capabilities.cardTitle}
+            cardBody = {capabilities.cardBody}/>
+
+        )
+    })
+}
+
+</div>
+<div class = "about-tag">
+<h3>About ZeCoat</h3>
+<h2>Small business. Space-grade results.</h2>
+<p>Founded in 2011 by David Sheikh, ZeCoat is an ITAR-registered small business operating a Class 7 clean room in Granite City, IL. Our coatings have flown on Kepler, PACE, Chandrayaan-1, Mars InSight, NuSTAR, and NanoSail-D.
+</p>
+</div>
+<div class = "experience-section">
+<h1>This is where the experience stuff will go</h1>
+</div>
+
+</div>
+</div>
 </Layout>
+
+<style>
+.intro-section {
+    background-image: url('public/dock-layout.png');
+    width: 100%;
+    height: 600px;
+    padding-left: clamp(3px, 10vw, 1000px);
+}
+
+.what-we-do-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:0;
+}
+
+.cards-layout {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: clamp(5px, 8vw, 300px);
+    margin-bottom: 70px;
+}
+
+.intro-section h1 {
+    font-size: 64px;
+    max-width: 700px;
+}
+
+.intro-section h3 {
+    max-width: 500px;
+}
+
+.what-we-do-section h1 ,
+.what-we-do-section h3 {
+    margin: 0;
+}
+
+.about-tag {
+    background-color: #F4C430;
+    width: 100%;
+}
+
+@media(max-width: 760px) {
+    .cards-layout {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+
+}
+</style>

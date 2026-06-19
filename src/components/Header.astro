@@ -1,4 +1,7 @@
 <script>
+import { actions } from "astro:actions";
+import { any } from "astro:schema";
+
 let lastScrollTop = 0;
 
 function handleScroll() {
@@ -16,8 +19,25 @@ function handleScroll() {
   
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative values
 };
+
+function setActiveLink() {
+  const button = document.querySelectorAll('.header a')
+
+  button.forEach(btn=> {
+    if (btn.getAttribute('href') === window.location.pathname) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+    });
+  }
+
+document.addEventListener('astro:page-load', setActiveLink);
+
 window.addEventListener('scroll', handleScroll);
-document.addEventListener('astro:page-load', handleScroll)
+document.addEventListener('astro:page-load', handleScroll);
+
+
 </script>
 
 <header class = "header"> 
@@ -26,11 +46,11 @@ document.addEventListener('astro:page-load', handleScroll)
  </div>
 <nav class = "navigation">
 <ul>
+<li><a href = "/">Home</a></li>
 <li><a href = "/about">About</a></li>
-<li><a href = "/coatings">Coatings</a> </li>
 <li><a href = "/">Capabilities</a></li>
 <li class="dropdown">
-<a href = "/">Tools</a>
+<a href = "/">Technologies</a>
 
 <ul class = "dropdown-menu">
 <li><a href = "/reflectivity-calculator">Reflectivity Calculator</a></li>
@@ -155,6 +175,10 @@ document.addEventListener('astro:page-load', handleScroll)
     }
     .header a:hover {
         color: #103A71
+    }
+
+    .header a.active {
+      color: #103A71;
     }
 
     @media (max-width: 768px) {

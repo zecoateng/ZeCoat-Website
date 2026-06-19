@@ -3,10 +3,32 @@ import Layout from '../layouts/layout.astro'
 ---
 
 <Layout>
-<div>
+<div class = "forms-page">
+<div class = "inquiries-statement">
 <h1>Get in touch.</h1>
 <h3>We welcome you inquiries.  If you would like more information about our custom or off-the-shelf coatings or to request a quote, please email us. If possible, when requesting a quote, please include your technical specifications, quantity and size of the substrates you will be providing, if the mirrors will all come at one time, and when you would like the mirror coated by. 
 </h3>
 <h3>Your request will be reviewed by the Chief Technical Officer, David Sheikh. </h3>
 </div>
+<div class = "forms-list">
+<p>FORMS LIST</p>
+</div>
+
+</div>
 </Layout>
+
+<style>
+
+.forms-page {
+    display: flex;
+}
+
+.inquiries-statement {
+    width: 50%
+}
+
+.forms-list {
+    width: 50%;
+}
+
+</style>
