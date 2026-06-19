@@ -83,7 +83,8 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 <h3>David Sheikh has developed a wide array of highly specialized optical, thermal, and space-resilient coatings for telescopes and planetary missions. </h3>
 </div>
 </div>
-<h2>Telescope Coatings</h2>
+<div class = "projects-wrapper">
+<h2 class = "section-title">Telescope Coatings</h2>
 <div class = "project-grid">
 {
     telescopeCoatings.map(project => {
@@ -96,7 +97,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     })
 }
 </div>
-<h2>Spacecraft Accomplishments</h2>
+<h2 class = "section-title">Spacecraft Accomplishments</h2>
 <div class = "project-grid">
 {
      spacecraftProtections.map(project => {
@@ -109,7 +110,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     })
 }
 </div>
-<h2>Active in Space</h2>
+<h2 class = "section-title">Active in Space</h2>
 <div class = "project-grid">
 {
      activeinSpace.map(project => {
@@ -122,6 +123,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     })
 
 }
+</div>
 </div>
 </Layout>
 
@@ -150,13 +152,29 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     transform: scale(1.03);
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
-    gap: 2rem;
-    justify-content: center;
+.projects-wrapper {
+    margin: 0 auto;
     max-width: 1200px;
-    margin-bottom: 5rem;;
+    padding: 20px;
+}
+
+.section-title {
+    text-align: left;
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    border-bottom: 3px solid black;
+}
+
+.project-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;    
+    margin-inline: auto;
+    align-items: center;
+    margin-bottom: 5rem;
+    padding-inline: 20px
 }
 
 .ceo-layout {
