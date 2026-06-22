@@ -1,0 +1,50 @@
+---
+const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
+---
+
+<div class:list={["card", variant]}>
+  <img src={imgSrc} class="card-img-top" alt="Card Image">
+  <div class="card-body">
+    <h5 class="card-title">{cardTitle}</h5>
+    <p class="card-text">{cardBody}</p>
+  </div>
+</div>
+
+<style>
+
+.card-img-top {
+    width:100%;
+}
+
+.card.default {
+    background-color:#D9F99D;
+    max-width: 300px;
+}
+
+.card .card-body {
+  padding: 10px;
+}
+
+.card.experiences .card-img-top {
+  width: 100%;
+  max-width: 200px;
+}
+
+.card.experiences .card-title {
+  font-size: 20px;
+}
+
+.card.experiences {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+/*make sure that you make a line in between the cards at some point */
+
+.card.featured {
+  background-color: #103A71;
+  color: white;
+}
+
+</style>

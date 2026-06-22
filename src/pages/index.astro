@@ -1,35 +1,117 @@
 ---
 import Layout from '../layouts/layout.astro'
-import CapabilitiesCards from '../components/capabilitiescards.astro'
+import Cards from '../components/HomeCards.astro'
 
 const capabilitiesLayout = [
     {
-        imgSrc: "/public/dock-layout.png",
+        imgSrc: "/dock-layout.png",
         cardTitle: "Meter-class Mirror Coatings",
         cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings."
 
     },
      {
-        imgSrc: "/public/dock-layout.png",
+        imgSrc: "/dock-layout.png",
         cardTitle: "Research & Development",
         cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis."
 
     },
      {
-        imgSrc: "/public/dock-layout.png",
+        imgSrc: "/dock-layout.png",
         cardTitle: "Licensing Technology",
         cardBody: "ZeCoat has over a dozen coating technologies available for sale or license, covering a wide variety of aerospace applications."
+    }
+]
+
+const experiencesLayout = [
+    {
+        imgSrc: "/NASA-Logo.svg",
+        cardTitle: "NASA-BACKED",
+        cardBody: "technology development and flight herritage"
+
+    },
+    {
+        imgSrc: "/NASA-Logo.svg",
+        cardTitle: "NASA-BACKED",
+        cardBody: "technology development and flight herritage"
+
+    },
+    {
+        imgSrc: "/NASA-Logo.svg",
+        cardTitle: "NASA-BACKED",
+        cardBody: "technology development and flight herritage"
+
+    },
+    {
+        imgSrc: "/NASA-Logo.svg",
+        cardTitle: "NASA-BACKED",
+        cardBody: "technology development and flight herritage"
+
+    },
+    {
+        imgSrc: "/NASA-Logo.svg",
+        cardTitle: "NASA-BACKED",
+        cardBody: "technology development and flight herritage"
+
+    }
+]
+
+const featuredMissions = [
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    }
+]
+
+const featuredTechnologies = [
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
+    },
+    {
+        imgSrc: "/satelite-image.jpg",
+        cardTitle: "Kepler Space Telescope",
+        cardBody: "Helped unlock the mysteries of distant worlds"
     }
 ]
 ---
 
 <Layout>
 <div class = "intro-section">
+<div class = "title">
 <h1>Optical Coatings Built for Space</h1>
 <h3>ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
+
 <div>
 <button>Explore Our Work</button>
 <button>Contact Us</button>
+</div>
 </div>
 </div>
 <div class = "capabilites-section">
@@ -41,7 +123,7 @@ const capabilitiesLayout = [
 {
     capabilitiesLayout.map(capabilities => {
         return (
-            <CapabilitiesCards
+            <Cards
             imgSrc = {capabilities.imgSrc}
             cardTitle = {capabilities.cardTitle}
             cardBody = {capabilities.cardBody}/>
@@ -52,13 +134,65 @@ const capabilitiesLayout = [
 
 </div>
 <div class = "about-tag">
-<h3>About ZeCoat</h3>
-<h2>Small business. Space-grade results.</h2>
-<p>Founded in 2011 by David Sheikh, ZeCoat is an ITAR-registered small business operating a Class 7 clean room in Granite City, IL. Our coatings have flown on Kepler, PACE, Chandrayaan-1, Mars InSight, NuSTAR, and NanoSail-D.
-</p>
+<h3>Why ZeCoat</h3>
+<h1>Proven Experience. Trusted Performance</h1>
+    <div class = "cards-layout">
+{
+    experiencesLayout.map(experiences => {
+        return (
+            <Cards
+            variant = "experiences"
+            imgSrc = {experiences.imgSrc}
+            cardTitle = {experiences.cardTitle}
+            cardBody = {experiences.cardBody}/>
+
+        )
+    })
+}
+
+</div>
 </div>
 <div class = "experience-section">
-<h1>This is where the experience stuff will go</h1>
+    <div class = "featured-header">
+<h1>Featured Missions</h1>
+<h3>View All Missions</h3>
+    </div>
+
+<div class = "cards-layout">
+{
+    featuredMissions.map(technologies => {
+        return (
+            <Cards
+            variant = "featured"
+            imgSrc = {technologies.imgSrc}
+            cardTitle = {technologies.cardTitle}
+            cardBody = {technologies.cardBody}/>
+
+        )
+    })
+}
+
+</div>
+<div class = "featured-header">
+<h1>Featured Technologies</h1>
+<h3>View All Technologies</h3>
+</div>
+
+<div class = "cards-layout">
+{
+    featuredTechnologies.map(experiences => {
+        return (
+            <Cards
+            variant = "featured"
+            imgSrc = {experiences.imgSrc}
+            cardTitle = {experiences.cardTitle}
+            cardBody = {experiences.cardBody}/>
+
+        )
+    })
+}
+
+</div>
 </div>
 
 </div>
@@ -67,10 +201,14 @@ const capabilitiesLayout = [
 
 <style>
 .intro-section {
-    background-image: url('public/dock-layout.png');
+    background-image: url('/dock-layout.png');
     width: 100%;
     height: 600px;
-    padding-left: clamp(3px, 10vw, 1000px);
+    padding-top: 1px;
+}
+
+.title {
+    padding-left: clamp(2px,4vw,150px);
 }
 
 .what-we-do-section {
@@ -83,10 +221,10 @@ const capabilitiesLayout = [
 .cards-layout {
     margin-top: 60px;
     display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: clamp(5px, 8vw, 300px);
+    justify-content: space-evenly;
+    gap: clamp(5px, 4vw, 300px);
     margin-bottom: 70px;
+    margin-inline: 20px;
 }
 
 .intro-section h1 {
@@ -106,6 +244,20 @@ const capabilitiesLayout = [
 .about-tag {
     background-color: #F4C430;
     width: 100%;
+    text-align: center;
+}
+
+.featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%
+}
+
+.featured-header, .cards-layout {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1600px;
 }
 
 @media(max-width: 760px) {

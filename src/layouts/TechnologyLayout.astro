@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/dock-layout.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Is a simple design: The MHD patch is composed of two electrodes and an electromagnet.</li>
+    <li>Generates large lift and drag forces: Simulations show the MHD patch generates forces up to 200 kN under Neptune atmosphere reentry conditions which are projected to be similar to Earth.</li>
+    <li>Harvests power: The MHD patch harvests power via skimming of ionizing atmospheres.</li>
+    <li>Is radar-silent: The MHD patch is non-protruding and is projected to have minimal radar signature.</li>
+    <li>Enables larger payloads to be delivered faster: The MHD patch facilitates entry of larger, heavier craft into planetary atmospheres (including earth) at higher speeds.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Aerospace and defense: Guidance, navigation, and control of hypersonic aircraft and spacecraft; power harvesting; aerocapture</li>
+    <li>Aerospace and defense: Guidance, navigation, and control of hypersonic aircraft and spacecraft; power harvesting; aerocapture</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/ 
+    
+}
+
+</style>

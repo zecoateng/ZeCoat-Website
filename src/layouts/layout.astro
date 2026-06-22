@@ -23,6 +23,11 @@ import { ClientRouter } from 'astro:transitions';
   </body>
 </html>
 
+<style is:global>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+</style>
+
 <style>
 
   body {
@@ -33,13 +38,18 @@ import { ClientRouter } from 'astro:transitions';
     font-family: Inter;
   }
 
+   h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+
 
   .page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #ECEFF3
+    background-color: #ECEFF3;
   }
+  
 
   main {
     flex: 1;
