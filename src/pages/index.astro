@@ -103,7 +103,7 @@ const featuredTechnologies = [
 ---
 
 <Layout>
-<div class = "intro-section">
+<section class = "intro-section">
 <div class = "title">
 <h1>Optical Coatings Built for Space</h1>
 <h3>ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
@@ -113,10 +113,8 @@ const featuredTechnologies = [
 <button>Contact Us</button>
 </div>
 </div>
-</div>
-<div class = "capabilites-section">
-</div>
-<div class = "what-we-do-section">
+</section>
+<section class = "what-we-do-section">
 <h1>What We Do</h1>
 <h3>Three core capabilities all built on the same precision vacuum deposition process</h3>
 <div class = "cards-layout">
@@ -133,26 +131,8 @@ const featuredTechnologies = [
 }
 
 </div>
-<div class = "about-tag">
-<h3>Why ZeCoat</h3>
-<h1>Proven Experience. Trusted Performance</h1>
-    <div class = "cards-layout">
-{
-    experiencesLayout.map(experiences => {
-        return (
-            <Cards
-            variant = "experiences"
-            imgSrc = {experiences.imgSrc}
-            cardTitle = {experiences.cardTitle}
-            cardBody = {experiences.cardBody}/>
-
-        )
-    })
-}
-
-</div>
-</div>
-<div class = "experience-section">
+</section>
+<section class = "experience-section">
     <div class = "featured-header">
 <h1>Featured Missions</h1>
 <h3>View All Missions</h3>
@@ -193,10 +173,31 @@ const featuredTechnologies = [
 }
 
 </div>
-</div>
+</section>
+
+<section class = "why-zecoat">
+<div class = "about-tag">
+<h3>Why ZeCoat</h3>
+<h1>Proven Experience. Trusted Performance</h1>
+    <div class = "cards-layout">
+{
+    experiencesLayout.map(experiences => {
+        return (
+            <Cards
+            variant = "experiences"
+            imgSrc = {experiences.imgSrc}
+            cardTitle = {experiences.cardTitle}
+            cardBody = {experiences.cardBody}/>
+
+        )
+    })
+}
 
 </div>
 </div>
+
+</section>
+
 </Layout>
 
 <style>
@@ -223,7 +224,6 @@ const featuredTechnologies = [
     display: flex;
     justify-content: space-evenly;
     gap: clamp(5px, 4vw, 300px);
-    margin-bottom: 70px;
     margin-inline: 20px;
 }
 
@@ -272,3 +272,4 @@ const featuredTechnologies = [
 
 }
 </style>
+

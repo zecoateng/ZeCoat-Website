@@ -1,0 +1,85 @@
+---
+const {} = Astro.props;
+---
+
+    <div class="ceo-layout">
+    <div class="ceo-image">
+        <img src="/public/dock-layout.png" />
+    </div>
+
+    <div class="ceo-description">
+        <div class="name-group">
+            <h1>Battery-Powered Deposition</h1>
+        </div>
+
+        <p>
+            High-reflectivity coatings for the visible and near-infrared spectrum, delivering exceptional performance and environmental durability for space and ground-based optical systems.
+        </p>
+        <div class = "bottom">
+            <p>Applications</p>
+            <p>Learn more</p>
+        </div>
+    </div>
+   
+</div>
+ <hr>
+
+
+<style>
+
+.ceo-layout {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 4vw, 150px);
+    padding-inline: 20px;
+}
+
+.ceo-image img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    border: 1px solid #DCE3EA;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+.ceo-image:hover img {
+    transform: scale(1.03);
+}
+
+.ceo-description {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.name-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.ceo-description h1,
+.ceo-description h2 {
+    margin: 0;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between
+}
+
+.ceo-description p {
+    max-width: 450px;
+}
+
+@media (max-width: 1000px) {
+    .ceo-layout {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 10px;
+    }
+}
+</style>
