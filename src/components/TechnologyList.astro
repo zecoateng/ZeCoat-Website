@@ -16,8 +16,8 @@ const {} = Astro.props;
             High-reflectivity coatings for the visible and near-infrared spectrum, delivering exceptional performance and environmental durability for space and ground-based optical systems.
         </p>
         <div class = "bottom">
-            <p>Applications</p>
-            <p>Learn more</p>
+            <div>Applications</div>
+            <a href="/TechnologyLayout">Learn more</a>
         </div>
     </div>
    
@@ -59,6 +59,7 @@ const {} = Astro.props;
 .name-group {
     display: flex;
     flex-direction: column;
+    font-size: clamp(0.5rem, 3vw, 1rem);
 }
 
 .ceo-description h1,
@@ -67,8 +68,10 @@ const {} = Astro.props;
 }
 
 .bottom {
+    height: 100%;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ceo-description p {
