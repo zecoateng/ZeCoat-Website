@@ -105,8 +105,8 @@ const featuredTechnologies = [
 <Layout>
 <section class = "intro-section">
 <div class = "title">
-<h1>Optical Coatings Built for Space</h1>
-<h3>ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
+<h1 class = "title-header">Optical Coatings Built for Space</h1>
+<h3 class = "title-description">ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
 
 <div>
 <button>Explore Our Work</button>
@@ -116,7 +116,7 @@ const featuredTechnologies = [
 </section>
 <section class = "what-we-do-section">
 <h1>What We Do</h1>
-<h3>Three core capabilities all built on the same precision vacuum deposition process</h3>
+<h3 class = "what-we-do-description">Three core capabilities all built on the same precision vacuum deposition process</h3>
 <div class = "cards-layout">
 {
     capabilitiesLayout.map(capabilities => {
@@ -206,10 +206,29 @@ const featuredTechnologies = [
     width: 100%;
     height: 600px;
     padding-top: 1px;
+    position: relative;
+}
+
+.intro-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.35);
 }
 
 .title {
+    width: fit-content;
     padding-left: clamp(2px,4vw,150px);
+    
+}
+
+.title-header {
+    font-size: clamp(40px, 4vw, 64px);
+    max-width: 700px;
+}
+
+.title-description {
+    max-width: 500px;
 }
 
 .what-we-do-section {
@@ -227,18 +246,14 @@ const featuredTechnologies = [
     margin-inline: 20px;
 }
 
-.intro-section h1 {
-    font-size: 64px;
-    max-width: 700px;
-}
-
-.intro-section h3 {
-    max-width: 500px;
-}
 
 .what-we-do-section h1 ,
 .what-we-do-section h3 {
     margin: 0;
+}
+
+.what-we-do-description {
+    text-align: center;
 }
 
 .about-tag {

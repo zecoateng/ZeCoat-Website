@@ -14,12 +14,18 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
 
 .card-img-top {
     width:100%;
+    max-height: 50%;
 }
 
 .card.default {
-    background-color:#D9F99D;
-    max-width: 300px;
+  background: white;
+  border: 1px solid #DCE3EA;
+  border-radius: 16px;
+  overflow: hidden;
+   max-width: 300px;
+  max-height: 700px;
 }
+
 
 .card .card-body {
   padding: 10px;

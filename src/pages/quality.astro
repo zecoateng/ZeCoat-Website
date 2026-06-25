@@ -1,11 +1,416 @@
 ---
-import Layout from "../layouts/Layout.astro"
+import Layout from "../layouts/layout.astro"
+
+// ── Compliance badges shown under the title ──────────────────────────────
+const credentials = [
+  "AS9100:2016 Certified",
+  "IAQG Registered Supplier",
+  "ISO 9001-Aligned QMS",
+]
+
+// ── "Information for External Providers" requirements (A–M) ───────────────
+const providerRequirements = [
+  { label: "A", text: "ZeCoat communicates our requirements for the processes, products, and services to be provided including the identification of relevant technical data on the purchase order, statement of work or accompanying attachments to either document." },
+  { label: "B", text: "ZeCoat communicates our requirements for the approval of products and services, methods, processes, and equipment and the release of products and services. These requirements will be stated on the purchase order, statement of work or accompanying attachments to either document." },
+  { label: "C", text: "ZeCoat requires vendors maintain competence, including any required qualification of persons." },
+  { label: "D", text: "ZeCoat will communicate our requirements for the external providers' interactions with the organization on the purchase order or SOW." },
+  { label: "E", text: "ZeCoat monitors and measures all external providers performance to quality and on-time delivery. Performance to contract will be monitored at each occurrence. Unsatisfactory performance will be communicated and may require formal corrective action." },
+  { label: "F", text: "ZeCoat communicates our requirements for verification or validation activities that the organization, or its customer, intends to perform at the external providers' premises." },
+  { label: "G", text: "ZeCoat maintains control of design and development according to specifications submitted with a purchase order. Any changes must be approved by ZeCoat and / or an applicable change control board." },
+  { label: "H", text: "ZeCoat communicates our requirements for special requirements, critical items or key characteristics. These requirements will be stated on the purchase order, statement of work or accompanying attachments to either document." },
+  { label: "I", text: "ZeCoat communicates our requirements for test, inspection, and verification on the purchase order or accompanying documents." },
+  { label: "J", text: "ZeCoat communicates our requirements for the use of statistical techniques for product acceptance and related instructions for acceptance. These requirements will be stated on the purchase order, statement of work or accompanying attachments to either document." },
+  {
+    label: "K",
+    text: "ZeCoat requires that:",
+    subItems: [
+      "External suppliers implement a quality management system similar to the requirements of ISO 9001.",
+      "External suppliers use ZeCoat-designated or approved sub-tier providers and / or process sources.",
+      "External suppliers notify ZeCoat of nonconforming processes, products, or services and obtain approval for their disposition.",
+      "External providers prevent the use of counterfeited parts.",
+      "External providers notify ZeCoat of changes to processes, products, or services, including changes of their external providers or location of manufacture and obtain ZeCoat's approval.",
+      "External providers shall flow down these requirements, including requirements as stated on the PO or accompanying documents, to any sub-tier approved vendors.",
+      "External providers will provide test specimens for design approval, inspection / verification, investigation, or auditing as stated on the PO or accompanying documents.",
+      "External providers shall retain documented information, including tests, inspections, relevant calibration, disposition and purchase orders for a minimum of 10 years.",
+    ],
+  },
+  { label: "L", text: "When specified by a purchase agreement, ZeCoat maintains the right of access by ZeCoat, ZeCoat's customer, and regulatory authorities to the applicable areas of facilities and to applicable documented information, at any level of the supply chain. By accepting the purchase order, the external provider accepts ZeCoat's right of access to the external providers premises to attend meetings, conduct performance reviews, review work in progress, conduct investigations, resolve problems, conduct 2nd party audits, support improvement activity, and deliver training." },
+  { label: "M", text: "ZeCoat requires that supplier employees are aware of their contribution to product or service conformity, their contribution to product safety, and the importance of ethical behavior — including individual accountability, compliance to process, attention to detail, reporting of nonconformance, and confidential reporting mechanisms within a no-blame culture." },
+]
+
+// ── Government Contract Clauses (incorporated by reference) ───────────────
+const farGroups = [
+  {
+    threshold: "Applies to all orders",
+    clauses: [
+      { code: "52.204-23", title: "Prohibition on Contracting for Hardware, Software, and Services Developed or Provided by Kaspersky Lab and Other Covered Entities (Jul 2018)" },
+      { code: "52.204-25", title: "Prohibition on Contracting for Certain Telecommunications and Video Surveillance Services or Equipment (Aug 2020) (excluding para (b)(2))" },
+      { code: "52.204-27", title: "Prohibition on a ByteDance Covered Application (Jun 2023)" },
+      { code: "52.212-04", title: "Contract Terms and Conditions — Commercial Items (Jan 2017). Paragraphs (a), (c), (e), (i), (l), (m), (n), (o), (q), (r), (s), (t), (u), and (v) apply" },
+      { code: "52.225-13", title: "Restrictions on Certain Foreign Purchases (Jun 2008)" },
+      { code: "52.244-06", title: "Subcontracts for Commercial Items (Jul 2014) (All clauses under Para (c)(1) apply)" },
+    ],
+  },
+  {
+    threshold: "Orders in excess of $10,000",
+    clauses: [
+      { code: "52.222-21", title: "Prohibition of Segregated Facilities (Feb 1999)" },
+    ],
+  },
+  {
+    threshold: "Orders $30,000 and above",
+    clauses: [
+      { code: "52.204-10", title: "Reporting Executive Compensation and First-Tier Subcontract Awards (Oct 2015)" },
+    ],
+  },
+  {
+    threshold: "Orders $35,000 and above",
+    clauses: [
+      { code: "52.209-06", title: "Protecting the Government's Interest when Subcontracting with Contractors Debarred, Suspended, or Proposed for Debarment (Oct 2015) (Excluding COTS Items)" },
+    ],
+  },
+  {
+    threshold: "Orders in excess of $150,000",
+    clauses: [
+      { code: "52.203-12", title: "Limitation on Payments to Influence Certain Federal Transactions (Oct 2010)" },
+    ],
+  },
+  {
+    threshold: "Orders in excess of $250,000",
+    clauses: [
+      { code: "52.203-06", title: "Restrictions on Subcontractor Sales to the Government (Sep 2006) Alt 1 (Oct 1995)" },
+      { code: "52.203-17", title: "Contractor Employee Whistleblower Rights and Requirements to Inform Employees of Whistleblower Rights (Apr 2014)" },
+    ],
+  },
+  {
+    threshold: "Orders in excess of $5.5M and >120 days POP",
+    clauses: [
+      { code: "52.203-13", title: "Code of Business Conduct and Ethics (Oct 2015)" },
+    ],
+  },
+]
+
+const dfarsClauses = [
+  { code: "252.203-7002", title: "Requirement to Inform Employees of Whistleblower Rights (Sep 2013)" },
+  { code: "252.204-7000", title: "Disclosure of Information (Aug 2013)" },
+  { code: "252.223-7006", title: "Prohibition on Storage and Disposal of Toxic and Hazardous Materials (Apr 2012)" },
+  { code: "252.225-7048", title: "Export Controlled Items (Jun 2013)" },
+  { code: "252.239-7018", title: "Supply Chain Risk (Nov 2013)" },
+  { code: "252.247-7023", title: "Transportation of Supplies by Sea — Basic (Apr 2014) (Except para (f) & (g) <SAT)" },
+]
 ---
 
 <Layout>
+<div class="quality-page">
 
-    <div>
-        Hello. this is the page for quality
-    </div>
-    
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="quality-hero">
+    <h1 class="title">Quality Assurance</h1>
+    <p class="lead">
+      ZeCoat is an International Aerospace Quality Group (IAQG) registered supplier
+      operating a quality management system that fulfills the requirements of the
+      AS9100:2016 standard.
+    </p>
+    <ul class="badges">
+      {credentials.map(c => <li class="badge">{c}</li>)}
+    </ul>
+  </header>
+
+  <!-- ── Quality Assurance narrative ─────────────────────────── -->
+  <section class="prose">
+    <p>
+      We strive to continuously improve our products and customer satisfaction
+      through detailed documentation of process operations and constant measurement
+      of process parameters, which ensure our products meet customer and regulatory
+      requirements. Our customers are welcomed and encouraged to review our quality
+      plan, and we will make any necessary modifications to ensure compliance with
+      the most stringent requirements.
+    </p>
+    <p>
+      Quality assurance is an integral part of every product manufactured at ZeCoat,
+      and every product is tested for conformance to the customer's specification as
+      part of our quality control program. ZeCoat plans quality management for each
+      individual contract based on the customer's specific requirements. Once
+      requirements are defined, a detailed process traveler is created to document the
+      individual procedures and testing needed to demonstrate compliance.
+    </p>
+    <p>
+      The process traveler includes several quality assurance checkpoints to ensure
+      that low quality is prevented. When the final product is produced, ZeCoat
+      performs total quality control testing on witness coupons to verify requirements
+      have been met. ZeCoat then generates lessons learned that will be used to improve
+      the process, and requests feedback from our customers to improve services.
+    </p>
+  </section>
+
+  <!-- ── Information for External Providers ──────────────────── -->
+  <section class="reference">
+    <h2 class="section-title">Information for External Providers</h2>
+    <p class="prose">
+      The following requirements apply to all external providers and sub-tier suppliers
+      to ZeCoat Corporation providing materials and services with respect to ZeCoat's
+      AS9100-compliant production and design. By accepting a purchase order from ZeCoat
+      Corporation, the supplier is bound to the requirements listed below and shall flow
+      them down to any sub-tier suppliers. These requirements are derived from the
+      requirements of ZeCoat's customers and AS9100D 8.4.3.
+    </p>
+
+    <details class="panel">
+      <summary>View external provider requirements (A–M)</summary>
+      <ol class="lettered-list">
+        {providerRequirements.map(req => (
+          <li>
+            <span class="letter">{req.label}</span>
+            <div class="req-body">
+              <p>{req.text}</p>
+              {req.subItems && (
+                <ul class="sub-list">
+                  {req.subItems.map(item => <li>{item}</li>)}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </details>
+  </section>
+
+  <!-- ── Government Contract Clauses ─────────────────────────── -->
+  <section class="reference">
+    <h2 class="section-title">Government Contract Clauses</h2>
+    <p class="prose">
+      The following clauses of the Federal Acquisition Regulation (FAR) and Defense
+      Federal Acquisition Regulation Supplement (DFARS) are incorporated by reference
+      with the same force and effect as though fully set forth herein.
+    </p>
+
+    <details class="panel">
+      <summary>FAR Clauses</summary>
+      <div class="clause-groups">
+        {farGroups.map(group => (
+          <div class="clause-group">
+            <h3 class="clause-threshold">{group.threshold}</h3>
+            <ul class="clause-list">
+              {group.clauses.map(clause => (
+                <li>
+                  <span class="clause-code">{clause.code}</span>
+                  <span class="clause-title">{clause.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </details>
+
+    <details class="panel">
+      <summary>DFARS Clauses (apply to all orders)</summary>
+      <ul class="clause-list">
+        {dfarsClauses.map(clause => (
+          <li>
+            <span class="clause-code">{clause.code}</span>
+            <span class="clause-title">{clause.title}</span>
+          </li>
+        ))}
+      </ul>
+    </details>
+
+    <p class="fine-print">
+      In all FAR clauses herein listed, the term "Contractor" shall mean "Subcontractor,"
+      the term "this Contract" shall mean "this Order," and the terms "Government" and
+      "Contracting Office" may also be interpreted to mean "ZeCoat Corporation."
+    </p>
+  </section>
+
+</div>
 </Layout>
+
+<style>
+  .quality-page {
+    max-width: 900px;
+    margin-inline: auto;
+    padding: 60px 20px 100px;
+  }
+
+  /* ── Header ── */
+  .quality-hero {
+    margin-bottom: 3rem;
+  }
+
+  .title {
+    font-size: clamp(40px, 6vw, 60px);
+    margin-bottom: 1rem;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+    color: #334155;
+    max-width: 70ch;
+  }
+
+  .badges {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  .badge {
+    background: #103A71;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Readable body text ── */
+  .prose {
+    width: auto;
+  }
+
+  .prose p {
+    margin-bottom: 1.2rem;
+    color: #1E293B;
+  }
+
+  /* ── Section headings (matches your about page) ── */
+  .section-title {
+    font-size: clamp(24px, 4vw, 34px);
+    border-bottom: 3px solid black;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .reference {
+    margin-top: 3.5rem;
+    width: auto;
+  }
+
+  /* ── Collapsible panels ── */
+  .panel {
+    background: white;
+    border: 1px solid #DCE3EA;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    padding: 0.5rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .panel summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    color: #103A71;
+    list-style-position: inside;
+  }
+
+  .panel[open] summary {
+    border-bottom: 1px solid #ECEFF3;
+    margin-bottom: 1rem;
+  }
+
+  /* ── Lettered list (External Providers) ── */
+  .lettered-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .lettered-list > li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .letter {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: #ECEFF3;
+    color: #103A71;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .req-body p {
+    margin: 0;
+  }
+
+  .sub-list {
+    margin: 0.75rem 0 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #334155;
+  }
+
+  /* ── Clause lists (FAR / DFARS) ── */
+  .clause-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .clause-threshold {
+    font-size: 1rem;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .clause-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .clause-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+  }
+
+  .clause-code {
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: #103A71;
+    min-width: 6.5rem;
+  }
+
+  .clause-title {
+    color: #334155;
+  }
+
+  .fine-print {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #64748B;
+    font-style: italic;
+    max-width: 75ch;
+  }
+
+  @media (max-width: 600px) {
+    .clause-list li {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+  }
+</style>
