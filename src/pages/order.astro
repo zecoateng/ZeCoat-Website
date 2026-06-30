@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import { products } from "../data/mirrors";
+
+import productConfigurator from '../products/productConfig.jsx'
+---
+
+<Layout>
+
+    {
+  products.map(product => (
+    <div class="product-card">
+      <img src={product.image} alt={product.name} />
+
+      <h2>{product.name}</h2>
+
+      <p>{product.shortDescription}</p>
+
+      <a href={`/products/${product.slug}`}>
+        Configure →
+      </a>
+    </div>
+  ))
+}
+    
+</Layout>

@@ -10,7 +10,7 @@ const timeline = [
   },
 
   {
-    category: "Spacecraft Accomplishments",
+    category: "Telescope Coatings",
     title: "Moon Mineralogy Mapper (M³)",
     description: "He created the protected silver coatings used on the M³ imaging spectrometer, a NASA instrument carried by India's Chandrayaan-1 spacecraft that helped confirm water molecules on the Moon."
   },
@@ -111,6 +111,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 <div class = "timeline-description">From pioneering protected silver coatings to enabling the future of self-coating space technologies, our work has supported groundbreaking sessions and technologies</div>
 </div>
 <div class="timeline-layout">
+  <div class="timeline-line"></div>
 
   <div class="timeline-column left-column">
     <div class = "title-cards">Spacecraft Accomplishments</div>
@@ -122,10 +123,6 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
         />
       ))
     }
-  </div>
-
-  <div class="timeline-center">
-    <div class="timeline-line"></div>
   </div>
 
   <div class="timeline-column right-column">
@@ -198,11 +195,13 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 
 .timeline-layout {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
-    align-items: start;
+    position: relative;
+    padding-bottom: 150px;
+    margin-inline: 20px;
 }
 
 .timeline-header {
@@ -212,16 +211,10 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 
 .timeline {
     position: relative;
-    max-width: 1400px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     gap: 3rem;
-}
-
-.timeline-line {
-    width: 4px;
-    min-height: 2500px;
-    background: #B2BEB5;
 }
 
 .timeline-item {
@@ -229,27 +222,57 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     position: relative;
 }
 
-.timeline-center {
-    display: flex;
-}
-
 .timeline-end {
     display: flex;
     justify-content: center;
+    z-index: 10;
 }
 
 .left-column {
     display: flex;
     flex-direction: column;
-    gap: 1rem;      /* tight spacing */
+    gap: 2rem;      /* tight spacing */
 }
 
 .right-column {
     display: flex;
     flex-direction: column;
-    gap: 5rem;      /* loose spacing */
+    gap: 4rem;      /* loose spacing */
+    margin-top: 150px;
+}
+ 
+.timeline-wrapper {
+  margin-block: 50px;
 }
 
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 3px;
+    background: #B2BEB5;
+    z-index: 1;
+}
+
+.timeline-line::before {
+    content: "";
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #B2BEB5;
+
+    left: 67%;
+    transform: translateX(-50%);
+
+    top: -8px; 
+}
 
 .timeline-item.center {
     width: 100%;
@@ -278,6 +301,10 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 .title {
     font-size: 60px;
     margin-bottom: 0.5rem;
+}
+
+.title-cards {
+  text-align: center;
 }
 
 .about-container {

@@ -22,7 +22,7 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
   border: 1px solid #DCE3EA;
   border-radius: 16px;
   overflow: hidden;
-   max-width: 300px;
+  max-width: 300px;
   max-height: 700px;
 }
 
@@ -49,8 +49,11 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
 /*make sure that you make a line in between the cards at some point */
 
 .card.featured {
-  background-color: #103A71;
-  color: white;
+    background: #ECE8E3;
+    border: 1px solid #dce3ea;
+    border-radius: 18px;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
 }
 
 </style>

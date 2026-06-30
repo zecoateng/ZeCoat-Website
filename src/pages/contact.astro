@@ -10,8 +10,20 @@ import Layout from '../layouts/layout.astro'
 </h3>
 <h3>Your request will be reviewed by the Chief Technical Officer, David Sheikh. </h3>
 </div>
-<div class = "forms-list">
+<form class = "forms-list" action="/api/contact" method="POST"> <!--this is where the form would be submitted -->
+
 <p>FORMS LIST</p>
+<div class = "name">
+<input type="text" placeholder="First Name">
+<input type="text" placeholder="Last Name">
+</div>
+<input type="text" placeholder="Company">
+<input type="text" placeholder="Email">
+<input type="text" placeholder="Phone-Number">
+<textarea placeholder="Additional Comments"></textarea>
+<button>Submit</button>
+</form>
+<div>
 </div>
 
 </div>
@@ -21,14 +33,27 @@ import Layout from '../layouts/layout.astro'
 
 .forms-page {
     display: flex;
+    justify-content: center;
 }
 
 .inquiries-statement {
-    width: 50%
+    max-width: 700px;
+    width: 100%;
 }
 
 .forms-list {
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+}
+
+.name {
+    display: flex;
+    gap: 1rem;
+}
+
+.name input {
+    flex: 1;
 }
 
 </style>
