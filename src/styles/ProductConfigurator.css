@@ -1,0 +1,14 @@
+.notSelected {
+    background-color: white;
+    transition: background-color 0.8s ease;
+}
+    
+
+.Selected {
+    background: lightblue;
+    transition: background-color 0.8s ease;
+}
+
+.layout {
+    display: flex;
+}
