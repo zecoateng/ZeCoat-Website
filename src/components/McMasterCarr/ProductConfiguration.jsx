@@ -48,7 +48,11 @@ export default function ProductConfiguration({
 
     //Once you add this it will work
 
-    const handleCoatingChange = () => {
+    const handleCoatingChange = (event) => {
+        setConfiguration({
+            ...configuration,
+            coating: event.target.value
+        })
 
     }
 
@@ -57,6 +61,7 @@ export default function ProductConfiguration({
         configuration.material &&
         configuration.shape &&
         configuration.coating &&
+        configuration.size &&
         configuration.quantity > 0
     )};
 
@@ -97,9 +102,7 @@ export default function ProductConfiguration({
         {configuration.shape === "Round" &&
         (
             <div>
-                Flat-to-Flat (mm)
-                <input />
-                Thickness (mm)
+                Diameter
                 <input />
             </div>
         )}
@@ -117,17 +120,21 @@ export default function ProductConfiguration({
     </div>
     <div className = "coating-type">
         Coating Type
-        <select name="" id="options">
-            <option value="">ZC-1251</option>
-            <option value="">ZC-XXXX</option>
-            <option value="">ZC-YYYY</option>
+        <select name="coating-types" value = {configuration.coating} id="options" onChange = {handleCoatingChange}>
+            <option value="" disabled hidden>Choose a coating</option>
+            <option value="ZC-1251">ZC-1251</option>
+            <option value="ZC-XXXX">ZC-XXXX</option>
+            <option value="ZC-YYYY">ZC-YYYY</option>
         </select>
+        {configuration.coating}
     </div>
     <div className = "number-of-mirrors">
         Number of Mirrors
-        <button onClick = {handleAdd}></button>
-        <h2>{configuration.quantity}</h2>
-        <button onClick = {handleSubtract}></button>
+        <div className = "mirror-button">
+            <button onClick = {handleAdd}>+</button>
+            <div className = "config-quantity">{configuration.quantity}</div>
+            <button onClick = {handleSubtract}>-</button>
+            </div>
     </div>
     <div className = "additional-requirements">
         Additional Requirements

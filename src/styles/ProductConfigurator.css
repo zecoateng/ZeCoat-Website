@@ -12,3 +12,16 @@
 .layout {
     display: flex;
 }
+
+.mirror-button {
+    display: flex;
+}
+
+.config-quantity {
+    padding-inline: 20px;
+    background-color: white;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+}
+

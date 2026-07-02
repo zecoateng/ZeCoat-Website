@@ -1,10 +1,11 @@
 import {useState} from "react"
 import ProductConfiguration from "./ProductConfiguration.jsx"
 import QuoteReview from "./ReviewQuote.jsx"
+import Intro from "./intro.jsx"
 
 export default function QuoteBuilder(){
 
-    const [step, setStep] = useState("configure");
+    const [step, setStep] = useState("intro");
 
     const [configuration, setConfiguration] = useState({
         material: "",
@@ -25,6 +26,14 @@ export default function QuoteBuilder(){
 
     return (
         <>
+
+        {step === "intro" && (
+            <Intro
+            setStep = {setStep}
+            />
+        )
+
+        }
             {step === "configure" && (
                 <ProductConfiguration
                     configuration={configuration}
