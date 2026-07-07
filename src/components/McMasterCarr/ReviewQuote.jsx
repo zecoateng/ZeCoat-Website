@@ -28,7 +28,9 @@ export default function ReviewQuote({ configuration, setStep }) {
     
 
     return (
+         
         <div className="review-quote">
+            <button onClick={() => setStep("configure")}>Back</button>
             <h2>Review Your Quote</h2>
 
             <ul>
@@ -51,7 +53,7 @@ export default function ReviewQuote({ configuration, setStep }) {
 </form>
 <div>
 </div>
-        <button onClick={() => setStep("configure")}>Back</button>
+       
         </div>
     );
 }
