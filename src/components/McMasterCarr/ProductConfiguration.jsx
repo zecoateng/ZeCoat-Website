@@ -1,5 +1,5 @@
 import "../../styles/ProductConfigurator.css"
-
+import { useState } from "react";
 
 export default function ProductConfiguration({
     configuration,
@@ -65,6 +65,8 @@ export default function ProductConfiguration({
         configuration.quantity > 0
     )};
 
+    const [error, setError] = useState("");
+
 
 
 
@@ -90,7 +92,7 @@ export default function ProductConfiguration({
     <div className = "size">
         {configuration.shape === "Rectangle" &&
         (
-            <div>
+            <div className = "specs">
                 Width (mm)
                 <input />
                 Height (mm)
@@ -101,15 +103,15 @@ export default function ProductConfiguration({
         )}
         {configuration.shape === "Round" &&
         (
-            <div>
-                Diameter
+            <div className = "specs">
+                Diameter (in)
                 <input />
             </div>
         )}
         {configuration.shape === "Hexagon" 
         &&
         (
-            <div>
+            <div className = "specs">
                 Flat-to-Flat (mm)
                 <input />
                 Thickness (mm)
@@ -126,28 +128,35 @@ export default function ProductConfiguration({
             <option value="ZC-XXXX">ZC-XXXX</option>
             <option value="ZC-YYYY">ZC-YYYY</option>
         </select>
-        {configuration.coating}
     </div>
     <div className = "number-of-mirrors">
         Number of Mirrors
         <div className = "mirror-button">
-            <button onClick = {handleAdd}>+</button>
-            <div className = "config-quantity">{configuration.quantity}</div>
             <button onClick = {handleSubtract}>-</button>
+            <div className = "config-quantity">{configuration.quantity}</div> 
+            <button onClick = {handleAdd}>+</button>
             </div>
     </div>
     <div className = "additional-requirements">
         Additional Requirements
         <textarea name="Additional Requirements" onChange = {handleNotesChange} id="" placeholder="e.g, Surface quality, scratch-dig requirements, witness sample, etc"></textarea>
     </div>
-{configuration.notes}
   </div>
   <div className = "configuration-summary">
     
-    <button onClick = {() => {
-        if (isConfigurationComplete())
-        {setStep("review")}}
-    }>Request & Review Quote</button>
+    <button onClick={() => {
+        if (isConfigurationComplete()) {
+            setError("");
+            setStep("review");
+        } else {
+            setError("Please complete all required fields before proceeding.");
+        }
+    }}>Request & Review Quote</button>
+    {error && (
+    <p className="error-message">
+        {error}
+    </p>
+)}
   </div>
   </div>
 

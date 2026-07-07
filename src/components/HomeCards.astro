@@ -24,6 +24,10 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
   overflow: hidden;
   max-width: 300px;
   max-height: 700px;
+  box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
+
 }
 
 
@@ -54,6 +58,11 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
     border-radius: 18px;
     padding: 1rem;
     box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    transition: 0.3s;
+}
+
+.card.featured:hover {
+  transform: translateY(-8px);
 }
 
 </style>

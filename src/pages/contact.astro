@@ -12,7 +12,6 @@ import Layout from '../layouts/layout.astro'
 </div>
 <form class = "forms-list" action="/api/contact" method="POST"> <!--this is where the form would be submitted -->
 
-<p>FORMS LIST</p>
 <div class = "name">
 <input type="text" placeholder="First Name">
 <input type="text" placeholder="Last Name">
@@ -45,6 +44,65 @@ import Layout from '../layouts/layout.astro'
     display: flex;
     flex-direction: column;
     margin: 2rem;
+    gap: 1.25rem;
+
+    background: white;
+    padding: 2rem;
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 40px rgba(15,23,42,.08);
+
+    width: 500px;
+}
+
+.forms-list input,
+.forms-list textarea {
+
+    padding: 1rem;
+
+    border: 1px solid #D8DEE6;
+
+    border-radius: 8px;
+
+    font-size: 1rem;
+
+    transition: .2s;
+}
+
+.forms-list input:focus,
+.forms-list textarea:focus{
+
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+}
+
+button {
+
+    background:#1E293B;
+    color:white;
+
+    border:none;
+
+    padding:1rem;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:#334155;
 }
 
 .name {
@@ -54,6 +112,7 @@ import Layout from '../layouts/layout.astro'
 
 .name input {
     flex: 1;
+    min-width: 0;
 }
 
 </style>

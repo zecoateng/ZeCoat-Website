@@ -1,26 +1,129 @@
-<footer class = "footer"> 
-<div class = "intro-info">
-<h1>ZeCoat Corporation</h1>
-<h3>1506 W 3rd St</h3>
-<h3>Granite City, IL 62040</h3>
-<h3>ZeCoat is an ITAR registered small business</h3>
-</div>
-<div class = "contact-info">
-<h1>Contact Us!</h1>
-<h3>info@zecoat.com</h3>
-<h3>(618) 221-5053</h3>
-<a href="">Resources</a>
-</div>
-</footer>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col brand">
+      <h2 class="footer-brand">ZeCoat Corporation</h2>
+      <address class="footer-address">
+        1506 W 3rd St<br />
+        Granite City, IL 62040
+      </address>
+    </div>
 
+    <div class="footer-col">
+      <h3 class="footer-heading">Contact</h3>
+      <ul class="footer-list">
+        <li><a href="mailto:info@zecoat.com">info@zecoat.com</a></li>
+        <li><a href="tel:+16182215053">(618) 221-5053</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Company</h3>
+      <ul class="footer-list">
+        <li><a href="/resources">Resources</a></li>
+        <li><a href="/contact">Get a Quote</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 ZeCoat Corporation. All rights reserved.</p>
+  </div>
+</footer>
 
 <style>
   .footer {
-    background-color: #343A40;
-    padding: 40px 20px;
+    background-color: #1E293B;
+    color: #CBD5E1;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-brand {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-address {
+    font-style: normal;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    color: #94A3B8;
+  }
+
+  .footer-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #93C5FD;
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .footer-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    justify-content: space-around;
-    color: #E5E7EB;
-    border-top: 1px solid rgba(255,255,255,.08);
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-list a {
+    color: #CBD5E1;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-list a:hover {
+    color: #93C5FD;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #64748B;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  @media (max-width: 700px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
     }
-</style> 
+
+    .footer-list {
+      align-items: center;
+    }
+  }
+</style>

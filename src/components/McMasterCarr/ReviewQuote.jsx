@@ -39,7 +39,6 @@ export default function ReviewQuote({ configuration, setStep }) {
                 {configuration.notes && <li>Notes: {configuration.notes}</li>}
             </ul>
    <form className = "forms-list" onSubmit = {handleSubmit}> 
-<p>FORMS LIST</p>
 <div className = "name">
 <input type="text" name = "firstName" placeholder="First Name"/>
 <input type="text" name = "lastName" placeholder="Last Name"/>

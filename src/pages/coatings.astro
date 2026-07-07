@@ -1,9 +1,147 @@
 ---
 import Layout from '../layouts/layout.astro'
+import CoatingCarousel from '../components/CoatingCarousel.astro';
+
+ const coatings = [
+  {
+    title: "Protected Silver",
+    image: "/images/protected-silver.jpg",
+    reflectance: "Avg. R: 96% (350–1000 nm)",
+    durability: "MIL-13830-B",
+    heritage: "Kepler Space Telescope",
+    description:
+      "High-performance protected silver coating offering exceptional broadband reflectance for astronomical optics.",
+
+    variations:
+      "Reflection, durability, and wavelength range can all be customized.",
+
+    maxSize: "2.0 m diameter",
+
+    priceDrivers: [
+      "Substrate size",
+      "Quantity",
+      "Coating complexity"
+    ]
+  },
+
+  {
+    title: "FUV Aluminum",
+    image: "/images/fuv-aluminum.jpg",
+    reflectance: ">96% @ 121 nm",
+    durability: "MIL-13830-B",
+    heritage: "",
+    description:
+      "Far ultraviolet coating optimized for extremely high reflectance at 121 nm.",
+
+    variations:
+      "Can be optimized for wavelength range and durability.",
+
+    maxSize: "2.0 m diameter",
+
+    priceDrivers: [
+      "Substrate size",
+      "Quantity",
+      "Difficulty"
+    ]
+  },
+
+  {
+    title: "Protected Gold",
+    image: "/images/protected-gold.jpg",
+    reflectance: ">98% (800–5000 nm)",
+    durability: "MIL-13830-B",
+    heritage: "",
+    description:
+      "Infrared gold coating with extremely high reflectance across the IR spectrum.",
+
+    variations:
+      "Reflection, durability and wavelength range may be customized.",
+
+    maxSize: "2.0 m diameter",
+
+    priceDrivers: [
+      "Substrate size",
+      "Quantity",
+      "Difficulty"
+    ]
+  },
+
+  {
+    title: "Multi-Layer Dielectric",
+    image: "/images/dielectric.jpg",
+
+    description:
+      "Custom AR coatings, dielectric mirrors and bandpass filters produced using ZeCoat's motion-controlled deposition system.",
+
+    maxSize: "2.0 m diameter"
+  },
+
+  {
+    title: "Spacecraft Thermal Control",
+    image: "/images/mars-insight.jpg",
+
+    heritage:
+      "NASA Mars InSight Seismometer Cover",
+
+    description:
+      "Low-glint spacecraft coating designed for thermal control applications."
+  },
+
+  {
+    title: "Silicon Cladding",
+    image: "/images/silicon.jpg",
+
+    description:
+      "Tailorable silicon cladding over 100 microns for optical finishing and near-zero CTE surfaces.",
+
+    maxSize: "2.0 m diameter"
+  },
+
+  {
+    title: "Black Edge Coating BEC-1-T",
+    image: "/images/black-edge.jpg",
+
+    reflectance:
+      "Avg R <1.5%",
+
+    locked: true
+  }
+];
 ---
 
 <Layout>
-<div>
-    ZeCoat has developed a unique vacuum coating system, which utilizes a motion-controlled electron beam evaporator, which can uniformly coat substrates up to 2-meters in diameter with exceptional layer precision to serve the astronomy community.
-</div>
+
+<section class="hero">
+
+    <h1>Optical Coating Portfolio</h1>
+
+    <p>
+        ZeCoat has developed a unique vacuum coating system, which utilizes a motion-controlled electron beam evaporator, which can uniformly coat substrates up to 2-meters in diameter with exceptional layer precision to serve the astronomy community.
+    </p>
+
+</section>
+
+{
+    coatings.map( coating => {
+        return (
+        <CoatingCarousel 
+        image={coating.image} 
+        title={coating.title}
+        description = {coating.description} 
+        reflectance = {coating.reflectance}
+        durability = {coating.durability} 
+        />
+        )
+    })
+   
+
+}
+
+
 </Layout>
+
+<style>
+
+  
+
+</style>

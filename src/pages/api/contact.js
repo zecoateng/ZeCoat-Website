@@ -72,7 +72,7 @@ This message was submitted via the ZeCoat website contact form.
   status: 303,
   headers: { Location: "/messageSent?sent=true" },
 });
-  // Preview URL is only available when using an Ethereal test account
+
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 } catch (err) {
   console.error("Error while sending mail:", err);

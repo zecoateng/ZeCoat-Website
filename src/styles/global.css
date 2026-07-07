@@ -1,0 +1,75 @@
+.intro-page {
+    max-width: 850px;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.intro-tag {
+    width: fit-content;
+    padding: .4rem .9rem;
+    border-radius: 999px;
+    background: #E8F0FF;
+    color: #2563EB;
+    font-weight: 600;
+}
+
+.intro-page h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: #1E293B;
+    margin: 0;
+}
+
+.intro-page p {
+    line-height: 1.8;
+    color: #475569;
+    font-size: 1.05rem;
+}
+
+.intro-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.intro-info div {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+}
+
+.intro-info h3 {
+    margin-top: 0;
+    color: #1E293B;
+}
+
+.intro-info ul {
+    padding-left: 1.2rem;
+    line-height: 2;
+    color: #64748B;
+}
+
+.intro-page button {
+    align-self: flex-start;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    background: #1E293B;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.intro-page button:hover {
+    transform: translateY(-2px);
+    background: #334155;
+}
+
+.button-spacing {
+    display: flex;
+    justify-content: center;
+}

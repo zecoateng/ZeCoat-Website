@@ -1,12 +1,25 @@
-.notSelected {
-    background-color: white;
-    transition: background-color 0.8s ease;
-}
-    
+.Selected{
 
-.Selected {
-    background: lightblue;
-    transition: background-color 0.8s ease;
+    background:#2563EB;
+
+    color:white;
+
+    border-color:#2563EB;
+}
+
+.notSelected{
+
+    background:white;
+}
+
+.material,
+.shape{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:1rem;
 }
 
 .layout {
@@ -25,3 +38,188 @@
     border-style: solid;
 }
 
+.layout {
+    display: grid;
+    grid-template-columns: 2fr 400px;
+    gap: 3rem;
+
+    max-width: 1400px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+
+    align-items: start;
+}
+
+.design-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.material,
+.shape,
+.size,
+.coating-type,
+.number-of-mirrors,
+.additional-requirements {
+
+    background: white;
+
+    border: 1px solid #E2E8F0;
+
+    border-radius: 14px;
+
+    padding: 1.75rem;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+    box-shadow: 0 10px 30px rgba(15,23,42,.05);
+}
+
+.material button,
+.shape button{
+
+    padding:.9rem 1.2rem;
+
+    border-radius:8px;
+
+    border:1px solid #CBD5E1;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.material button:hover,
+.shape button:hover{
+
+    border-color:#2563EB;
+
+    transform:translateY(-1px);
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:1rem;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    font-size:1rem;
+
+    box-sizing:border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+
+.configuration-summary button{
+
+    width:100%;
+
+    padding:1rem;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#1E293B;
+
+    color:white;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.configuration-summary{
+
+    position:sticky;
+
+    top:120px;
+
+    background:white;
+
+    border-radius:14px;
+
+    border:1px solid #E2E8F0;
+
+    padding:2rem;
+
+    box-shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+.config-quantity{
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    width:40px;
+
+    text-align:center;
+}
+
+.mirror-button button{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    background:#1E293B;
+
+    color:white;
+
+    font-size:1.5rem;
+
+    cursor:pointer;
+}
+
+.mirror-button{
+
+    display:flex;
+
+    align-items:center;
+    
+    justify-content: center;
+    gap:1rem;
+}
+
+.size div{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:1rem;
+}
+
+.error-message {
+    margin-top: 1rem;
+    color: #DC2626;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    padding: .75rem 1rem;
+    border-radius: 8px;
+    font-size: .95rem;
+}

@@ -31,8 +31,8 @@ const experiencesLayout = [
     },
     {
         imgSrc: "/NASA-Logo.svg",
-        cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage"
+        cardTitle: "25+",
+        cardBody: "yolopment"
 
     },
     {
@@ -96,15 +96,18 @@ const featuredTechnologies = [
 <section class = "intro-section">
 <div class = "title">
 <h1 class = "title-header">Optical Coatings Built for Space</h1>
-<h3 class = "title-description">ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies — from a clean-room facility in Granite City, IL</h3>
+<h3 class = "title-description">ZeCoat delivers space-qualified mirror coatings, NASA-backed R&D services, and licensable aerospace technologies from a clean-room facility in Granite City, IL</h3>
 
-<div>
-<button>Explore Our Work</button>
-<button>Contact Us</button>
+<div class = "hero-buttons">
+    <a href="#featured-technologies" class = "btn btn-primary">
+        Explore Our Work
+    </a>
+    <a href="/contact" class = "btn btn-secondary">Contact Us
+    </a>
 </div>
 </div>
 </section>
-<section class = "what-we-do-section">
+<section id = "what-we-do" class = "what-we-do-section">
 <h1>What We Do</h1>
 <h3 class = "what-we-do-description">Three core capabilities all built on the same precision vacuum deposition process</h3>
 <div class = "cards-layout">
@@ -143,7 +146,7 @@ const featuredTechnologies = [
 }
 
 </div>
-<div class = "featured-header">
+<div id = "featured-technologies" class = "featured-header">
 <h1>Featured Technologies</h1>
 <h3>View All Technologies</h3>
 </div>
@@ -192,7 +195,6 @@ const featuredTechnologies = [
 
 <style>
 .intro-section {
-    background-image: url('/dock-layout.png');
     width: 100%;
     height: 600px;
     padding-top: 1px;
@@ -203,12 +205,22 @@ const featuredTechnologies = [
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(255,255,255,0.35);
+     background:
+        linear-gradient(
+            rgba(5,15,35,.65),
+            rgba(5,15,35,.45)
+        ),
+        url("/dock-layout.png");
+    background-size: cover;
+    background-position: center;
 }
 
 .title {
     width: fit-content;
     padding-left: clamp(2px,4vw,150px);
+    position: relative; 
+    z-index: 1;
+    color: #F5F2EC;
     
 }
 
@@ -251,9 +263,15 @@ const featuredTechnologies = [
 }
 
 .about-tag {
-    background-color: #FAF0CA;
+    background:
+linear-gradient(
+rgba(5,15,35,.55),
+rgba(5,15,35,.35)
+),
+url(...);
     width: 100%;
     text-align: center;
+    color: white;
 }
 
 .featured-header {
@@ -267,6 +285,58 @@ const featuredTechnologies = [
     width: 100%;
     margin-inline: auto;
     max-width: 1600px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    font: inherit;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 0.25rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #2563eb;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(4px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Keyboard accessibility */
+.btn:focus-visible {
+    outline: 2px solid #93C5FD;
+    outline-offset: 2px;
 }
 
 @media(max-width: 760px) {
