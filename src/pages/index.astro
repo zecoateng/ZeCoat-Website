@@ -26,31 +26,31 @@ const experiencesLayout = [
     {
         imgSrc: "/NASA-Logo.svg",
         cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage"
+        cardBody: "technology development and flight herritage. This is placeholder text"
 
     },
     {
-        imgSrc: "/NASA-Logo.svg",
-        cardTitle: "25+",
-        cardBody: "yolopment"
+        imgSrc: "/calendar-xmark-alt-svgrepo-com.svg",
+        cardTitle: "25+ Years",
+        cardBody: "of working engineering experience. This is placeholder text"
 
     },
     {
-        imgSrc: "/NASA-Logo.svg",
+        imgSrc: "/building-svgrepo-com.svg",
+        cardTitle: "U.S Based Facility",
+        cardBody: "In Granite City, Illinois. This is some more placeholder text"
+
+    },
+    {
+        imgSrc: "/itar-registered.svg",
+        cardTitle: "ITAR Registered",
+        cardBody: "Technology development and flight herritage. This is placeholder text."
+
+    },
+    {
+        imgSrc: "/shield-check-svgrepo-com.svg",
         cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage"
-
-    },
-    {
-        imgSrc: "/NASA-Logo.svg",
-        cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage"
-
-    },
-    {
-        imgSrc: "/NASA-Logo.svg",
-        cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage"
+        cardBody: "technology development and flight herritage. This is placeholdet text."
 
     }
 ]
@@ -128,7 +128,7 @@ const featuredTechnologies = [
 <section class = "experience-section">
     <div class = "featured-header">
 <h1>Featured Missions</h1>
-<h3>View All Missions</h3>
+<a href="/about">View all Missions</a>
     </div>
 
 <div class = "cards-layout">
@@ -148,7 +148,7 @@ const featuredTechnologies = [
 </div>
 <div id = "featured-technologies" class = "featured-header">
 <h1>Featured Technologies</h1>
-<h3>View All Technologies</h3>
+<a href="/TechnologyList">View all Technologies</a>
 </div>
 
 <div class = "cards-layout">
@@ -337,6 +337,10 @@ url(...);
 .btn:focus-visible {
     outline: 2px solid #93C5FD;
     outline-offset: 2px;
+}
+
+a {
+    text-decoration: none;
 }
 
 @media(max-width: 760px) {

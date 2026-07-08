@@ -1,0 +1,465 @@
+---
+import Layout from "../layouts/layout.astro";
+
+// Fetches the API
+let rows = [];
+let loadError = null;
+try {
+  const response = await fetch("http://localhost:4321/api/quotes");
+  const data = await response.json();
+  // The API returns an array on success, or { error } on failure.
+  rows = Array.isArray(data) ? data : [];
+  if (!Array.isArray(data)) loadError = data?.error || "Could not load quotes.";
+} catch (err) {
+  loadError = "Could not reach the quotes API.";
+}
+
+// Normalize each row: parse the configuration JSON whether it comes back
+// as a string (text column) or an already-parsed object (jsonb column).
+const quotes = rows.map((q) => {
+  let config = q.configuration;
+  if (typeof config === "string") {
+    try {
+      config = JSON.parse(config);
+    } catch {
+      config = null;
+    }
+  }
+  return { ...q, config: config || {} };
+});
+
+// A couple of quick stats for the header.
+const total = quotes.length;
+const companies = new Set(
+  quotes.map((q) => (q.company || "").trim()).filter(Boolean)
+).size;
+
+// Turns "Alex Quijada" -> "AQ" for the avatar.
+const initials = (first, last) =>
+  `${(first || "").charAt(0)}${(last || "").charAt(0)}`.toUpperCase() || "?";
+---
+
+<Layout>
+  <section class="dash">
+    <header class="dash-head">
+      <div>
+        <h1>Quote Requests</h1>
+        <p class="sub">Incoming inquiries from the ZeCoat contact form.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">{total}</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">{companies}</span>
+          <span class="stat-label">Companies</span>
+        </div>
+      </div>
+    </header>
+
+    {loadError && <div class="notice error">{loadError}</div>}
+
+    {!loadError && total === 0 && (
+      <div class="notice">No quote requests yet.</div>
+    )}
+
+    <div class="grid" id="grid">
+      {
+        quotes.map((quote) => {
+          const c = quote.config || {};
+          const size = c.size || {};
+          const haystack = `${quote.first_name || ""} ${quote.last_name || ""} ${quote.company || ""} ${quote.email || ""}`.toLowerCase();
+          return (
+            <article class="card" data-search={haystack}>
+              <div class="card-top">
+                <div class="avatar">{initials(quote.first_name, quote.last_name)}</div>
+                <div class="who">
+                  <h2 class="name">
+                    {quote.first_name} {quote.last_name}
+                  </h2>
+                  {quote.company && <p class="company">{quote.company}</p>}
+                </div>
+              </div>
+
+              <div class="contact">
+                {quote.email && (
+                  <div class="row">
+                    <a href={`mailto:${quote.email}`}>{quote.email}</a>
+                  </div>
+                )}
+                {quote.phone && (
+                  <div class="row">
+                    <a href={`tel:${quote.phone}`}>{quote.phone}</a>
+                  </div>
+                )}
+              </div>
+
+              {(c.material || c.shape || c.coating || c.quantity) && (
+                <div class="config">
+                  <h3 class="config-title">Configuration</h3>
+                  <div class="chips">
+                    {c.material && <span class="chip">{c.material}</span>}
+                    {c.shape && <span class="chip">{c.shape}</span>}
+                    {c.coating && <span class="chip">{c.coating}</span>}
+                    {c.quantity && <span class="chip">Qty {c.quantity}</span>}
+                  </div>
+
+                  {(size.width || size.height || size.diameter || size.thickness) && (
+                    <div class="specs">
+                      {size.width && (
+                        <div class="spec"><span>Width</span><b>{size.width}</b></div>
+                      )}
+                      {size.height && (
+                        <div class="spec"><span>Height</span><b>{size.height}</b></div>
+                      )}
+                      {size.diameter && (
+                        <div class="spec"><span>Diameter</span><b>{size.diameter}</b></div>
+                      )}
+                      {size.thickness && (
+                        <div class="spec"><span>Thickness</span><b>{size.thickness}</b></div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {quote.notes && (
+                <div class="notes">
+                  <h3 class="config-title">Notes</h3>
+                  <p>{quote.notes}</p>
+                </div>
+              )}
+
+              <div class="card-actions">
+                {/* Placeholder — will eventually send an email to the customer */}
+                <button class="btn-email" type="button" data-email={quote.email || ""}>
+                  <span class="ico" aria-hidden="true">&#9993</span>
+                  Email Customer
+                </button>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <p class="empty-search" id="emptySearch" hidden>No matches for your search.</p>
+  </section>
+</Layout>
+
+<script>
+  // Live client-side filtering of the cards.
+  const search = document.getElementById("search");
+  const cards = Array.from(document.querySelectorAll(".card"));
+  const emptyMsg = document.getElementById("emptySearch");
+
+  search?.addEventListener("input", () => {
+    const term = search.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach((card) => {
+      const match = card.dataset.search.includes(term);
+      card.hidden = !match;
+      if (match) visible++;
+    });
+    if (emptyMsg) emptyMsg.hidden = visible !== 0;
+  });
+
+  // Placeholder action for the "Email Customer" button.
+  document.querySelectorAll(".btn-email").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const email = btn.dataset.email;
+      // TODO: replace with your real "send email to customer" flow.
+      alert(`Email flow coming soon for: ${email || "this customer"}`);
+    });
+  });
+</script>
+
+<style>
+  .dash {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .dash-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+
+  .dash-head h1 {
+    font-size: 2rem;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+  }
+
+  .sub {
+    color: #64748B;
+    margin-top: 0.35rem;
+  }
+
+  .stats {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .stat {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .stat-num {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1E293B;
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .toolbar {
+    margin-bottom: 1.5rem;
+  }
+
+  .search {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.7rem 1rem;
+    border: 1px solid #CBD5E1;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .search:focus {
+    border-color: #1E293B;
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1);
+  }
+
+  .notice {
+    background: #fff;
+    border: 1px dashed #CBD5E1;
+    border-radius: 14px;
+    padding: 2rem;
+    text-align: center;
+    color: #64748B;
+  }
+
+  .notice.error {
+    border-color: #FCA5A5;
+    background: #FEF2F2;
+    color: #B91C1C;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #334155, #0F172A);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+  }
+
+  .name {
+    font-size: 1.15rem;
+    color: #0F172A;
+    line-height: 1.2;
+  }
+
+  .company {
+    color: #64748B;
+    font-size: 0.9rem;
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .row a {
+    color: #334155;
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .row a:hover {
+    color: #1E293B;
+    text-decoration: underline;
+  }
+
+  .ico {
+    color: #94A3B8;
+    width: 1.1rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .config-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #94A3B8;
+    margin-bottom: 0.5rem;
+  }
+
+  .config {
+    border-top: 1px solid #F1F5F9;
+    padding-top: 1rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    background: #F1F5F9;
+    color: #334155;
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+
+  .spec {
+    display: flex;
+    justify-content: space-between;
+    background: #F8FAFC;
+    border-radius: 8px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .spec span {
+    color: #94A3B8;
+  }
+
+  .spec b {
+    color: #334155;
+  }
+
+  .notes {
+    border-top: 1px solid #F1F5F9;
+    padding-top: 1rem;
+  }
+
+  .notes p {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .card-actions {
+    margin-top: auto;
+    padding-top: 0.4rem;
+  }
+
+  .btn-email {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #1E293B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .btn-email:hover {
+    background: #0F172A;
+  }
+
+  .btn-email:active {
+    transform: scale(0.98);
+  }
+
+  .btn-email .ico {
+    color: #fff;
+  }
+
+  .empty-search {
+    text-align: center;
+    color: #94A3B8;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .dash-head {
+      align-items: flex-start;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
