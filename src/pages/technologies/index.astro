@@ -1,6 +1,30 @@
 ---
 import Layout from "../../layouts/Layout.astro"
 import TechnologyList from "../../components/TechnologyList.astro"
+
+export const technologies = [
+  {
+    title: "Battery-Powered Deposition",
+    description:
+      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
+    image: "/dock-layout.png",
+    link: "/technologies/BPD"
+  },
+  {
+    title: "Advanced Dielectric Coatings",
+    description:
+      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
+    image: "/dock-layout.png",
+    link: "/technologies/Technology2"
+  },
+  {
+    title: "Protected Silver Coatings",
+    description:
+      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
+    image: "/dock-layout.png",
+    link: "/technologies/Technology3"
+  }
+];
 ---
 
 <Layout>
@@ -12,11 +36,18 @@ import TechnologyList from "../../components/TechnologyList.astro"
             </div>
         </div>
         <hr/>
-        <h2>Current Research and Development</h2>
+        <h2 class = "layout-header">Current Research and Development</h2>
         <div class = "Technology-List">
-        <TechnologyList/>
-        <TechnologyList/>
-        <TechnologyList/>
+        {
+  technologies.map((technology) => (
+    <TechnologyList
+      title={technology.title}
+      description={technology.description}
+      image={technology.image}
+      link={technology.link}
+    />
+  ))
+}
         </div>
     </div>
     
@@ -29,6 +60,7 @@ import TechnologyList from "../../components/TechnologyList.astro"
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 40px;
     
 }
 
@@ -36,6 +68,17 @@ import TechnologyList from "../../components/TechnologyList.astro"
     text-align: center;
     width: 100%;
     max-width: 800px;
+}
+
+.layout-header  {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+}
+
+.layout-header {
+    margin-top: 50px;
 }
 
 .Technology-List {

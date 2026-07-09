@@ -1,23 +1,22 @@
 ---
-const {} = Astro.props;
+const {title, description, image, link} = Astro.props;
 ---
 
     <div class="ceo-layout">
     <div class="ceo-image">
-        <img src="/public/dock-layout.png" />
+        <img src={image} />
     </div>
 
     <div class="ceo-description">
         <div class="name-group">
-            <h1>Battery-Powered Deposition</h1>
+            <h1>{title}</h1>
         </div>
 
         <p>
-           A new coating process that uses multiple controlled evaporation sources to produce highly uniform optical coatings in seconds for large mirrors and future space applications.
+           {description}
         </p>
         <div class = "bottom">
-            <div>Applications</div>
-            <a href="/TechnologyLayout">Learn more</a>
+            <a href={link}>Learn more</a>
         </div>
     </div>
    
@@ -33,10 +32,11 @@ const {} = Astro.props;
     gap: clamp(10px, 4vw, 150px);
     padding: 20px;
     border-style: solid;
-    border-color: black;
+    border-color: #D1D5DB;
     border-width: 2px;
-    background-color: white;
-    border-radius: 5px;
+    background-color: #F8F9FB;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 .ceo-image img {
@@ -45,14 +45,9 @@ const {} = Astro.props;
     max-width: 400px;
     aspect-ratio: 5 / 4;
     object-fit: cover;
-    transition: transform 0.4s ease;
     border: 1px solid #DCE3EA;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border-radius: 10px;
-}
-
-.ceo-image:hover img {
-    transform: scale(1.03);
+    border-radius: 8px;
 }
 
 .ceo-description {
@@ -63,6 +58,14 @@ const {} = Astro.props;
 
 a {
     text-decoration: none;
+    background:#E7A21C;
+    color: #1B2430;
+    transition: transform 0.3s ease;
+}
+
+a:hover {
+    background:#C6870F;
+    transform: translateY(-2px);
 }
 
 .name-group {
@@ -76,11 +79,18 @@ a {
     margin: 0;
 }
 
-.bottom {
-    height: 100%;
-    display: flex;
+.bottom a{
+    display: inline-flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.75rem 1.75rem;
+
+    
+
+    border-radius: 8px;
+
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .ceo-description p {

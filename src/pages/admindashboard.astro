@@ -130,14 +130,7 @@ const initials = (first, last) =>
                   <p>{quote.notes}</p>
                 </div>
               )}
-
-              <div class="card-actions">
-                {/* Placeholder — will eventually send an email to the customer */}
-                <button class="btn-email" type="button" data-email={quote.email || ""}>
-                  <span class="ico" aria-hidden="true">&#9993</span>
-                  Email Customer
-                </button>
-              </div>
+              
             </article>
           );
         })
@@ -147,34 +140,6 @@ const initials = (first, last) =>
     <p class="empty-search" id="emptySearch" hidden>No matches for your search.</p>
   </section>
 </Layout>
-
-<script>
-  // Live client-side filtering of the cards.
-  const search = document.getElementById("search");
-  const cards = Array.from(document.querySelectorAll(".card"));
-  const emptyMsg = document.getElementById("emptySearch");
-
-  search?.addEventListener("input", () => {
-    const term = search.value.trim().toLowerCase();
-    let visible = 0;
-    cards.forEach((card) => {
-      const match = card.dataset.search.includes(term);
-      card.hidden = !match;
-      if (match) visible++;
-    });
-    if (emptyMsg) emptyMsg.hidden = visible !== 0;
-  });
-
-  // Placeholder action for the "Email Customer" button.
-  document.querySelectorAll(".btn-email").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const email = btn.dataset.email;
-      // TODO: replace with your real "send email to customer" flow.
-      alert(`Email flow coming soon for: ${email || "this customer"}`);
-    });
-  });
-</script>
-
 <style>
   .dash {
     max-width: 1200px;

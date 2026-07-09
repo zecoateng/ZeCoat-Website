@@ -16,7 +16,7 @@ export default function ReviewQuote({ configuration, setStep }) {
     await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ form: data, configuration }),
+      body: JSON.stringify({ form: data, configuration, type: "quote" }),
     });
   };
 
@@ -30,24 +30,24 @@ export default function ReviewQuote({ configuration, setStep }) {
 
       <div className="rq-summary">
         <div className="rq-row">
-          <span>Material</span>
+          <span>Material: </span>
           <b>{configuration.material || "—"}</b>
         </div>
         <div className="rq-row">
-          <span>Shape</span>
+          <span>Shape: </span>
           <b>{configuration.shape || "—"}</b>
         </div>
         <div className="rq-row">
-          <span>Coating</span>
+          <span>Coating: </span>
           <b>{configuration.coating || "—"}</b>
         </div>
         <div className="rq-row">
-          <span>Quantity</span>
+          <span>Quantity: </span>
           <b>{configuration.quantity || "—"}</b>
         </div>
         {configuration.notes && (
           <div className="rq-row">
-            <span>Notes</span>
+            <span>Notes: </span>
             <b>{configuration.notes}</b>
           </div>
         )}
@@ -55,11 +55,11 @@ export default function ReviewQuote({ configuration, setStep }) {
 
       <form className="rq-form" onSubmit={handleSubmit}>
         <div className="rq-name">
-          <input type="text" name="firstName" placeholder="First Name" />
-          <input type="text" name="lastName" placeholder="Last Name" />
+          <input type="text" required name="firstName" placeholder="First Name" />
+          <input type="text" required name="lastName" placeholder="Last Name" />
         </div>
         <input type="text" name="company" placeholder="Company" />
-        <input type="email" name="email" placeholder="Email" />
+        <input type="email" required name="email" placeholder="Email" />
         <input type="tel" name="phoneNumber" placeholder="Phone Number" />
         <textarea name="comments" placeholder="Additional Comments" rows="4"></textarea>
         <button type="submit" className="rq-submit">Submit Quote Request</button>

@@ -1,225 +1,252 @@
-.Selected{
-
-    background:#2563EB;
-
-    color:white;
-
-    border-color:#2563EB;
-}
-
-.notSelected{
-
-    background:white;
-}
-
-.material,
-.shape{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:1rem;
+:root {
+  --navy: #16202e;
+  --navy-2: #23324a;
+  --slate: #566072;
+  --bg: #e9edf1;
+  --white: #ffffff;
+  --line: #cdd5dc;
+  --line-2: #dbe1e7;
+  --accent: #e8862b;
 }
 
 .layout {
-    display: flex;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 44px 20px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: start;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--navy);
 }
 
-.mirror-button {
-    display: flex;
+.config-title {
+  grid-column: 1 / -1;
+  font-family: "Playfair Display", serif;
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.3px;
+  color: var(--navy);
+  margin: 0 0 26px;
 }
 
-.config-quantity {
-    padding-inline: 20px;
-    background-color: white;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 2fr 400px;
-    gap: 3rem;
-
-    max-width: 1400px;
-    margin: 3rem auto;
-    padding: 0 2rem;
-
-    align-items: start;
-}
-
+/* ---------- Main panel ---------- */
 .design-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 30px 30px 8px;
+  box-shadow: 0 18px 44px -28px rgba(22, 32, 46, 0.35);
 }
 
-.material,
-.shape,
-.size,
-.coating-type,
-.number-of-mirrors,
-.additional-requirements {
-
-    background: white;
-
-    border: 1px solid #E2E8F0;
-
-    border-radius: 14px;
-
-    padding: 1.75rem;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 1rem;
-
-    box-shadow: 0 10px 30px rgba(15,23,42,.05);
+.field {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-2);
+}
+.field:last-child {
+  border-bottom: none;
 }
 
-.material button,
-.shape button{
-
-    padding:.9rem 1.2rem;
-
-    border-radius:8px;
-
-    border:1px solid #CBD5E1;
-
-    cursor:pointer;
-
-    transition:.2s;
+.field-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 14px;
 }
 
-.material button:hover,
-.shape button:hover{
+/* ---------- Option buttons (material + shape) ---------- */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-    border-color:#2563EB;
+.btn-group button {
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  color: var(--slate);
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.btn-group button:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+.btn-group .Selected {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.btn-group .notSelected {
+  /* base styles above already cover the unselected state */
+}
 
-    transform:translateY(-1px);
+/* ---------- Dimension inputs ---------- */
+.specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+}
+.specs label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--slate);
+  font-weight: 500;
 }
 
 input,
 select,
-textarea{
-
-    width:100%;
-
-    padding:1rem;
-
-    border:1px solid #CBD5E1;
-
-    border-radius:8px;
-
-    font-size:1rem;
-
-    box-sizing:border-box;
+textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.14s;
 }
-
+.specs input {
+  width: 150px;
+}
 input:focus,
 select:focus,
-textarea:focus{
-
-    outline:none;
-
-    border-color:#2563EB;
-
-    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
-.configuration-summary button{
-
-    width:100%;
-
-    padding:1rem;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#1E293B;
-
-    color:white;
-
-    font-size:1rem;
-
-    cursor:pointer;
-
-    transition:.2s;
+/* ---------- Coating select ---------- */
+.coating-type select {
+  width: 100%;
+  max-width: 320px;
+  cursor: pointer;
 }
 
-.configuration-summary{
-
-    position:sticky;
-
-    top:120px;
-
-    background:white;
-
-    border-radius:14px;
-
-    border:1px solid #E2E8F0;
-
-    padding:2rem;
-
-    box-shadow:0 10px 30px rgba(15,23,42,.08);
+/* ---------- Quantity stepper ---------- */
+.mirror-button {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mirror-button button {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: var(--white);
+  font-size: 20px;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.mirror-button button:hover {
+  background: var(--bg);
+}
+.config-quantity {
+  min-width: 56px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  border-left: 1.5px solid var(--line);
+  border-right: 1.5px solid var(--line);
 }
 
-.config-quantity{
-
-    font-size:1.5rem;
-
-    font-weight:700;
-
-    width:40px;
-
-    text-align:center;
+/* ---------- Notes ---------- */
+.additional-requirements textarea {
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  line-height: 1.5;
 }
 
-.mirror-button button{
-
-    width:45px;
-
-    height:45px;
-
-    border:none;
-
-    background:#1E293B;
-
-    color:white;
-
-    font-size:1.5rem;
-
-    cursor:pointer;
+/* ---------- Summary rail ---------- */
+.configuration-summary {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  position: sticky;
+  top: 24px;
+  box-shadow: 0 18px 44px -28px rgba(22, 32, 46, 0.35);
+}
+.summary-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 16px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line-2);
+}
+.summary-key {
+  color: var(--slate);
+}
+.summary-value {
+  font-weight: 600;
+  color: var(--navy);
+  text-align: right;
+}
+.summary-value.empty {
+  color: #aab3bd;
+  font-weight: 400;
+  font-style: italic;
 }
 
-.mirror-button{
-
-    display:flex;
-
-    align-items:center;
-    
-    justify-content: center;
-    gap:1rem;
+.submit {
+  width: 100%;
+  margin-top: 20px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.14s;
 }
-
-.size div{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:1rem;
+.submit:hover {
+  background: var(--navy-2);
 }
 
 .error-message {
-    margin-top: 1rem;
-    color: #DC2626;
-    background: #FEF2F2;
-    border: 1px solid #FECACA;
-    padding: .75rem 1rem;
-    border-radius: 8px;
-    font-size: .95rem;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #b23b3b;
+  line-height: 1.45;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 820px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .configuration-summary {
+    position: static;
+  }
 }

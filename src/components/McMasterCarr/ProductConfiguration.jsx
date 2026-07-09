@@ -1,164 +1,207 @@
-import "../../styles/ProductConfigurator.css"
+import "../../styles/ProductConfigurator.css";
 import { useState } from "react";
 
+const MATERIALS = ["Silicon", "Aluminum", "Glass", "Silicon Carbide"];
+const SHAPES = ["Round", "Rectangle", "Hexagon"];
+const COATINGS = ["ZC-1251", "ZC-XXXX", "ZC-YYYY"];
+
+// Dimension inputs per shape; each key is stored under configuration.dimensions.
+const DIMENSION_FIELDS = {
+  Round: [{ key: "diameter", label: "Diameter (in)" }],
+  Rectangle: [
+    { key: "width", label: "Width (mm)" },
+    { key: "height", label: "Height (mm)" },
+    { key: "thickness", label: "Thickness (mm)" },
+  ],
+  Hexagon: [
+    { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
+    { key: "thickness", label: "Thickness (mm)" },
+  ],
+};
+
 export default function ProductConfiguration({
-    configuration,
-    setConfiguration,
-    setStep
-}
-   
-) {
+  configuration,
+  setConfiguration,
+  setStep,
+}) {
+  const [error, setError] = useState("");
 
-    const handleAdd = () => {
-        setConfiguration({
-            ...configuration,
-            quantity: configuration.quantity + 1})
-    }
+  const updateConfig = (patch) =>
+    setConfiguration({ ...configuration, ...patch });
 
-    const handleSubtract = () => {
-        if (configuration.quantity <= 1) {
-            return;
-        } else {
-            setConfiguration({
-            ...configuration,
-            quantity: configuration.quantity - 1})
-        }
-    }
+  const handleMaterialChange = (material) => updateConfig({ material });
+  const handleShapeChange = (shape) => updateConfig({ shape });
+  const handleCoatingChange = (event) =>
+    updateConfig({ coating: event.target.value });
+  const handleNotesChange = (event) =>
+    updateConfig({ notes: event.target.value });
 
-    const handleMaterialChange = (material) => {
-        setConfiguration({
-            ...configuration,
-            material: material
-        })
-    }
+  const handleAdd = () => updateConfig({ quantity: configuration.quantity + 1 });
+  const handleSubtract = () => {
+    if (configuration.quantity <= 1) return;
+    updateConfig({ quantity: configuration.quantity - 1 });
+  };
 
-    const handleNotesChange = (event) => {
-        setConfiguration({
-            ...configuration,
-            notes: event.target.value
-        })
-    }
+  const handleDimensionChange = (key, value) =>
+    updateConfig({
+      dimensions: { ...configuration.dimensions, [key]: value },
+    });
 
-    const handleSizeChange = (shape) => {
-        setConfiguration({
-            ...configuration,
-            shape: shape
-        })
-    }
+  const dimensionFields = DIMENSION_FIELDS[configuration.shape] ?? [];
 
-    //Once you add this it will work
+  const areDimensionsComplete = () =>
+    dimensionFields.length > 0 &&
+    dimensionFields.every((field) => configuration.dimensions?.[field.key]);
 
-    const handleCoatingChange = (event) => {
-        setConfiguration({
-            ...configuration,
-            coating: event.target.value
-        })
-
-    }
-
-      const isConfigurationComplete = () =>  {
-        return (
-        configuration.material &&
+  const isConfigurationComplete = () =>
+    Boolean(
+      configuration.material &&
         configuration.shape &&
         configuration.coating &&
-        configuration.size &&
-        configuration.quantity > 0
-    )};
-
-    const [error, setError] = useState("");
-
-
-
-
-    return (
-    <div className = "layout">
-    
-    <div className = "design-layout">
-    <div className = "material">
-        Material
-        <button className = {configuration.material === "Silicon" ? "Selected" : "notSelected"} onClick = {() => {handleMaterialChange("Silicon")}}>Silicon</button>
-        <button className = {configuration.material === "Aluminum" ? "Selected" : "notSelected"} onClick = {() => {handleMaterialChange("Aluminum")}}>Aluminum</button>
-        <button className = {configuration.material === "Glass" ? "Selected" : "notSelected"} onClick = {() => {handleMaterialChange("Glass")}}>Glass</button>
-        <button className = {configuration.material === "Silicon Carbide" ? "Selected" : "notSelected"} onClick = {() => {handleMaterialChange("Silicon Carbide")}}>Silicon Carbide</button>
-
-    </div>
-    <div className = "shape">
-        Shape
-        <button onClick =  {() => {handleSizeChange("Round")}}>Round</button>
-        <button onClick =  {() => {handleSizeChange("Rectangle")}}>Rectangle</button>
-        <button onClick =  {() => {handleSizeChange("Hexagon")}}>Hezagonal</button>
-
-    </div>
-    <div className = "size">
-        {configuration.shape === "Rectangle" &&
-        (
-            <div className = "specs">
-                Width (mm)
-                <input />
-                Height (mm)
-                <input />
-                Thickness (mm)
-                <input />
-            </div>
-        )}
-        {configuration.shape === "Round" &&
-        (
-            <div className = "specs">
-                Diameter (in)
-                <input />
-            </div>
-        )}
-        {configuration.shape === "Hexagon" 
-        &&
-        (
-            <div className = "specs">
-                Flat-to-Flat (mm)
-                <input />
-                Thickness (mm)
-                <input />
-            </div>
-        )}
-
-    </div>
-    <div className = "coating-type">
-        Coating Type
-        <select name="coating-types" value = {configuration.coating} id="options" onChange = {handleCoatingChange}>
-            <option value="" disabled hidden>Choose a coating</option>
-            <option value="ZC-1251">ZC-1251</option>
-            <option value="ZC-XXXX">ZC-XXXX</option>
-            <option value="ZC-YYYY">ZC-YYYY</option>
-        </select>
-    </div>
-    <div className = "number-of-mirrors">
-        Number of Mirrors
-        <div className = "mirror-button">
-            <button onClick = {handleSubtract}>-</button>
-            <div className = "config-quantity">{configuration.quantity}</div> 
-            <button onClick = {handleAdd}>+</button>
-            </div>
-    </div>
-    <div className = "additional-requirements">
-        Additional Requirements
-        <textarea name="Additional Requirements" onChange = {handleNotesChange} id="" placeholder="e.g, Surface quality, scratch-dig requirements, witness sample, etc"></textarea>
-    </div>
-  </div>
-  <div className = "configuration-summary">
-    
-    <button onClick={() => {
-        if (isConfigurationComplete()) {
-            setError("");
-            setStep("review");
-        } else {
-            setError("Please complete all required fields before proceeding.");
-        }
-    }}>Request & Review Quote</button>
-    {error && (
-    <p className="error-message">
-        {error}
-    </p>
-)}
-  </div>
-  </div>
-
+        configuration.quantity > 0 &&
+        areDimensionsComplete()
     );
+
+  const handleSubmit = () => {
+    if (isConfigurationComplete()) {
+      setError("");
+      setStep("review");
+    } else {
+      setError("Please complete all required fields before proceeding.");
+    }
+  };
+
+  const summaryValue = (value) =>
+    value || value === 0 ? (
+      <span className="summary-value">{value}</span>
+    ) : (
+      <span className="summary-value empty">—</span>
+    );
+
+  return (
+    <div className="layout">
+      <h1 className="config-title">Configure Your Coating</h1>
+
+      <div className="design-layout">
+        <div className="field material">
+          <span className="field-label">Material</span>
+          <div className="btn-group">
+            {MATERIALS.map((material) => (
+              <button
+                key={material}
+                className={
+                  configuration.material === material ? "Selected" : "notSelected"
+                }
+                onClick={() => handleMaterialChange(material)}
+              >
+                {material}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="field shape">
+          <span className="field-label">Shape</span>
+          <div className="btn-group">
+            {SHAPES.map((shape) => (
+              <button
+                key={shape}
+                className={
+                  configuration.shape === shape ? "Selected" : "notSelected"
+                }
+                onClick={() => handleShapeChange(shape)}
+              >
+                {shape}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {dimensionFields.length > 0 && (
+          <div className="field size">
+            <span className="field-label">Dimensions</span>
+            <div className="specs">
+              {dimensionFields.map((field) => (
+                <label key={field.key}>
+                  {field.label}
+                  <input
+                    type="number"
+                    value={configuration.dimensions?.[field.key] ?? ""}
+                    onChange={(event) =>
+                      handleDimensionChange(field.key, event.target.value)
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="field coating-type">
+          <span className="field-label">Coating Type</span>
+          <select
+            id="options"
+            name="coating-types"
+            value={configuration.coating}
+            onChange={handleCoatingChange}
+          >
+            <option value="" disabled hidden>
+              Choose a coating
+            </option>
+            {COATINGS.map((coating) => (
+              <option key={coating} value={coating}>
+                {coating}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="field number-of-mirrors">
+          <span className="field-label">Number of Mirrors</span>
+          <div className="mirror-button">
+            <button onClick={handleSubtract}>–</button>
+            <div className="config-quantity">{configuration.quantity}</div>
+            <button onClick={handleAdd}>+</button>
+          </div>
+        </div>
+
+        <div className="field additional-requirements">
+          <span className="field-label">Additional Requirements</span>
+          <textarea
+            name="Additional Requirements"
+            value={configuration.notes ?? ""}
+            onChange={handleNotesChange}
+            placeholder="e.g., Surface quality, scratch-dig requirements, witness sample, etc."
+          />
+        </div>
+      </div>
+
+      <div className="configuration-summary">
+        <div className="summary-title">Summary</div>
+
+        <div className="summary-row">
+          <span className="summary-key">Material</span>
+          {summaryValue(configuration.material)}
+        </div>
+        <div className="summary-row">
+          <span className="summary-key">Shape</span>
+          {summaryValue(configuration.shape)}
+        </div>
+        <div className="summary-row">
+          <span className="summary-key">Coating</span>
+          {summaryValue(configuration.coating)}
+        </div>
+        <div className="summary-row">
+          <span className="summary-key">Quantity</span>
+          {summaryValue(configuration.quantity)}
+        </div>
+
+        <button className="submit" onClick={handleSubmit}>
+          Request &amp; Review Quote
+        </button>
+
+        {error && <p className="error-message">{error}</p>}
+      </div>
+    </div>
+  );
 }
