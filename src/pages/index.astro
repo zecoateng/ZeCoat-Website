@@ -24,33 +24,33 @@ const capabilitiesLayout = [
 
 const experiencesLayout = [
     {
-        imgSrc: "/NASA-Logo.svg",
-        cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage. This is placeholder text"
+        imgSrc: "/nasa-svgrepo-com.svg",
+        cardTitle: "NASA-BACKED missions",
+        cardBody: "Flight-proven coatings on NASA missions."
 
     },
     {
         imgSrc: "/calendar-xmark-alt-svgrepo-com.svg",
-        cardTitle: "25+ Years",
-        cardBody: "of working engineering experience. This is placeholder text"
+        cardTitle: "25+ Years Of fdfd",
+        cardBody: "Precision vacuum-deposition experience."
 
     },
     {
         imgSrc: "/building-svgrepo-com.svg",
         cardTitle: "U.S Based Facility",
-        cardBody: "In Granite City, Illinois. This is some more placeholder text"
+        cardBody: "Clean-room in Granite City, Illinois."
 
     },
     {
         imgSrc: "/itar-registered.svg",
         cardTitle: "ITAR Registered",
-        cardBody: "Technology development and flight herritage. This is placeholder text."
+        cardBody: "Compliant for defense & aerospace work."
 
     },
     {
         imgSrc: "/shield-check-svgrepo-com.svg",
-        cardTitle: "NASA-BACKED",
-        cardBody: "technology development and flight herritage. This is placeholdet text."
+        cardTitle: "NASA-BACKED missions",
+        cardBody: "Qualified for the harshest space environments."
 
     }
 ]
@@ -170,7 +170,7 @@ const featuredTechnologies = [
 
 <section class = "why-zecoat">
 <div class = "about-tag">
-<h3>Why ZeCoat</h3>
+<h3 class = "about-title">Why ZeCoat</h3>
 <h1>Proven Experience. Trusted Performance</h1>
     <div class = "cards-layout">
 {
@@ -263,15 +263,11 @@ const featuredTechnologies = [
 }
 
 .about-tag {
-    background:
-linear-gradient(
-rgba(5,15,35,.55),
-rgba(5,15,35,.35)
-),
-url(...);
+    background:#DCE2E8;
     width: 100%;
     text-align: center;
-    color: white;
+    color: #16202E;
+
 }
 
 .featured-header {
@@ -341,6 +337,46 @@ url(...);
 
 a {
     text-decoration: none;
+    color: #16202E;
+    transition: transform 0.3s ease;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .15s;
+}
+
+a .arrow { 
+    color: #C6870F; 
+}   
+
+a:hover { 
+    border-color: #E7A21C; 
+}    
+
+a:hover .arrow {
+     transform: translateX(3px); 
+}
+
+a::after {
+    content: "";
+        position: absolute;
+
+        left: 0;
+        bottom: -4px;
+
+        width: 100%;
+        height: 1px;
+
+        background: #1B2430;
+
+        transform: scaleX(0);
+        transform-origin: left;
+
+        transition: transform 0.3s ease;
+}
+
+.about-title {
+    color:#C6870F;
+    padding-top: 20px;
 }
 
 @media(max-width: 760px) {

@@ -79,11 +79,10 @@
 }
 .btn-group button:hover {
   border-color: var(--navy);
-  color: var(--navy);
 }
 .btn-group .Selected {
-  background: var(--navy);
-  border-color: var(--navy);
+  background: #0F1822;
+  border-color: #0F1822;
   color: #fff;
 }
 .btn-group .notSelected {
@@ -219,8 +218,8 @@ textarea:focus {
 .submit {
   width: 100%;
   margin-top: 20px;
-  background: var(--navy);
-  color: #fff;
+  background: #E7A21C;
+  color: #1B2433;
   border: none;
   font-family: "Inter", sans-serif;
   font-size: 15px;
@@ -231,7 +230,7 @@ textarea:focus {
   transition: background 0.14s;
 }
 .submit:hover {
-  background: var(--navy-2);
+  background: #C6870F;
 }
 
 .error-message {
