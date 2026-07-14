@@ -26,7 +26,7 @@ export async function GET() {
         }
     )
 } catch (err) {
-    console.log(error);
+    console.log(err);
 
     return new Response(
         JSON.stringify({error: "Database error"})
