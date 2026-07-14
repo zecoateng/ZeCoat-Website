@@ -121,6 +121,7 @@ import CoatingCarousel from '../components/CoatingCarousel.astro';
 
 </section>
 
+<div class = "cards-layout">
 {
     coatings.map( coating => {
         return (
@@ -136,11 +137,16 @@ import CoatingCarousel from '../components/CoatingCarousel.astro';
    
 
 }
-
+</div>
 
 </Layout>
 
 <style>
+
+  .cards-layout {
+    display: grid;
+    grid-template-rows: 200px 1fr 100px;
+  }
 
   
 
