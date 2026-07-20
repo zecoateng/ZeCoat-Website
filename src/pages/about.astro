@@ -340,15 +340,88 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 }
 
 
-@media(max-width: 1000px) {
-    .ceo-layout {
-    display:flex;
-    flex-direction: column;
+@media (max-width: 1000px) {
+
+  .title{
+    font-size: 48px;
+    text-align:center;
+  }
+
+  .ceo-layout{
+    flex-direction:column;
     align-items:center;
-    padding-inline: 10px;
-    }
-   
+    gap:2rem;
+  }
+
+  .ceo-description{
+    text-align:center;
+    align-items:center;
+  }
+
+  .ceo-image img{
+    max-width:450px;
+    width:100%;
+    height:auto;
+  }
+
 }
 
+@media (max-width:900px){
+
+.timeline-layout{
+    grid-template-columns:1fr;
+    gap:2rem;
+}
+
+
+.timeline-column{
+    padding-left:50px;
+}
+
+
+.timeline-line{
+    left:24px;
+    transform:none;
+}
+
+.left-column,
+.right-column{
+    margin-top:0;
+    
+}
+}
+
+@media (max-width:768px){
+
+.about-container{
+
+    padding-inline:24px;
+}
+
+.about-container p{
+
+    line-height:1.8;
+}
+}
+
+@media (max-width:768px){
+
+.ceo-description h1{
+
+    font-size:2rem;
+}
+
+.ceo-description h2{
+
+    font-size:1.2rem;
+}
+
+.ceo-description h3{
+
+    font-size:1rem;
+    line-height:1.7;
+}
+
+}
 
 </style>

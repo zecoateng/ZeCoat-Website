@@ -131,7 +131,7 @@ const featuredTechnologies = [
 <a href="/about">View all Missions</a>
     </div>
 
-<div class = "cards-layout">
+<div class = "cards-layout missions">
 {
     featuredMissions.map(technologies => {
         return (
@@ -232,6 +232,7 @@ const featuredTechnologies = [
 .title-description {
     max-width: 500px;
 }
+
 
 .what-we-do-section {
     display: flex;
@@ -379,16 +380,106 @@ a::after {
     padding-top: 20px;
 }
 
-@media(max-width: 760px) {
+@media (max-width: 768px) {
+
+    /* Hero */
+    .intro-section {
+        height: auto;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        padding: 3rem 1.5rem;
+    }
+
+    .title {
+        padding: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .title-header {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        max-width: 100%;
+    }
+
+    .title-description {
+        max-width: 100%;
+        margin: 1rem auto;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .missions {
+    margin-bottom: 4rem;
+}
+
+
+    /* Hero Buttons */
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .btn {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Section spacing */
+
+    .what-we-do-section,
+    .experience-section {
+        padding: 3rem 1rem;
+    }
+
+    /* Cards */
+
     .cards-layout {
-    margin-top: 60px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    /* Assuming cards have a fixed width */
+
+    .cards-layout > * {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    /* Featured headers */
+
+    .featured-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .75rem;
+    }
+
+    .featured-header h1 {
+        margin: 0;
+    }
+
+    /* About section */
+
+    /* Headings */
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
 }
 
-
-}
 </style>
 

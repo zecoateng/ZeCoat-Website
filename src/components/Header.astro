@@ -37,6 +37,32 @@ document.addEventListener('astro:page-load', setActiveLink);
 window.addEventListener('scroll', handleScroll);
 document.addEventListener('astro:page-load', handleScroll);
 
+document.addEventListener("astro:page-load", () => {
+  const menuButton = document.querySelector(".open-menu");
+  const navigation = document.querySelector(".navigation");
+  const overlay = document.querySelector(".menu-overlay");
+  const width = window.innerWidth;
+
+  menuButton?.addEventListener("click", () => {
+    navigation?.classList.toggle("open");
+    overlay?.classList.toggle("active");
+  });
+  
+  overlay?.addEventListener("click", () => {
+    navigation?.classList.remove("open");
+    overlay?.classList.remove("active");
+  });
+
+  window.addEventListener('resize', () => {
+    if (width > 900) {
+      overlay?.classList.remove("active");
+      navigation?.classList.remove("open")
+    }
+  }) 
+
+  setActiveLink();
+});
+
 
 </script>
 
@@ -64,7 +90,7 @@ document.addEventListener('astro:page-load', handleScroll);
 &#9776;
 </button>
 </header>
-
+<div class="menu-overlay"></div>
 
 <style>
   .header {
@@ -178,17 +204,67 @@ document.addEventListener('astro:page-load', handleScroll);
       color: #1B2430;
     }
 
-    @media (max-width: 900px) {
-      .navigation {
-        display: none;
-      }
-      .Logo {
-        display: none;
-      }
+    .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
 
-      .open-menu {
-        display: block;
-      }
-    }
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+
+    z-index: 999;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+    @media (max-width: 900px) {
+  .Logo {
+    display: block;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .header {
+    justify-content: space-between;
+    padding-inline: 1rem;
+  }
+
+  .open-menu {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+
+  .navigation.open {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: white;
+    padding: 1rem;
+  }
+
+  .navigation.open ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .navigation.open li {
+    text-align: center;
+  }
+}
 </style>
 

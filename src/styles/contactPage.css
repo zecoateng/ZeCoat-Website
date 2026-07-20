@@ -93,18 +93,59 @@ button:hover{
 }
 
 @media (max-width: 900px) {
-
     .forms-page {
         flex-direction: column;
         align-items: center;
+        padding: 1.5rem;
+        gap: 2rem;
     }
 
     .inquiries-statement {
+        max-width: 600px;
+        text-align: center;
         margin-left: 0;
     }
 
     .forms-list {
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
+        margin: 0;
+    }
+
+    .name {
+        flex-direction: column;
+    }
+
+    .name input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .forms-page {
+        padding: 1rem;
+    }
+
+    .inquiries-statement {
+        text-align: center;
+    }
+
+    .inquiries-statement h1 {
+        font-size: 2rem;
+    }
+
+    .inquiries-statement h3 {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .forms-list {
+        padding: 1.25rem;
+    }
+
+    .forms-list input,
+    .forms-list textarea,
+    .forms-list button {
+        font-size: 1rem;
     }
 }

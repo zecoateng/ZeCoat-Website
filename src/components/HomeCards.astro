@@ -18,8 +18,17 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
 }
 
 .card.default {
-  background: white;
-  border: 1px solid #DCE3EA;
+  background:
+linear-gradient(
+180deg,
+#ffffff,
+#f7f9fc
+);
+
+border:1px solid rgba(0,0,0,.06);
+
+box-shadow:
+0 12px 40px rgba(0,0,0,.08);
   border-radius: 16px;
   overflow: hidden;
   max-width: 300px;
@@ -61,7 +70,6 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
     background: #FFFFFF;
     border: 1px solid #dce3ea;
     border-radius: 18px;
-    padding: 1rem;
     box-shadow: 0 10px 30px rgba(0,0,0,.08);
     transition: 0.3s;
 }

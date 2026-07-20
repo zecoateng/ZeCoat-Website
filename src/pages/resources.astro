@@ -1,243 +1,431 @@
 ---
-
-
-import Layout from "../layouts/layout.astro"
-
-
-var defl, filmThick;
-
-const stressCalculator = () => {
-
-	Es = +document.getElementById("yMod").value * 1000000000;
-
-	v = +document.getElementById("pRat").value;
-
-	ts = +document.getElementById("subThick").value * .001;
-
-	w = +document.getElementById("subWidth").value * .001;
-
-	defl = +document.getElementById("defl").value * .000001;
-
-	filmThick = +document.getElementById("filmThick").value * .000001;
-
-	stress = Math.round(Es*ts*ts/3/(1-v) * defl/filmThick/(filmThick*filmThick+w*w/4) *.000001);
-
-	document.getElementById("stress").innerHTML = "Stress: " + stress +" MPa";
-
-    };
-
-    
-
-let CSVdata = null;
-
-function circleOverlap(d, R, r) {
-  if (d >= R + r) return 0;
-  if (d <= Math.abs(R - r)) return Math.PI * Math.min(R, r) ** 2;
-
-  const part1 = R * R * Math.acos((d*d + R*R - r*r) / (2*d*R));
-  const part2 = r * r * Math.acos((d*d + r*r - R*R) / (2*d*r));
-  const part3 = 0.5 * Math.sqrt(
-    (-d + R + r) *
-    ( d + R - r) *
-    ( d - R + r) *
-    ( d + R + r)
-  );
-  return part1 + part2 - part3;
-}
-
-function parseTXT(text) {
-  const lines = text.trim().split(/\r?\n/);
-  let wavelength = [];
-  let refl = [];
-
-  lines.forEach(line => {
-    const cols = line.trim().split(/\s+/).map(Number);
-    if (cols.length === 2) {
-      wavelength.push(cols[0]);
-      refl.push(cols[1]);
-    } else if (cols.length === 1) {
-      refl.push(cols[0]);
-    }
-  });
-
-  if (wavelength.length === 0) {
-    wavelength = Array.from({length: refl.length}, (_, i) => 300 + i);
-  }
-
-  return { wavelength, refl };
-}
-
-async function loadFile(fileInput) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(parseTXT(reader.result));
-    reader.onerror = reject;
-    reader.readAsText(fileInput.files[0]);
-  });
-}
-
-function generateFileInputs() {
-  const container = document.getElementById("fileContainer");
-  container.innerHTML = "";
-
-  const nAnnuli = parseInt(document.getElementById("nAnnuli").value);
-
-  for (let i = 0; i < nAnnuli; i++) {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.id = "file" + i;
-    container.appendChild(input);
-    container.appendChild(document.createElement("br"));
-  }
-}
-
-async function runCalculation() {
-  const mirrorD = parseFloat(document.getElementById('mirrorD').value);
-  const beamD = parseFloat(document.getElementById('beamD').value);
-
-  const Rm = mirrorD / 2;
-  const Rb = beamD / 2;
-  const maxCenter = Rm - Rb;
-  const nAnnuli = parseInt(document.getElementById("nAnnuli").value);
-
-  const annulusEdges = [];
-  for (let i = 0; i <= nAnnuli; i++) {
-    annulusEdges.push(i * Rm / nAnnuli);
-  }
-
-
-  let annuli = [];
-  for (let i = 0; i < nAnnuli; i++) {
-    const input = document.getElementById('file' + i);
-    if (!input.files.length) {
-      alert('Please upload all five annulus files.');
-      return;
-    }
-    annuli.push(await loadFile(input));
-  }
-
-  const wavelength = annuli[0].wavelength;
-  const nLambda = wavelength.length;
-  const Abeam = Math.PI * Rb * Rb;
-
-  const nRadial = 300;
-  let Rmin = Array(nLambda).fill(Infinity);
-  let Rmax = Array(nLambda).fill(-Infinity);
-
-  for (let j = 0; j < nRadial; j++) {
-
-    const d = maxCenter * j / (nRadial - 1);
-
-    let Ai = [];
-    for (let k = 0; k < nAnnuli; k++) {
-      const Aout = circleOverlap(d, Rb, annulusEdges[k+1]);
-      const Ain  = circleOverlap(d, Rb, annulusEdges[k]);
-      Ai.push(Aout - Ain);
-    }
-
-    // Loop over wavelengths
-    for (let l = 0; l < nLambda; l++) {
-
-      let RbAvg = 0;
-
-      for (let k = 0; k < nAnnuli; k++) {
-        RbAvg += Ai[k] * annuli[k].refl[l];
-      }
-
-      RbAvg /= Abeam;
-
-      Rmin[l] = Math.min(Rmin[l], RbAvg);
-      Rmax[l] = Math.max(Rmax[l], RbAvg);
-    }
-  }
-
-  const nMC = 10000;
-  let Rmean = Array(nLambda).fill(0);
-  for (let i = 0; i < nMC; i++) {
-
-    const d = maxCenter * Math.sqrt(Math.random());
-
-    let Ai = [];
-    for (let k = 0; k < nAnnuli; k++) {
-      const Aout = circleOverlap(d, Rb, annulusEdges[k+1]);
-      const Ain  = circleOverlap(d, Rb, annulusEdges[k]);
-      Ai.push(Aout - Ain);
-    }
-    for (let l = 0; l < nLambda; l++) {
-
-      let RbAvg = 0;
-
-      for (let k = 0; k < nAnnuli; k++) {
-        RbAvg += Ai[k] * annuli[k].refl[l];
-      }
-
-      Rmean[l] += RbAvg / Abeam;
-    }
-  }
-  for (let l = 0; l < nLambda; l++) {
-    Rmean[l] /= nMC;
-  }
-
-  let html = '<table><tr><th>λ (nm)</th><th>Min</th><th>Mean</th><th>Max</th></tr>';
-  for (let i = 0; i < nLambda; i++) {
-    html += `<tr>
-      <td>${wavelength[i]}</td>
-      <td>${Rmin[i].toFixed(4)}</td>
-      <td>${Rmean[i].toFixed(4)}</td>
-      <td>${Rmax[i].toFixed(4)}</td>
-    </tr>`;
-  }
-  html += '</table>';
-
-  CSVdata = {
-    wavelength,
-    Rmin,
-    Rmean,
-    Rmax
-  };
-
-  document.getElementById('csvBtn').disabled = false;
-
-  document.getElementById('output').innerHTML = html;
-}
-
-function downloadCSV() {
-  if (!CSVdata) return;
-
-  let csv = 'Wavelength_nm,Min_Reflectance,Mean_Reflectance,Max_Reflectance\n';
-
-  for (let i = 0; i < CSVdata.wavelength.length; i++) {
-    csv += `${CSVdata.wavelength[i]},` +
-           `${CSVdata.Rmin[i]},` +
-           `${CSVdata.Rmean[i]},` +
-           `${CSVdata.Rmax[i]}\n`;
-  }
-
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'beam_averaged_reflectance.csv';
-  document.body.appendChild(a);
-  a.click();
-
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-
+import Layout from "../layouts/layout.astro";
 ---
 
-<Layout>
+<Layout title="Engineering Calculators">
+  <div class="calculators-container">
+    <div class="calculators-header">
+      <h1>Engineering Calculators</h1>
+      <p>Interactive tools for optical and coating system design. Adjust parameters and see results in real-time.</p>
+    </div>
 
-    <input type="text" id = "yMod">
-    <input type="text" id = "pRat">
-    <input type="text">
-    <input type="text">
-    <input type="text">
+    <!-- Coating Stress Calculator -->
+    <div class="calculator-card">
+      <div class="calculator-header">
+        <h2>Coating Stress Calculator</h2>
+        <p>Calculate stress in thin film coatings based on substrate and material properties</p>
+      </div>
 
+      <div class="calculator-grid">
+        <div class="calculator-inputs">
+          <div class="input-group">
+            <label for="yMod">Young's Modulus (GPa)</label>
+            <input type="number" id="yMod" value="70" placeholder="70">
+          </div>
 
+          <div class="input-group">
+            <label for="pRat">Poisson's Ratio</label>
+            <input type="number" id="pRat" value="0.3" placeholder="0.3" step="0.01">
+          </div>
 
-    
+          <div class="input-group">
+            <label for="subThick">Substrate Thickness (mm)</label>
+            <input type="number" id="subThick" value="10" placeholder="10">
+          </div>
+
+          <div class="input-group">
+            <label for="subWidth">Substrate Width (mm)</label>
+            <input type="number" id="subWidth" value="25" placeholder="25">
+          </div>
+
+          <div class="input-group">
+            <label for="defl">Deflection (μm)</label>
+            <input type="number" id="defl" value="0.5" placeholder="0.5" step="0.1">
+          </div>
+
+          <div class="input-group">
+            <label for="filmThick">Film Thickness (μm)</label>
+            <input type="number" id="filmThick" value="0.1" placeholder="0.1" step="0.01">
+          </div>
+
+          <button class="calc-button" onclick="calculateStress()">Calculate Stress</button>
+        </div>
+
+        <div class="calculator-output">
+          <div class="output-section">
+            <h3>Results</h3>
+            <div id="stress" class="output-value">Stress: — MPa</div>
+          </div>
+
+          <div class="info-box">
+            <p><strong>Formula:</strong></p>
+            <p class="formula">σ = (Es × ts² / 3(1-ν)) × (δ / tf) × (1 / (tf² + w²/4))</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simplified Telescope Calculator -->
+    <div class="calculator-card">
+      <div class="calculator-header">
+        <h2>Telescope Design Calculator</h2>
+        <p>Quick calculation for primary mirror specifications</p>
+      </div>
+
+      <div class="calculator-grid">
+        <div class="calculator-inputs">
+          <div class="input-group">
+            <label for="mirrorDia">Primary Mirror Diameter (mm)</label>
+            <input type="number" id="mirrorDia" value="200" placeholder="200">
+          </div>
+
+          <div class="input-group">
+            <label for="primaryFocal">Primary Focal Length (mm)</label>
+            <input type="number" id="primaryFocal" value="1000" placeholder="1000">
+          </div>
+
+          <div class="input-group">
+            <label for="systemFocal">System Focal Length (mm)</label>
+            <input type="number" id="systemFocal" value="3000" placeholder="3000">
+          </div>
+
+          <div class="input-group">
+            <label for="backFocal">Back Focal Length (mm)</label>
+            <input type="number" id="backFocal" value="100" placeholder="100">
+          </div>
+
+          <div class="input-group">
+            <label for="fieldView">Field of View (degrees)</label>
+            <input type="number" id="fieldView" value="0.5" placeholder="0.5" step="0.1">
+          </div>
+
+          <button class="calc-button" onclick="calculateTelescope()">Calculate Design</button>
+        </div>
+
+        <div class="calculator-output">
+          <div class="output-section">
+            <h3>Results</h3>
+            <div id="telescopeResults" class="output-results">
+              <div class="result-item">
+                <span class="result-label">Extension Factor (m):</span>
+                <span class="result-value" id="extensionFactor">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Primary R.O.C.:</span>
+                <span class="result-value" id="primaryROC">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Secondary Diameter:</span>
+                <span class="result-value" id="secondaryDia">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beam Calculator -->
+    <div class="calculator-card">
+      <div class="calculator-header">
+        <h2>Beam Averaging Calculator</h2>
+        <p>Calculate beam-averaged reflectance across mirror aperture</p>
+      </div>
+
+      <div class="calculator-grid">
+        <div class="calculator-inputs">
+          <div class="input-group">
+            <label for="mirrorDBeam">Mirror Diameter (mm)</label>
+            <input type="number" id="mirrorDBeam" value="100" placeholder="100">
+          </div>
+
+          <div class="input-group">
+            <label for="beamDBeam">Beam Diameter (mm)</label>
+            <input type="number" id="beamDBeam" value="50" placeholder="50">
+          </div>
+
+          <div class="input-group">
+            <label for="centralRefl">Central Region Reflectance</label>
+            <input type="number" id="centralRefl" value="0.95" placeholder="0.95" step="0.01" min="0" max="1">
+          </div>
+
+          <div class="input-group">
+            <label for="outerRefl">Outer Region Reflectance</label>
+            <input type="number" id="outerRefl" value="0.90" placeholder="0.90" step="0.01" min="0" max="1">
+          </div>
+
+          <button class="calc-button" onclick="calculateBeam()">Calculate Reflectance</button>
+        </div>
+
+        <div class="calculator-output">
+          <div class="output-section">
+            <h3>Results</h3>
+            <div id="beamResults" class="output-results">
+              <div class="result-item">
+                <span class="result-label">Beam-Averaged Reflectance:</span>
+                <span class="result-value" id="beamRefl">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Beam Area (mm²):</span>
+                <span class="result-value" id="beamArea">—</span>
+              </div>
+              <div class="result-item">
+                <span class="result-label">Mirror Area (mm²):</span>
+                <span class="result-value" id="mirrorArea">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </Layout>
+
+<script>
+  function calculateStress() {
+    const Es = parseFloat(document.getElementById("yMod").value) * 1000000000;
+    const v = parseFloat(document.getElementById("pRat").value);
+    const ts = parseFloat(document.getElementById("subThick").value) * 0.001;
+    const w = parseFloat(document.getElementById("subWidth").value) * 0.001;
+    const defl = parseFloat(document.getElementById("defl").value) * 0.000001;
+    const filmThick = parseFloat(document.getElementById("filmThick").value) * 0.000001;
+
+    const stress = Math.round(
+      (Es * ts * ts) / (3 * (1 - v)) *
+      (defl / filmThick) /
+      (filmThick * filmThick + (w * w) / 4) *
+      0.000001
+    );
+
+    document.getElementById("stress").innerHTML = `Stress: ${stress} MPa`;
+  }
+
+  function calculateTelescope() {
+    const D1 = parseFloat(document.getElementById("mirrorDia").value);
+    const F = parseFloat(document.getElementById("primaryFocal").value);
+    const Ft = parseFloat(document.getElementById("systemFocal").value);
+    const b = parseFloat(document.getElementById("backFocal").value);
+
+    const m = Ft / F;
+    const R1 = 2 * F;
+    const A = (F + b) / (m + 1);
+    const D2 = (D1 * A) / F;
+
+    document.getElementById("extensionFactor").textContent = m.toFixed(2);
+    document.getElementById("primaryROC").textContent = R1.toFixed(1) + " mm";
+    document.getElementById("secondaryDia").textContent = D2.toFixed(2) + " mm";
+  }
+
+  function calculateBeam() {
+    const mirrorD = parseFloat(document.getElementById("mirrorDBeam").value);
+    const beamD = parseFloat(document.getElementById("beamDBeam").value);
+    const centralRefl = parseFloat(document.getElementById("centralRefl").value);
+    const outerRefl = parseFloat(document.getElementById("outerRefl").value);
+
+    const Rm = mirrorD / 2;
+    const Rb = beamD / 2;
+
+    const beamArea = Math.PI * Rb * Rb;
+    const mirrorArea = Math.PI * Rm * Rm;
+
+    // Simple average weighted by area
+    const overlapArea = Math.min(beamArea, mirrorArea);
+    const beamAvgRefl = (centralRefl + outerRefl) / 2;
+
+    document.getElementById("beamRefl").textContent = beamAvgRefl.toFixed(4);
+    document.getElementById("beamArea").textContent = beamArea.toFixed(2);
+    document.getElementById("mirrorArea").textContent = mirrorArea.toFixed(2);
+  }
+</script>
+
+<style>
+  .calculators-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .calculators-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .calculators-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+  }
+
+  .calculators-header p {
+    font-size: 1.1em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .calculator-card {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .calculator-header {
+    background: #f0f0f0;
+    padding: 30px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .calculator-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.6em;
+    color: #1a1a1a;
+  }
+
+  .calculator-header p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95em;
+  }
+
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 30px;
+  }
+
+  @media (max-width: 900px) {
+    .calculator-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .calculator-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .input-group input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  }
+
+  .calc-button {
+    background: #E7A21C;
+    color: black;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+  }
+
+  .calc-button:hover {
+    background: #C6870F;
+  }
+
+  .calc-button:active {
+    background: ;
+  }
+
+  .calculator-output {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .output-section h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.2em;
+    color: #1a1a1a;
+  }
+
+  .output-value {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: black;
+    padding: 20px;
+    background: white;
+    border-left: 4px solid #E7A21C;
+    border-radius: 4px;
+  }
+
+  .output-results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .result-label {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .result-value {
+    color: #0066cc;
+    font-weight: 600;
+  }
+
+  .info-box {
+    background: #f0f7ff;
+    padding: 16px;
+    border-radius: 4px;
+    border-left: 4px solid #E7A21C;
+  }
+
+  .info-box p {
+    margin: 0 0 8px 0;
+    font-size: 0.9em;
+    color: #333;
+  }
+
+  .info-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  .formula {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    color: #0066cc;
+    background: white;
+    padding: 8px;
+    border-radius: 3px;
+    overflow-x: auto;
+  }
+</style>
