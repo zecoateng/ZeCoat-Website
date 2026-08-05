@@ -47,7 +47,7 @@ document.addEventListener("astro:page-load", () => {
     navigation?.classList.toggle("open");
     overlay?.classList.toggle("active");
   });
-  
+          
   overlay?.addEventListener("click", () => {
     navigation?.classList.remove("open");
     overlay?.classList.remove("active");
@@ -68,22 +68,41 @@ document.addEventListener("astro:page-load", () => {
 
 <header class = "header"> 
 <div class = "Logo">
-<a href= "/"><img src = "/images.jpg" style="max-width: 100%"  alt = "ZeCoat Logo"/></a>
+<a href= "/"><img src = "/ZeCoatLogo.jpg" style="max-width: 100%"  alt = "ZeCoat Logo"/></a>
  </div>
 <nav class = "navigation">
 <ul>
 <li><a href = "/">Home</a></li>
 <li><a href = "/about">About</a></li>
-<li><a href = "/coatings">Capabilities</a></li>
+<li><a href = "/coatings">Coatings</a></li>
 
-<li><a href = "/technologies">Technologies</a></li>
+<li><a href = "/technologies">Research</a></li>
 
 
 
 <li><a href = "/quality">Quality</a></li>
 <li><a href="/order">Order</a></li>
 
-<li><a href = "/contact">Contact</a></li>
+<li class="dropdown">
+  <a class = "dropdown-link">Calculators</a>
+
+  <ul class="dropdown-menu">
+    <li><a href="/stress-calculator">Stress Calculator</a></li>
+    <li><a href="/beam-calculator">Beam Calculator</a></li>
+    <li><a href="/telescope-calculator">Telescope Calculator </a></li>
+  </ul>
+</li>
+<li class="mobile-only">
+  <a href="/stress-calculator">Stress Calculator</a>
+</li>
+
+<li class="mobile-only">
+  <a href="/beam-calculator">Beam Calculator</a>
+</li>
+
+<li class="mobile-only">
+  <a href="/telescope-calculator">Telescope Calculator</a>
+</li>
 </ul>
 </nav>
 <button aria-label = "open-menu" class = "open-menu">
@@ -101,8 +120,6 @@ document.addEventListener("astro:page-load", () => {
     align-items: center;
     justify-content: center;
     gap: clamp(0.2rem, 4vw, 5rem);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.4s ease;
     position: sticky;
@@ -140,9 +157,42 @@ document.addEventListener("astro:page-load", () => {
     list-style: none;
 }
 
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dropdown-link::before {
+    content: "▾";
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-link::before {
+    transform: rotate(180deg);
+}
 
 .dropdown:hover .dropdown-menu {
     display: flex;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding-inline: 10px;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(30, 41, 59, 0.08);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
 }
 
   .Logo img {
@@ -150,6 +200,9 @@ document.addEventListener("astro:page-load", () => {
     height: auto;
   }
 
+  a:hover {
+  cursor: pointer;
+}
 
 
     .navigation > ul {
@@ -193,9 +246,11 @@ document.addEventListener("astro:page-load", () => {
         transition: transform 0.3s ease;
     }
 
-    .navigation > ul > li > a:hover::after {
-        transform: scaleX(1);
-    }
+    .dropdown:hover > a::after,
+    .navigation > ul > li:not(.dropdown):hover > a::after {
+    transform: scaleX(1);
+}
+
     .header a:hover {
         color: #1B2430
     }
@@ -221,20 +276,45 @@ document.addEventListener("astro:page-load", () => {
     visibility: visible;
 }
 
+.mobile-only {
+  display: none;
+}
+
 
     @media (max-width: 900px) {
   .Logo {
     display: block;
   }
 
-  .navigation {
+  .dropdown {
     display: none;
   }
+
+      .navigation {
+        display: none;
+    }
+
+    .navigation.open {
+        display: flex;
+    }
+  
 
   .header {
     justify-content: space-between;
     padding-inline: 1rem;
   }
+
+  .calculators-menu {
+  display: none;
+}
+
+.mobile-only {
+  display: block;
+}
+
+li {
+  border-bottom: 1px solid rgba(30, 41, 59, 0.15);
+}
 
   .open-menu {
     display: block;
@@ -244,17 +324,40 @@ document.addEventListener("astro:page-load", () => {
     cursor: pointer;
   }
 
+    .navigation > ul > li > a::after {
+        display: none;
+    }
 
-  .navigation.open {
-    display: flex;
+
+.navigation {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
 
+    display: flex;
+    overflow: hidden;
+
     background: white;
-    padding: 1rem;
-  }
+
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-20px);
+
+    transition:
+        max-height 0.35s ease,
+        transform 0.1s ease;
+
+    pointer-events: none;
+}
+
+.navigation.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    padding: 10px;
+}
 
   .navigation.open ul {
     flex-direction: column;
@@ -264,6 +367,7 @@ document.addEventListener("astro:page-load", () => {
 
   .navigation.open li {
     text-align: center;
+    padding-inline: 20px;
   }
 }
 </style>

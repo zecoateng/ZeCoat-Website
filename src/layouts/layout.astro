@@ -8,6 +8,11 @@ import { ClientRouter } from 'astro:transitions';
   <ClientRouter/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="icon" type="image/x-icon" href="/public/ZeCoatFavicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
@@ -27,6 +32,12 @@ import { ClientRouter } from 'astro:transitions';
 <style is:global>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
+
+  /* Form controls don't inherit font-family by default — force them to */
+  button, input, textarea, select { font-family: inherit; }
+
+  /* A touch of tightening makes Inter headings look crisp and intentional */
+  h1, h2, h3 { letter-spacing: -0.02em; }
 </style>
 
 <style>
@@ -40,7 +51,11 @@ import { ClientRouter } from 'astro:transitions';
     padding: 0;
     font-size: 18px;
     line-height: 1.7;
-    font-family: Inter;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
    h1, h2, h3, h4, h5, h6, p {

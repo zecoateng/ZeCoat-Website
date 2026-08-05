@@ -18,7 +18,7 @@ export const pool = new Pool({
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com", //find out who hosts zecoat email
     port: 587,
-    secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
+    secure: false,
     auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,

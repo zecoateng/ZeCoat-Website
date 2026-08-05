@@ -5,17 +5,35 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
 <div class:list={["card", variant]}>
   <img src={imgSrc} class="card-img-top" alt="Card Image">
   <div class="card-body">
-    <h5 class="card-title">{cardTitle}</h5>
+    <h3 class="card-title">{cardTitle}</h3>
     <p class="card-text">{cardBody}</p>
   </div>
 </div>
 
 <style>
 
-.card-img-top {
-    width:100%;
+.card.experiences .card-img-top {
+    width: 100%;
     max-height: 50%;
 }
+
+.card.default .card-img-top {
+    width: 100%;
+    max-height: 50%;   
+}
+
+.card {
+  max-width: 380px;
+}
+
+
+.card.featured .card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+}
+
 
 .card.default {
   background:
@@ -29,14 +47,15 @@ border:1px solid rgba(0,0,0,.06);
 
 box-shadow:
 0 12px 40px rgba(0,0,0,.08);
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
-  max-width: 300px;
+  max-width: 400px;
   max-height: 700px;
   box-shadow:
 0 10px 25px rgba(0,0,0,.08);
 
-
+  border-color:#1E293B;
+  border-width: 1px;
 }
 
 
@@ -46,7 +65,7 @@ box-shadow:
 
 .card.experiences .card-img-top {
   width: 100%;
-  max-width: 200px;
+  
   height: 100%;
   max-height: 100px;
 }

@@ -4,19 +4,19 @@ import Cards from '../components/HomeCards.astro'
 
 const capabilitiesLayout = [
     {
-        imgSrc: "/dock-layout.png",
+        imgSrc: "/coatings.jpeg",
         cardTitle: "Meter-class Mirror Coatings",
         cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings."
 
     },
      {
-        imgSrc: "/dock-layout.png",
+        imgSrc: "/chamber.jpeg",
         cardTitle: "Research & Development",
         cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis."
 
     },
      {
-        imgSrc: "/dock-layout.png",
+        imgSrc: "/FacilityIndoor.jpeg",
         cardTitle: "Licensing Technology",
         cardBody: "ZeCoat has over a dozen coating technologies available for sale or license, covering a wide variety of aerospace applications."
     }
@@ -31,8 +31,8 @@ const experiencesLayout = [
     },
     {
         imgSrc: "/calendar-xmark-alt-svgrepo-com.svg",
-        cardTitle: "25+ Years Of fdfd",
-        cardBody: "Precision vacuum-deposition experience."
+        cardTitle: "25+ Years Experience",
+        cardBody: "Of precision vacuum-deposition experience."
 
     },
     {
@@ -57,24 +57,24 @@ const experiencesLayout = [
 
 const featuredMissions = [
     {
-        imgSrc: "/satelite-image.jpg",
+        imgSrc: "/Kepler-Space-Telescope.jpg",
         cardTitle: "Kepler Space Telescope",
-        cardBody: "Helped unlock the mysteries of distant worlds"
+        cardBody: "Developed the protected silver coating for the primary mirror of NASA's Kepler Space Telescope."
+    },
+    {
+        imgSrc: "/Mars-Insight-Lander.jpg",
+        cardTitle: "Mars InSight Seismometer Cover",
+        cardBody: "Designed the thermal control coating protecting the SEIS seismometer on NASA's Mars InSight Lander from extreme Martian temperatures."
+    },
+    {
+        imgSrc: "/HWOImage.png",
+        cardTitle: "Habitable Worlds Observatory",
+        cardBody: "Leading development of next-generation FUV broadband reflective coatings for NASA's Habitable Worlds Observatory."
     },
     {
         imgSrc: "/satelite-image.jpg",
-        cardTitle: "Kepler Space Telescope",
-        cardBody: "Helped unlock the mysteries of distant worlds"
-    },
-    {
-        imgSrc: "/satelite-image.jpg",
-        cardTitle: "Kepler Space Telescope",
-        cardBody: "Helped unlock the mysteries of distant worlds"
-    },
-    {
-        imgSrc: "/satelite-image.jpg",
-        cardTitle: "Kepler Space Telescope",
-        cardBody: "Helped unlock the mysteries of distant worlds"
+        cardTitle: "Self-Coating Space Telescopes",
+        cardBody: "Developed a battery-powered, autonomous optical coating system capable of refreshing telescope mirrors while in orbit."
     }
 ]
 
@@ -90,6 +90,19 @@ const featuredTechnologies = [
         cardBody: "Helped unlock the mysteries of distant worlds"
     }
 ]
+
+
+let announcements = [];
+
+try {
+    const response = await fetch("http://localhost:4321/api/announcements");
+    const data = await response.json();
+
+    announcements = Array.isArray(data) ? data : [];
+} catch (err) {
+    console.error("Could not load announcements:", err);
+}
+
 ---
 
 <Layout>
@@ -107,6 +120,7 @@ const featuredTechnologies = [
 </div>
 </div>
 </section>
+<div class = "page-layout">
 <section id = "what-we-do" class = "what-we-do-section">
 <h1>What We Do</h1>
 <h3 class = "what-we-do-description">Three core capabilities all built on the same precision vacuum deposition process</h3>
@@ -125,8 +139,29 @@ const featuredTechnologies = [
 
 </div>
 </section>
+<section class = "announcements-section">
+<h1>Announcements</h1>
+
+    <div class="cards-layout">
+    {
+        announcements.map(announcement => {
+            return (
+                <div class="announcement-card">
+                    <span class="announcement-date">{new Date(announcement.date).toLocaleDateString()}</span>
+                    <h3 class="announcement-title">{announcement.title}</h3>
+                    <p class="announcement-body">{announcement.description}</p>
+                </div>
+            )
+        })
+    }
+</div>
+       
+</section>
 <section class = "experience-section">
-    <div class = "featured-header">
+    <div class = "featuredMissions-section">
+
+    
+<div class = "featured-header">
 <h1>Featured Missions</h1>
 <a href="/about">View all Missions</a>
     </div>
@@ -146,6 +181,8 @@ const featuredTechnologies = [
 }
 
 </div>
+</div>
+<div class = "featuredTechnologies-section">
 <div id = "featured-technologies" class = "featured-header">
 <h1>Featured Technologies</h1>
 <a href="/technologies">View all Technologies</a>
@@ -165,6 +202,7 @@ const featuredTechnologies = [
     })
 }
 
+</div>
 </div>
 </section>
 
@@ -190,6 +228,7 @@ const featuredTechnologies = [
 </div>
 
 </section>
+</div>
 
 </Layout>
 
@@ -210,7 +249,7 @@ const featuredTechnologies = [
             rgba(5,15,35,.65),
             rgba(5,15,35,.45)
         ),
-        url("/dock-layout.png");
+        url("/Facility.jpeg");
     background-size: cover;
     background-position: center;
 }
@@ -239,18 +278,28 @@ const featuredTechnologies = [
     flex-direction: column;
     align-items: center;
     gap:0;
+    margin-inline: 20px;
 }
 
 .cards-layout {
     margin-top: 60px;
     display: flex;
     justify-content: space-evenly;
-    gap: clamp(5px, 4vw, 300px);
+    gap: clamp(1rem, 4vw, 4rem);
     margin-inline: 20px;
+}
+
+.cards-layout > * {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .experience-section {
     margin-inline: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    
 }
 
 
@@ -380,6 +429,56 @@ a::after {
     padding-top: 20px;
 }
 
+.announcements-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-inline: 20px;
+}
+
+.announcements-section h1 {
+    margin: 0;
+}
+
+.announcements-description {
+    margin: 0;
+    text-align: center;
+}
+
+.announcement-card {
+    flex: 1;
+    max-width: 380px;
+    padding: 1.5rem;
+    border: 1px solid #DCE2E8;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(22, 32, 46, 0.06);
+}
+
+.announcement-date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #C6870F;
+}
+
+.announcement-title {
+    margin: 0.5rem 0;
+    color: #16202E;
+}
+
+.announcement-body {
+    margin: 0;
+    color: #1B2430;
+    line-height: 1.5;
+}
+
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 @media (max-width: 768px) {
 
     /* Hero */
@@ -442,6 +541,7 @@ a::after {
         align-items: center;
         gap: 2rem;
         margin-top: 2rem;
+
     }
 
     /* Assuming cards have a fixed width */

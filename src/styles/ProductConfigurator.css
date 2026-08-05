@@ -9,21 +9,38 @@
   --accent: #e8862b;
 }
 
-.layout {
-  max-width: 1060px;
+.page {
+
+}
+
+.page-layout {
+  width: min(95%, 1400px);
   margin: 0 auto;
   padding: 44px 20px;
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 28px;
+  display: flex;
+  gap: 50px;
   align-items: start;
-  font-family: "Inter", system-ui, sans-serif;
   color: var(--navy);
+}
+
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.add-button {
+  background-color: #6FC276;
+}
+
+.remove-button {
+  background-color: #F47174;
 }
 
 .config-title {
   grid-column: 1 / -1;
-  font-family: "Playfair Display", serif;
   font-weight: 800;
   font-size: 34px;
   letter-spacing: -0.3px;
@@ -31,13 +48,14 @@
   margin: 0 0 26px;
 }
 
-/* ---------- Main panel ---------- */
 .design-layout {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 30px 30px 8px;
   box-shadow: 0 18px 44px -28px rgba(22, 32, 46, 0.35);
+  display: flex;
+  flex-direction: column;
 }
 
 .field {
@@ -58,7 +76,6 @@
   margin-bottom: 14px;
 }
 
-/* ---------- Option buttons (material + shape) ---------- */
 .btn-group {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +83,6 @@
 }
 
 .btn-group button {
-  font-family: "Inter", sans-serif;
   font-size: 14.5px;
   font-weight: 500;
   padding: 10px 18px;
@@ -85,11 +101,7 @@
   border-color: #0F1822;
   color: #fff;
 }
-.btn-group .notSelected {
-  /* base styles above already cover the unselected state */
-}
 
-/* ---------- Dimension inputs ---------- */
 .specs {
   display: flex;
   flex-wrap: wrap;
@@ -108,7 +120,6 @@
 input,
 select,
 textarea {
-  font-family: "Inter", sans-serif;
   font-size: 14.5px;
   color: var(--navy);
   background: var(--white);
@@ -127,14 +138,12 @@ textarea:focus {
   border-color: var(--accent);
 }
 
-/* ---------- Coating select ---------- */
 .coating-type select {
   width: 100%;
   max-width: 320px;
   cursor: pointer;
 }
 
-/* ---------- Quantity stepper ---------- */
 .mirror-button {
   display: inline-flex;
   align-items: center;
@@ -167,7 +176,6 @@ textarea:focus {
   border-right: 1.5px solid var(--line);
 }
 
-/* ---------- Notes ---------- */
 .additional-requirements textarea {
   width: 100%;
   min-height: 92px;
@@ -175,8 +183,7 @@ textarea:focus {
   line-height: 1.5;
 }
 
-/* ---------- Summary rail ---------- */
-.configuration-summary {
+.summary-layout {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -221,7 +228,6 @@ textarea:focus {
   background: #E7A21C;
   color: #1B2433;
   border: none;
-  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 600;
   padding: 15px;
@@ -240,12 +246,11 @@ textarea:focus {
   line-height: 1.45;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 820px) {
-  .layout {
+  .page-layout {
     grid-template-columns: 1fr;
   }
-  .configuration-summary {
+  .summary-layout {
     position: static;
   }
 }

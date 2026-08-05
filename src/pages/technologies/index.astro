@@ -35,7 +35,6 @@ export const technologies = [
             ZeCoat has developed a portfolio of advanced coating technologies engineered for the most demanding space, astronomy, and areospace applications. Each solution is built on decades of research, precision deposition experitise, and a commitment to mission success
             </div>
         </div>
-        <hr/>
         <h2 class = "layout-header">Current Research and Development</h2>
         <div class = "Technology-List">
         {
@@ -82,7 +81,9 @@ export const technologies = [
 }
 
 .Technology-List {
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 @media (max-width: 900px) {

@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/layout.astro'
-import ProjectCard from '../components/projectcards.astro'
+import ProjectCard from '../components/AboutCards.astro'
 
 const timeline = [
   {
@@ -95,7 +95,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 </div>
 <div class = "ceo-layout">
 <div class = "ceo-image">
-<img src = "/public/dock-layout.png"/>
+<img src = "/public/DavidHeadshot.jpg"/>
 </div>
 <div class = "ceo-description">
 <div class= "name-group">
@@ -363,6 +363,22 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     width:100%;
     height:auto;
   }
+
+  .timeline-line::after {
+    content: "";
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #E7A21C;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    bottom: -8px; 
+}
 
 }
 
