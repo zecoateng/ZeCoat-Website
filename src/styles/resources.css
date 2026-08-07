@@ -187,3 +187,235 @@
     border-radius: 3px;
     overflow-x: auto;
   }
+/* ---- Telescope Design Calculator ---- */
+.tele-body {
+  padding: 30px;
+}
+
+.tele-type-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tele-type-btn {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tele-type-btn:hover {
+  border-color: #C6870F;
+}
+
+.tele-type-btn.active {
+  background: #E7A21C;
+  border-color: #E7A21C;
+  color: #000;
+}
+
+.tele-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .tele-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-group select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: inherit;
+  background: #fff;
+}
+
+.input-group select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.tele-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.tele-checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
+.tele-error {
+  color: #c0392b;
+  font-weight: 600;
+  padding: 12px 16px;
+  background: #fdecea;
+  border-radius: 4px;
+  border-left: 4px solid #c0392b;
+}
+
+.tele-hint {
+  color: #666;
+  padding: 12px 0;
+}
+
+.tele-results-full {
+  margin-top: 24px;
+}
+
+.tele-summary-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .tele-summary-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tele-summary-column h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.05em;
+  color: #1a1a1a;
+  border-bottom: 2px solid #E7A21C;
+  padding-bottom: 6px;
+}
+
+.tele-summary-column .result-item {
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  gap: 10px;
+}
+
+/* ---- Telescope Calculator: mobile responsiveness ---- */
+
+/* Inputs & selects never exceed their container (padding/border included),
+   and long <select> option text can't force the control wider than the column */
+.input-group input,
+.input-group select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Long result values (coating names, exponentials) wrap instead of overflowing */
+.result-value {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: right;
+}
+
+.result-item {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Tablet / small laptop: results already collapse to 1 column at 900px.
+   Give a middle breakpoint so 3 columns don't get cramped. */
+@media (max-width: 1100px) {
+  .tele-summary-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .tele-summary-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: tighten padding so nothing is clipped, stack each result row
+   (label above value) so long values are always fully visible, full-width button */
+@media (max-width: 600px) {
+  .calculators-container {
+    padding: 20px 12px;
+  }
+  .calculator-header {
+    padding: 20px 16px;
+  }
+  .calculator-header h2 {
+    font-size: 1.3em;
+  }
+  .tele-body {
+    padding: 16px;
+  }
+  .result-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .result-value {
+    text-align: left;
+  }
+  .calc-button {
+    width: 100%;
+  }
+  .tele-type-btn {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+/* ---- Beam Averaging Calculator ---- */
+.beam-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .beam-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.beam-rings {
+  margin-top: 22px;
+}
+
+.beam-rings > label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.beam-rings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.beam-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.beam-actions .calc-button {
+  margin-top: 0;
+}
+
+.calc-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

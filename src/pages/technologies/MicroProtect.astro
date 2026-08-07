@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: Micrometeroid Protection</h1>
+<p>Directly imaging exoplanets and faint astronomical objects requires extremely precise control of unwanted light. A planet orbiting another star can be billions of times dimmer than its host star, meaning even small amounts of stray light can overwhelm the desired signal.
+Starshades address this challenge by using a large deployable structure positioned between a telescope and a distant star to block starlight before it reaches the telescope. However, the effectiveness of a starshade depends not only on its shape and size, but also on the optical performance of its edges and surfaces.
+ZeCoat develops advanced optical coatings designed to suppress reflections, scattering, and solar glint from starshade components. These coatings improve contrast performance and enable future space missions focused on exoplanet discovery and high-precision astronomical observations.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>Starshade edges are among the most critical optical surfaces in the system. While the starshade blocks direct starlight, light interacting with its edges can diffract around the structure and reduce the contrast needed for detecting faint objects.
+ZeCoat’s antireflection coating technology uses precisely engineered thin-film layers to reduce surface reflectance across mission-relevant wavelengths. By controlling coating materials, thicknesses, and deposition conditions, these coatings minimize unwanted reflections while maintaining durability in the harsh space environment.
+The development of starshade coatings requires balancing optical performance with practical spacecraft requirements, including large-area uniformity, lightweight substrate compatibility, thermal stability, and resistance to long-term exposure to radiation and vacuum conditions.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li><a href="#" target="_blank" rel="noopener">Publication title — Authors, Year</a></li>
+<li><a href="#" target="_blank" rel="noopener">Second publication — Authors, Year</a></li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/Starshades&StrayLight.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Durable overcoats shield the reflective layer from low-level pitting and erosion.</li>
+    <li>Sacrificial-layer approach preserves mirror reflectance and figure over long missions.</li>
+    <li>In-space re-coating offers a path to restore surfaces after cumulative impact damage.</li>
+    <li>Builds on proven, flight-relevant coating durability.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Long-duration space telescope mirrors.</li>
+    <li>Optics in low-Earth-orbit and debris-rich environments.</li>
+    <li>Exposed reflective surfaces requiring erosion resistance.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    text-decoration: underline;
+}
+
+</style>

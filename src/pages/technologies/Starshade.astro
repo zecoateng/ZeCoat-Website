@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: Starshade, Black Coatings & Stray-Light Suppression</h1>
+<p>Direct imaging of terrestrial exoplanets requires suppressing the host-star flux by roughly ten orders of magnitude relative to the planetary signal. External occulters, or starshades, achieve this suppression by geometric apodization, positioning a precisely shaped screen between the target star and a space telescope. System contrast is ultimately limited not only by the occulter's edge diffraction but by residual sunlight scattered from its surfaces and reflected from its optical edges. ZeCoat develops antireflection and high-absorptance ("black") coatings that minimize this scattered and reflected background from both the light-blocking membrane and the precision petal edges.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>The occulter presents two functionally distinct surfaces: a large-area flexible membrane and diamond-turned or etched optical edges that govern solar-glint performance. ZeCoat's coatings are engineered to maximize absorptance across the science band while controlling the bidirectional reflectance distribution function (BRDF) and thermal emissivity, allowing straylight and thermal-balance requirements to be satisfied within a single coating design. For large flexible membranes, roll-to-roll deposition provides uniform, scalable application, while radiation-hardened formulations preserve optical properties under the ionizing-radiation environment of long-duration missions. Broadband antireflection treatments applied to the optical edges reduce specular solar glint across the operational passband.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li><a href="https://doi.org/10.1117/12.2692094" target="_blank" rel="noopener">Antireflection Coatings on Starshade Light-Blocking Membranes for Straylight Suppression — Sheikh, Lum &amp; Whitehead, 2023</a></li>
+<li><a href="https://doi.org/10.1117/1.JATIS.7.2.021208" target="_blank" rel="noopener">Antireflection Coatings on Starshade Optical Edges for Solar Glint Suppression — McKeithen et al., 2021</a></li>
+<li><a href="https://doi.org/10.1117/12.2563103" target="_blank" rel="noopener">Broadband Characterization of Anti-Reflection-Coated Starshade Optical Edges for Solar Glint Control — McKeithen et al., 2020</a></li>
+</ul>
+<p><strong>SBIR Contracts</strong></p>
+<ul class="pub-list">
+<li><a href="https://www.sbir.gov/awards/209698" target="_blank" rel="noopener">Radiation-Hardened Dark Coating for Stray-Light Suppression — MDA SBIR Phase II, 2024</a></li>
+<li><a href="https://www.sbir.gov/awards/198283" target="_blank" rel="noopener">Radiation-Hardened Dark Coating for Stray-Light Suppression — MDA SBIR Phase I, 2022</a></li>
+<li>Dark Coatings with Tailorable BRDF and Thermal Emissivity for Light-Blocking Starshade Membranes — NASA SBIR Phase II, 2021</li>
+<li><a href="https://www.sbir.gov/awards/181931" target="_blank" rel="noopener">Specular Black Coating for Flexible Starshade Optical Shield — NASA SBIR Phase I, 2020</a></li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/Starshades&StrayLight.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Suppresses stray light, scattering, and solar glint from membranes and precision optical edges.</li>
+    <li>Tailorable BRDF and thermal emissivity within a single coating design.</li>
+    <li>Radiation-hardened formulations retain performance in the space environment.</li>
+    <li>Compatible with roll-to-roll coating of large flexible membranes.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Direct imaging of exoplanets with starshades.</li>
+    <li>Stray-light and glint suppression in optical and sensor systems.</li>
+    <li>Precision occulters and light-blocking membranes.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pub-list a:hover {
+    text-decoration: underline;
+}
+
+</style>

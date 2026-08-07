@@ -1,6 +1,4 @@
 import "../../styles/ProductConfigurator.css";
-import { useState } from "react";
-import SummaryComponent from "./SummaryComponent.jsx"
 
 const MATERIALS = ["Silicon", "Aluminum", "Glass", "Silicon Carbide"];
 const SHAPES = ["Round", "Rectangle", "Hexagon"];
@@ -21,13 +19,9 @@ const DIMENSION_FIELDS = {
 
 export default function ConfigureForm({
   configurationObject,
-  configurationTotal,
   index,
   updateConfiguration,
-  setStep,
-  addMirror
 }) {
-  const [error, setError] = useState("");
 
   const updateConfig = ((patch) =>
     updateConfiguration(index, patch)
@@ -65,19 +59,7 @@ export default function ConfigureForm({
   };
 
   const dimensionFields = DIMENSION_FIELDS[configurationObject.shape] ?? [];
-
-  // Checks if the dimensions for each object is filled
-  const areDimensionsComplete = () => {
-    dimensionFields.length > 0 &&
-    dimensionFields.every((field) => configurationObject.dimensions?.[field.key]);
-  }
-    
-
-  const isConfigurationComplete = () => {
-
-  };
-
-
+  
   return (
     <>
       <div className="design-layout">

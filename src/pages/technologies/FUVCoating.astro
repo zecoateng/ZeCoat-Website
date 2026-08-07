@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: Far-Ultraviolet and Broadband Mirror Coatings</h1>
+<p>Far-ultraviolet (FUV) spectroscopy and imaging provide access to star formation, hot interstellar and circumgalactic plasmas, and exoplanet atmospheres, but demand mirror coatings that maintain high reflectance at wavelengths where most optical materials are strongly absorbing. Aluminum protected by a fluoride overcoat remains the reference reflector into the FUV, yet its performance is highly sensitive to deposition conditions and overcoat design. ZeCoat develops protected-aluminum coatings that maximize FUV reflectance while providing the environmental durability required for extended ground- and space-based operation.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>FUV reflectance of aluminum is governed by the growth of the native oxide during and after deposition and by the transparency of the protective overcoat. Achieving high short-wavelength reflectance therefore requires precise control of evaporation rate, chamber pressure, substrate preparation, and overcoat deposition, so that the metal is sealed before significant oxidation occurs. ZeCoat employs precision vacuum deposition to produce protected-aluminum coatings with high reflectance, low scatter, and uniformity across the optical surface, and has demonstrated high-temperature protected-aluminum processes on low-expansion substrates. Complementary large-area, multi-source deposition methods extend these recipes to the meter-class primary mirrors envisioned for future FUV/optical/IR (FUVOIR) observatories.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li><a href="https://doi.org/10.1117/12.2595392" target="_blank" rel="noopener">Influence of Evaporation Rate and Chamber Pressure on the FUV Reflectance and Physical Characteristics of Aluminum Films — Quijada et al., 2021</a></li>
+<li><a href="https://doi.org/10.1117/12.2530585" target="_blank" rel="noopener">ZERODUR® Substrates for Application of High-Temperature Protected-Aluminum Far-Ultraviolet Coatings — Quijada, Sheikh, Del Hoyo &amp; Richardson, 2019</a></li>
+</ul>
+<p><strong>SBIR Contracts</strong></p>
+<ul class="pub-list">
+<li><a href="https://www.sbir.gov/awards/147314" target="_blank" rel="noopener">Broadband Reflective Coating Process for Large FUVOIR Mirrors — NASA SBIR Phase I, 2014</a></li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/Starshades&StrayLight.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Maximizes reflectance at far-ultraviolet wavelengths.</li>
+    <li>High uniformity and low scatter across demanding optical surfaces.</li>
+    <li>Withstands vacuum, thermal cycling, and long-duration operation.</li>
+    <li>Extensible to large, meter-class telescope mirrors.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Space-based ultraviolet telescopes.</li>
+    <li>Ultraviolet spectroscopy instruments.</li>
+    <li>Large-aperture FUVOIR mirrors.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pub-list a:hover {
+    text-decoration: underline;
+}
+
+</style>

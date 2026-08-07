@@ -1,153 +1,204 @@
 ---
 import Layout from '../layouts/layout.astro'
-import CoatingCarousel from '../components/CoatingCarousel.astro';
 
- const coatings = [
+const coatings = [
   {
     title: "Protected Silver",
-    image: "/dock-layout.png",
-    reflectance: "Avg. R: 96% (350–1000 nm)",
-    durability: "MIL-13830-B",
-    heritage: "Kepler Space Telescope",
+    image: "/MirrorImage.png",
     description:
-      "High-performance protected silver coating offering exceptional broadband reflectance for astronomical optics.",
-
-    variations:
-      "Reflection, durability, and wavelength range can all be customized.",
-
-    maxSize: "2.0 m diameter",
-
-    priceDrivers: [
-      "Substrate size",
-      "Quantity",
-      "Coating complexity"
-    ]
+      "High-performance protected silver coating delivering exceptional broadband reflectance across the visible and near-infrared. A flight-proven workhorse for astronomical and imaging optics."
   },
-
   {
-    title: "FUV Aluminum",
-    image: "/dock-layout.png",
-    reflectance: ">96% @ 121 nm",
-    durability: "MIL-13830-B",
-    heritage: "",
+    title: "Enhanced Protected Silver",
+    image: "/coatings.jpeg",
     description:
-      "Far ultraviolet coating optimized for extremely high reflectance at 121 nm.",
-
-    variations:
-      "Can be optimized for wavelength range and durability.",
-
-    maxSize: "2.0 m diameter",
-
-    priceDrivers: [
-      "Substrate size",
-      "Quantity",
-      "Difficulty"
-    ]
+      "An optimized silver stack engineered for higher reflectance and improved environmental durability, ideal for demanding ground- and space-based instruments."
   },
-
+  {
+    title: "Radiation Hardened Protected Silver",
+    image: "/satelite-image.jpg",
+    description:
+      "Protected silver formulated to withstand high-radiation orbital environments while maintaining reflectance and adhesion over long-duration missions."
+  },
   {
     title: "Protected Gold",
     image: "/dock-layout.png",
-    reflectance: ">98% (800–5000 nm)",
-    durability: "MIL-13830-B",
-    heritage: "",
     description:
-      "Infrared gold coating with extremely high reflectance across the IR spectrum.",
-
-    variations:
-      "Reflection, durability and wavelength range may be customized.",
-
-    maxSize: "2.0 m diameter",
-
-    priceDrivers: [
-      "Substrate size",
-      "Quantity",
-      "Difficulty"
-    ]
+      "Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability."
   },
-
-  {
-    title: "Multi-Layer Dielectric",
-    image: "/dock-layout.png",
-
-    description:
-      "Custom AR coatings, dielectric mirrors and bandpass filters produced using ZeCoat's motion-controlled deposition system.",
-
-    maxSize: "2.0 m diameter"
-  },
-
-  {
-    title: "Spacecraft Thermal Control",
-    image: "/dock-layout.png",
-
-    heritage:
-      "NASA Mars InSight Seismometer Cover",
-
-    description:
-      "Low-glint spacecraft coating designed for thermal control applications."
-  },
-
   {
     title: "Silicon Cladding",
-    image: "/dock-layout.png",
-
+    image: "/chamber.jpeg",
     description:
-      "Tailorable silicon cladding over 100 microns for optical finishing and near-zero CTE surfaces.",
-
-    maxSize: "2.0 m diameter"
+      "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero CTE surfaces."
   },
-
   {
-    title: "Black Edge Coating BEC-1-T",
-    image: "/dock-layout.png",
-
-    reflectance:
-      "Avg R <1.5%",
-
-    locked: true
+    title: "FUV Aluminum",
+    image: "/HWOImage.png",
+    description:
+      "Far-ultraviolet aluminum coating optimized for high reflectance down to 121 nm, developed for next-generation UV space telescopes."
+  },
+  {
+    title: "Black Coating",
+    image: "/Mars-Insight-Lander.jpg",
+    description:
+      "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures."
   }
 ];
 ---
 
 <Layout>
 
-<section class="hero">
+  <section class="standard-coatings">
+    <div class="section-heading">
+      <h2>Standard Coatings</h2>
+    </div>
 
-    <h1>Optical Coating Portfolio</h1>
+    <div class="coatings-grid">
+      {coatings.map(coating => (
+        <article class="coating-card">
+          <img src={coating.image} alt={coating.title} />
+          <div class="coating-card-body">
+            <h3>{coating.title}</h3>
+            <p>{coating.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
 
-    <p>
-        ZeCoat has developed a unique vacuum coating system, which utilizes a motion-controlled electron beam evaporator, which can uniformly coat substrates up to 2-meters in diameter with exceptional layer precision to serve the astronomy community.
-    </p>
-
-</section>
-
-<div class = "cards-layout">
-{
-    coatings.map( coating => {
-        return (
-        <CoatingCarousel 
-        image={coating.image} 
-        title={coating.title}
-        description = {coating.description} 
-        reflectance = {coating.reflectance}
-        durability = {coating.durability} 
-        />
-        )
-    })
-   
-
-}
-</div>
+  <section class="custom-coatings">
+    <div class="custom-coatings-inner">
+      <h2>Custom Coating Services</h2>
+      <p>
+        Need something that isn't in our standard portfolio? ZeCoat's motion-controlled
+        vacuum deposition system lets us engineer coatings to your exact reflectance,
+        durability, and wavelength requirements on substrates up to 2 meters in diameter.
+        If we don't already make it, we can build it for you.
+      </p>
+      <a href="/contact" class="custom-cta">Request a Custom Coating</a>
+    </div>
+  </section>
 
 </Layout>
 
 <style>
 
-  .cards-layout {
-    display: grid;
-    grid-template-rows: 200px 1fr 100px;
+  .standard-coatings {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+    padding-bottom: 4rem;
   }
 
-  
+  .section-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
 
+  .section-heading h2 {
+    font-size: clamp(2rem, 4vw + 1rem, 60px);
+    color: black;
+  }
+
+  .section-heading p {
+    margin-top: 0.75rem;
+    color: #475569;
+  }
+
+  .coatings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .coating-card {
+    background: linear-gradient(180deg, #ffffff, #f7f9fc);
+    border: 1px solid #DCE2E8;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .coating-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
+  }
+
+  .coating-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .coating-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .coating-card-body h3 {
+    font-size: 1.35rem;
+    color: #16202E;
+  }
+
+  .coating-card-body p {
+    color: #1B2430;
+    line-height: 1.6;
+  }
+
+  /* Custom coating services */
+  .custom-coatings {
+    background: #DCE2E8;
+    padding: 4rem 1.5rem;
+  }
+
+  .custom-coatings-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: #16202E;
+  }
+
+  .custom-coatings-inner h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .custom-coatings-inner p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .custom-cta {
+    display: inline-block;
+    background: #E7A21C;
+    color: #1B2430;
+    font-weight: 600;
+    font-size: 1.15rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #E7A21C;
+    box-shadow: 0 8px 24px rgba(235, 189, 37, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .custom-cta:hover {
+    background: #C6870F;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(235, 189, 37, 0.35);
+  }
+
+  /* Inquiry form */
+  .inquiry-section {
+    padding: 4rem 1.5rem;
+    scroll-margin-top: 2rem;
+  }
 </style>

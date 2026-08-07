@@ -4,25 +4,39 @@ import TechnologyList from "../../components/TechnologyList.astro"
 
 export const technologies = [
   {
-    title: "Battery-Powered Deposition",
+    title: "Silicon Cladding for Lightweight Mirrors",
     description:
-      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
-    image: "/dock-layout.png",
-    link: "/technologies/BPD"
+      "Lightweight mirror substrates are notoriously hard to polish to an optical finish. ZeCoat's low-stress silicon cladding, applied by pulsed ion-assisted evaporation, adds a dense, polishable surface without distorting the mirror's figure — giving next-generation telescopes both low mass and optical-quality optics.",
+    image: "/SiliconCladding.jpg",
+    link: "/technologies/SiliconCladding"
   },
   {
-    title: "Advanced Dielectric Coatings",
+    title: "Starshades & Stray-Light Suppression",
     description:
-      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
-    image: "/dock-layout.png",
-    link: "/technologies/Technology2"
+      "ZeCoat develops antireflection and black coatings that suppress stray light, scattering, and solar glint from starshade membranes and optical edges. Applied by processes including roll-to-roll coating of large flexible membranes, they help future space telescopes reach the extreme contrast needed for direct exoplanet imaging.",
+    image: "/Starshade.jpg",
+    link: "/technologies/Starshade"
   },
   {
-    title: "Protected Silver Coatings",
+    title: "FUV & Broadband Mirror Coatings",
     description:
-      "ZeCoat is developing a new and novel way of depositing a thin film optical coating. This new method uses many small evaporation sources that fire simultaneously in a controlled manner. This application process allows a large mirror to be uniformly coated in a matter of seconds. There are several advantages to this method of coating, including: ",
-    image: "/dock-layout.png",
-    link: "/technologies/Technology3"
+      "ZeCoat develops protected-aluminum coatings that maximize far-ultraviolet reflectance, letting next-generation telescopes and instruments capture faint UV signals with exceptional efficiency. Precise deposition control — and large-area, multi-source methods — extends these coatings toward the largest future mirrors.",
+    image: "/FUVImage.jpg",
+    link: "/technologies/FUVCoating"
+  },
+  {
+    title: "Self-Coating Telescope",
+    description:
+      "An aluminum mirror oxidizes the moment it meets air, which cuts off far-ultraviolet reflectance. ZeCoat's self-coating telescope carries a compact, battery-powered deposition system that lays down a fresh, bare aluminum surface in orbit — reaching deeper into the ultraviolet and letting a mission refresh its own mirror.",
+    image: "/SelfCoatingTelescope.jpg",
+    link: "/technologies/SelfCoating"
+  },
+  {
+    title: "Micrometeroid Protection",
+    description:
+      "Over years in orbit, micrometeoroids slowly pit and roughen a telescope mirror, raising scattered light. ZeCoat draws on its durable protective overcoats and in-space coating capability to help optical surfaces resist this erosion — and, where damage accumulates, to restore them by re-coating on orbit.",
+    image: "/MicrometeroidImage.jpg",
+    link: "/technologies/MicroProtect"
   }
 ];
 ---
@@ -30,12 +44,11 @@ export const technologies = [
 <Layout>
     <div class = "page-layout">
         <div class = "page-header">
-            <h1>Technologies</h1>
+            <h1 class = "title">Research, Publications & Funded Programs</h1>
         <div>
             ZeCoat has developed a portfolio of advanced coating technologies engineered for the most demanding space, astronomy, and areospace applications. Each solution is built on decades of research, precision deposition experitise, and a commitment to mission success
             </div>
         </div>
-        <h2 class = "layout-header">Current Research and Development</h2>
         <div class = "Technology-List">
         {
   technologies.map((technology) => (
@@ -60,24 +73,26 @@ export const technologies = [
     flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
-    
 }
 
 .page-header {
     text-align: center;
     width: 100%;
     max-width: 800px;
-}
-
-.layout-header  {
-    font-size: 2.25rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    margin-top: 10px;
     margin-bottom: 2.5rem;
 }
 
-.layout-header {
-    margin-top: 50px;
+.page-header h1 {
+    font-size: clamp(2rem, 4vw + 1rem, 60px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.page-header div {
+    color: #475569;
+    line-height: 1.7;
 }
 
 .Technology-List {
@@ -93,9 +108,6 @@ export const technologies = [
 
     .page-header {
         text-align: center;
-    }
-
-    .layout-header {
         margin-top: 2rem;
     }
 
@@ -117,11 +129,6 @@ export const technologies = [
     .page-header div {
         font-size: 1rem;
         line-height: 1.6;
-    }
-
-    .layout-header {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
     }
 }
 

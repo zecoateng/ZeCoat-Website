@@ -31,21 +31,62 @@
   max-width: 1000px;
 }
 
-.add-button {
-  background-color: #6FC276;
+.config-header {
+  width: min(95%, 1400px);
+  margin: 0 auto;
+  padding: 40px 20px 0;
 }
 
+.mirror-actions {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 4px;
+}
+
+.add-button,
 .remove-button {
-  background-color: #F47174;
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.add-button {
+  color: var(--navy);
+}
+.add-button:hover {
+  border-color: var(--navy);
+  background: #f7f9fb;
+}
+.remove-button {
+  color: #b23b3b;
+  border-color: #e2b9b9;
+}
+.remove-button:hover {
+  border-color: #b23b3b;
+  background: #fdf2f2;
+}
+
+.summary-mirror-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top: 12px;
 }
 
 .config-title {
-  grid-column: 1 / -1;
   font-weight: 800;
   font-size: 34px;
   letter-spacing: -0.3px;
   color: var(--navy);
-  margin: 0 0 26px;
+  margin: 0;
 }
 
 .design-layout {
@@ -192,6 +233,7 @@ textarea:focus {
   top: 24px;
   box-shadow: 0 18px 44px -28px rgba(22, 32, 46, 0.35);
 }
+
 .summary-title {
   font-size: 12.5px;
   font-weight: 600;
@@ -248,9 +290,10 @@ textarea:focus {
 
 @media (max-width: 820px) {
   .page-layout {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
   .summary-layout {
     position: static;
+    width: 100%;
   }
 }

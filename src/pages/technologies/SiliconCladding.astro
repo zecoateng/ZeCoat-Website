@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: Silicon Cladding for Lightweight Mirrors</h1>
+<p>Lightweight substrates that reduce the areal density of large telescope mirrors are frequently difficult to polish directly to an optical figure. A polishable cladding layer addresses this by providing a workable surface over a low-density structural substrate. ZeCoat develops low-stress silicon cladding that yields such a surface without imparting the film-induced distortion that would otherwise compromise the mirror figure of thin, lightweight optics.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>The principal constraint on a thick cladding layer is intrinsic film stress, which produces substrate curvature that degrades figure — a limitation that is most severe for the thin, low-mass mirrors the technology targets. ZeCoat deposits silicon by pulsed ion-assisted evaporation, producing a dense, polishable layer at residual stress low enough to preserve the underlying figure. The deposited silicon can subsequently be polished and figured to an optical finish, allowing advanced low-density substrates to support a conventionally finished optical surface.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li><a href="https://doi.org/10.1117/12.2191445" target="_blank" rel="noopener">Low-Stress Silicon Cladding Made by Pulsed-Ion-Assisted Evaporation — Sheikh, 2015</a></li>
+</ul>
+<p><strong>SBIR Contracts</strong></p>
+<ul class="pub-list">
+<li>Low-Stress Silicon Cladding for Surface Finishing Large UVOIR Mirrors — NASA SBIR Phase II, 2014</li>
+<li><a href="https://www.sbir.gov/awards/140978" target="_blank" rel="noopener">Low-Stress Silicon Cladding for Surface Finishing Large UVOIR Mirrors — NASA SBIR Phase I, 2013</a></li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/Starshades&StrayLight.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Adds a dense, polishable surface to lightweight substrates.</li>
+    <li>Low residual film stress preserves mirror figure during cladding.</li>
+    <li>Enables the optical finish required for high-resolution UVOIR imaging.</li>
+    <li>Combines low areal density with conventional surface quality.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Lightweight space telescope mirrors.</li>
+    <li>Surface finishing of large UVOIR optics.</li>
+    <li>Advanced ceramic and composite mirror substrates.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pub-list a:hover {
+    text-decoration: underline;
+}
+
+</style>

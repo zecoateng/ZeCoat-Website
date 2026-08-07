@@ -1,8 +1,34 @@
 import "../../styles/review-quote.css"
+import { useState } from "react";
+
+const DIMENSION_FIELDS = {
+  Round: [{ key: "diameter", label: "Diameter (in)" }],
+  Rectangle: [
+    { key: "width", label: "Width (mm)" },
+    { key: "height", label: "Height (mm)" },
+    { key: "thickness", label: "Thickness (mm)" },
+  ],
+  Hexagon: [
+    { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
+    { key: "thickness", label: "Thickness (mm)" },
+  ],
+};
+
+function formatDimensions(config) {
+  const fields = DIMENSION_FIELDS[config.shape] || [];
+  const parts = fields
+    .filter((f) => config.dimensions?.[f.key])
+    .map((f) => f.label + ": " + config.dimensions[f.key]);
+  return parts.length ? parts.join(", ") : "—";
+}
 
 export default function ReviewQuote({ configuration, setStep }) {
+  const mirrors = Array.isArray(configuration) ? configuration : [configuration];
+  const [submitting, isSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    isSubmitting(true);
 
     const data = {
       firstName: e.target.firstName.value,
@@ -13,12 +39,23 @@ export default function ReviewQuote({ configuration, setStep }) {
       comments: e.target.comments.value,
     };
 
-    await fetch("/api/contact", {
+    try {
+      const response = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ form: data, configuration, type: "quote" }),
     });
-  };
+
+    if (response.ok) {
+        alert("Message Sent!")
+        isSubmitting(false);
+    }
+  }  catch(err) {
+        console.error(err)
+        alert("Unable to send your inquiry, please try again")
+    } 
+  }
+   
 
   return (
     <div className="review-quote">
@@ -28,30 +65,39 @@ export default function ReviewQuote({ configuration, setStep }) {
 
       <h2 className="rq-title">Review Your Quote</h2>
 
-      <div className="rq-summary">
-        <div className="rq-row">
-          <span>Material: </span>
-          <b>{configuration.material || "—"}</b>
-        </div>
-        <div className="rq-row">
-          <span>Shape: </span>
-          <b>{configuration.shape || "—"}</b>
-        </div>
-        <div className="rq-row">
-          <span>Coating: </span>
-          <b>{configuration.coating || "—"}</b>
-        </div>
-        <div className="rq-row">
-          <span>Quantity: </span>
-          <b>{configuration.quantity || "—"}</b>
-        </div>
-        {configuration.notes && (
+      {mirrors.map((config, i) => (
+        <div className="rq-summary" key={config.orderNumber ?? i}>
+          {mirrors.length > 1 && (
+            <div className="rq-mirror-heading">Mirror #{config.orderNumber ?? i + 1}</div>
+          )}
           <div className="rq-row">
-            <span>Notes: </span>
-            <b>{configuration.notes}</b>
+            <span>Material</span>
+            <b>{config.material || "—"}</b>
           </div>
-        )}
-      </div>
+          <div className="rq-row">
+            <span>Shape</span>
+            <b>{config.shape || "—"}</b>
+          </div>
+          <div className="rq-row">
+            <span>Dimensions</span>
+            <b>{formatDimensions(config)}</b>
+          </div>
+          <div className="rq-row">
+            <span>Coating</span>
+            <b>{config.coating || "—"}</b>
+          </div>
+          <div className="rq-row">
+            <span>Quantity</span>
+            <b>{config.quantity || "—"}</b>
+          </div>
+          {config.notes && (
+            <div className="rq-row">
+              <span>Notes</span>
+              <b>{config.notes}</b>
+            </div>
+          )}
+        </div>
+      ))}
 
       <form className="rq-form" onSubmit={handleSubmit}>
         <div className="rq-name">
@@ -62,8 +108,8 @@ export default function ReviewQuote({ configuration, setStep }) {
         <input type="email" required name="email" placeholder="Email" />
         <input type="tel" name="phoneNumber" placeholder="Phone Number" />
         <textarea name="comments" placeholder="Additional Comments" rows="4"></textarea>
-        <div class = "button-wrapper">
-          <button type="submit" className="rq-submit">Submit Quote Request</button>
+        <div className="button-wrapper">
+          <button type="submit" className="rq-submit" disabled = {submitting}>{ submitting ? "Sending..." : "Submit Quote Request"}</button>
         </div>
       </form>
     </div>

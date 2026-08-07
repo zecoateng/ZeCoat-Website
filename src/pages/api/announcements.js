@@ -5,7 +5,7 @@ configDotenv();
   
 const { Pool } = pg;
   
-//Connects the API to the database to save submissions
+// Connects the API to the database to save submissions
 export const pool = new Pool({
     user: "postgres",
     host: "localhost",
@@ -14,7 +14,7 @@ export const pool = new Pool({
     port: 5432
   })
 
-  // creates new instance of annoucement
+  // Creates new instance of annoucement
 export async function POST({ request }) {
     const data = await request.json();
     const { title, date, description } = data;

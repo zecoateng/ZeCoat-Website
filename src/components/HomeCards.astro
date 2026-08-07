@@ -2,99 +2,112 @@
 const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
 ---
 
-<div class:list={["card", variant]}>
-  <img src={imgSrc} class="card-img-top" alt="Card Image">
-  <div class="card-body">
-    <h3 class="card-title">{cardTitle}</h3>
-    <p class="card-text">{cardBody}</p>
+{variant === "experiences" ? (
+  <div class="card experiences">
+    <img src={imgSrc} class="card-img-top" alt={cardTitle} />
+    <div class="card-body">
+      <h3 class="card-title">{cardTitle}</h3>
+      <p class="card-text">{cardBody}</p>
+    </div>
   </div>
-</div>
+) : (
+  <div class:list={["card", variant]}>
+    <div class="img-wrap">
+      <img src={imgSrc} class="card-img-top" alt={cardTitle} />
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">{cardTitle}</h3>
+      <p class="card-text">{cardBody}</p>
+    </div>
+  </div>
+)}
 
 <style>
+  .card {
+    box-sizing: border-box;
+  }
 
-.card.experiences .card-img-top {
+  .card.default,
+  .card.featured {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card.featured:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
+  }
+
+  .card.default .img-wrap,
+  .card.featured .img-wrap {
+    overflow: hidden;
+  }
+
+  .card.default .card-img-top,
+  .card.featured .card-img-top {
     width: 100%;
-    max-height: 50%;
-}
-
-.card.default .card-img-top {
-    width: 100%;
-    max-height: 50%;   
-}
-
-.card {
-  max-width: 380px;
-}
-
-
-.card.featured .card-img-top {
-    width: 100%;
-    height: 250px;
+    height: 210px;
     object-fit: cover;
     object-position: center;
-}
+    display: block;
+    transition: transform 0.5s ease;
+  }
 
+  .card.default:hover .card-img-top,
+  .card.featured:hover .card-img-top {
+    transform: scale(1.05);
+  }
 
-.card.default {
-  background:
-linear-gradient(
-180deg,
-#ffffff,
-#f7f9fc
-);
+  .card.default .card-body,
+  .card.featured .card-body {
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
 
-border:1px solid rgba(0,0,0,.06);
+  .card.default .card-title,
+  .card.featured .card-title {
+    font-size: 1.3rem;
+    color: #16202E;
+    margin: 0;
+  }
 
-box-shadow:
-0 12px 40px rgba(0,0,0,.08);
-  border-radius: 8px;
-  overflow: hidden;
-  max-width: 400px;
-  max-height: 700px;
-  box-shadow:
-0 10px 25px rgba(0,0,0,.08);
+  .card.default .card-text,
+  .card.featured .card-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+  .card.experiences {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 380px;
+  }
 
-  border-color:#1E293B;
-  border-width: 1px;
-}
+  .card.experiences .card-img-top {
+    width: 100%;
+    height: 100%;
+    max-height: 100px;
+  }
 
+  .card.experiences .card-body {
+    height: 100%;
+    padding: 10px;
+  }
 
-.card .card-body {
-  padding: 10px;
-}
-
-.card.experiences .card-img-top {
-  width: 100%;
-  
-  height: 100%;
-  max-height: 100px;
-}
-
-.card.experiences .card-title {
-  font-size: 20px;
-}
-
-.card.experiences {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.card.experiences .card-body {
-  height: 100%;
-}
-
-.card.featured {
-    background: #FFFFFF;
-    border: 1px solid #dce3ea;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
-    transition: 0.3s;
-}
-
-.card.featured:hover {
-  transform: translateY(-8px);
-}
-
+  .card.experiences .card-title {
+    font-size: 20px;
+  }
 </style>

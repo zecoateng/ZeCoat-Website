@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: Self-Coating Telescope</h1>
+<p>Every aluminum mirror flown into space is already a little compromised before it ever leaves the ground. The instant fresh aluminum meets air, it grows a thin skin of oxide, and that skin quietly cuts off reflectance in the far-ultraviolet — exactly the wavelengths that are hardest to reach and often the most scientifically valuable. The usual workaround is to seal the aluminum under a protective fluoride layer, which keeps it stable but blocks the shortest wavelengths anyway. ZeCoat's self-coating telescope flips the problem around: instead of coating the mirror on Earth and hoping it survives launch and years on orbit, the telescope carries its own compact coating system and lays down a fresh, bare aluminum surface once it is already in space.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>The idea is built on ZeCoat's battery-powered deposition system. In place of the large, cable-fed evaporation source used in a ground coating plant, it uses many small filament evaporators — each running on low-voltage, high-current battery power, on the order of 7.4 volts and 100 amps per source spread across the mirror in a hexagonal array. Fired together, the array can coat a large mirror in a matter of seconds, and because there are no heavy power cables running back to a distant supply, the whole assembly is light and compact enough to fly.
+
+Coating in the vacuum of a high orbit such as L2 changes what is possible. The aluminum never sees air, so there is no oxide to fight and no need for a lossy protective overcoat. That is where the payoff comes from: a mirror coated on the ground reflects well only down to about 160 nm, and a fluoride-protected one falls off below roughly 105 nm, but bare aluminum deposited in space can stay reflective into the extreme ultraviolet toward 50 nm. Modeling of the source array shows uniformity tightening as sources are added, from around 12% peak-to-valley with 23 sources per square meter to roughly 6% with 81, and the approach scales from mirrors a couple of meters across to well beyond six
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li><a href="https://doi.org/10.1117/12.2529530" target="_blank" rel="noopener">Mathematical Analysis of Hexagonal Source Arrangement for Making Uniform Reflective Aluminum Coatings — Sheikh, Quijada, Del Hoyo &amp; Richardson, 2019</a></li>
+<li><a href="https://doi.org/10.1117/12.2234335" target="_blank" rel="noopener">Battery-Powered Thin-Film Deposition Process for Coating Telescope Mirrors in Space — Sheikh, 2016</a></li>
+</ul>
+<p><strong>SBIR Contracts</strong></p>
+<ul class="pub-list">
+<li><a href="https://www.sbir.gov/awards/164492" target="_blank" rel="noopener">Battery-Powered Process for Coating Telescope Mirrors in Space — NASA SBIR Phase I, 2017</a></li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<img src = "/Starshades&StrayLight.png" class = "img">
+<h2>Benefits</h2>
+<ul>
+    <li>Deposits fresh, bare aluminum in orbit, avoiding oxide and overcoat losses.</li>
+    <li>Extends useful reflectance into the extreme ultraviolet, toward 50 nm.</li>
+    <li>Compact, battery-powered sources need no heavy cabling and are light enough to fly.</li>
+    <li>Enables on-orbit re-coating to refresh degraded mirrors and extend mission life.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Extreme- and far-ultraviolet space telescopes.</li>
+    <li>Long-duration observatories requiring mirror refresh on orbit.</li>
+    <li>Large-aperture space mirrors where ground coating is impractical.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pub-list a:hover {
+    text-decoration: underline;
+}
+
+</style>

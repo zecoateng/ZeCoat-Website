@@ -93,16 +93,32 @@ ZeCoat has developed a unique vacuum coating system, which utilizes a motion-con
 In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. The Illinois facility is centered on 3-acres, and is located on the Mississippi river with direct access to a municipal barge port. 
 </p>
 </div>
+<div class = "ceo-wrapper">
 <div class = "ceo-layout">
 <div class = "ceo-image">
-<img src = "/public/DavidHeadshot.jpg"/>
+<img src = "/public/DavidHeadshot.png"/>
 </div>
 <div class = "ceo-description">
 <div class= "name-group">
 <h1>David Sheikh</h1>
 <h2>CEO, Founder</h2>
 </div>
-<h3>David Sheikh has developed a wide array of highly specialized optical, thermal, and space-resilient coatings for telescopes and planetary missions. </h3>
+<p>David A. Sheikh is the co-founder and CEO of ZeCoat Corporation, where he leads the development of advanced optical coating technologies for space, astronomy, and scientific research. With nearly four decades of experience in chemical engineering and vacuum deposition, he specializes in designing high-performance mirror coatings, thermal control coatings, and precision thin films for both ground-based and space-based optical systems.</p>
+</div>
+</div>
+<div class = "ceo-layout">
+<div class = "ceo-image">
+</div>
+<div class = "ceo-description">
+<div class= "name-group">
+<h1>Joshua Saadia</h1>
+<h2>Operations Manager</h2>
+</div>
+<p>Joshua Saadia oversees engineering operations, manufacturing, and quality management at ZeCoat Corporation. With more than 20 years of experience in thin-film coatings and vacuum systems, he has supported major aerospace programs and helps bring advanced coating technologies from research into production.</p>
+</div>
+<div class = "ceo-image">
+<img src = "/public/JoshHeadshot.jpg"/>
+</div>
 </div>
 </div>
 <div class = "timeline-wrapper">
@@ -157,6 +173,7 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     display:flex;
     flex-direction: column;
     max-width: 600px;
+    font-size: 18px;
 }
 
 .ceo-image img {
@@ -170,6 +187,12 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     border: 1px solid #DCE3EA;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     border-radius: 16px;
+}
+
+.ceo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
 .timeline-wrapper {
@@ -244,8 +267,16 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
 .right-column {
     display: flex;
     flex-direction: column;
-    gap: 4rem;      /* loose spacing */
-    margin-top: 150px;
+    gap: 2rem;      /* even with left column by default */
+    margin-top: 0;
+}
+
+/* Staggered zig-zag only when there's room for it */
+@media (min-width: 1200px) {
+    .right-column {
+        gap: 4rem;
+        margin-top: 150px;
+    }
 }
  
 .timeline-wrapper {
@@ -346,6 +377,12 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     font-size: 48px;
     text-align:center;
   }
+  
+  .ceo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
 
   .ceo-layout{
     flex-direction:column;

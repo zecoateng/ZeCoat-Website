@@ -83,19 +83,18 @@ const removeMirror = (indexToRemove) => {
         )
 
         }
-            {step === "configure" && 
+            {step === "configure" &&
             <div className = "page">
-                <h1>Configure Coating</h1>
+                <div className = "config-header">
+                    <h1 className = "config-title">Configure Coating</h1>
+                </div>
             <div className = "page-layout">
             <div className = "form-layout">
-                {configuration.map((config, index) => (
+                {configuration.map((config) => (
                     <ConfigureForm
-                    key={config.id}
+                    key={config.orderNumber}
                     configurationObject={config}
-                    configurationTotal={configuration}
-                    index={index}
                     updateConfiguration={updateConfiguration}
-                    setStep={setStep}
                     />
                     ))}
                     </div>
