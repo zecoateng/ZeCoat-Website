@@ -179,7 +179,7 @@ This request was submitted via the ZeCoat website coating configurator.
 // Adds the inquiry to the database
 await pool.query(
   `
-  INSERT INTO quotes (
+  INSERT INTO submissions (
   first_name,
   last_name,
   company,

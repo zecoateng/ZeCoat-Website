@@ -1,18 +1,13 @@
 import { configDotenv } from "dotenv";
-import pg from "pg";
+import { neon } from "@netlify/neon"
 export const prerender = false;
 configDotenv();
+
+
+// Connects the API to the database to save submissions  
+const sql = neon();
   
-const { Pool } = pg;
-  
-// Connects the API to the database to save submissions
-export const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "zecoat_quotes",
-    password: process.env.POSTGRES_PASSWORD,
-    port: 5432
-  })
+
 
   // Creates new instance of annoucement
 export async function POST({ request }) {
@@ -34,20 +29,19 @@ export async function POST({ request }) {
       );
     }
 
-    await pool.query(
+    await sql
       `
       INSERT INTO announcements (
       title,
       date,
       description
       )
-      VALUES ($1, $2, $3)
-      `, [
-        title,
-        date,
-        description
-      ]
-    );
+      VALUES (
+      ${title},
+      ${date},
+      ${description}
+      )
+      `;
 
      return new Response(
       JSON.stringify({
@@ -81,14 +75,14 @@ export async function POST({ request }) {
 // actually gets the instances of the announcements and put on website
 export async function GET() {
     try {
-    const result = await pool.query(
+    const result = await sql
       `
       SELECT id, title, date, description
       FROM announcements
       ORDER BY created_at DESC
       LIMIT 3
       `
-    );
+      ;
 
     return new Response(
       JSON.stringify(result.rows),
