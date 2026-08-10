@@ -214,7 +214,7 @@ const featuredTechnologies = [
   async function loadAnnouncements() {
     // Re-query each run: ClientRouter swaps in a fresh DOM on every navigation
     const list = document.getElementById("announcements-list");
-    if (!list) return; // not on the homepage
+    if (!list) return;
     try {
       const res = await fetch("/api/announcements");
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
@@ -326,6 +326,8 @@ const featuredTechnologies = [
 
 .what-we-do-description {
     text-align: center;
+    font-weight: 400;
+    color: #475569;
 }
 
 .about-tag {
@@ -462,8 +464,6 @@ a::after {
     text-align: center;
 }
 
-/* These cards are injected by client-side JS, so they never get Astro's
-   scoped data attribute — the styles must be :global() to reach them. */
 :global(.announcement-card) {
     flex: 1;
     max-width: 380px;

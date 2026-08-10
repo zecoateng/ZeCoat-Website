@@ -88,6 +88,15 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
     color: #475569;
     margin: 0;
   }
+
+  /* Cap the featured card body so long descriptions don't stretch the card.
+     Truncates to 3 lines with an ellipsis. */
+  .card.featured .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .card.experiences {
     display: flex;
     flex-direction: column;
