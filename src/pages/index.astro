@@ -85,18 +85,6 @@ const featuredTechnologies = [
     }
 ]
 
-
-let announcements = [];
-
-try {
-    const response = await fetch("http://localhost:4321/api/announcements");
-    const data = await response.json();
-
-    announcements = Array.isArray(data) ? data : [];
-} catch (err) {
-    console.error("Could not load announcements:", err);
-}
-
 ---
 
 <Layout>
@@ -136,20 +124,10 @@ try {
 <section class = "announcements-section">
 <h1>Announcements</h1>
 
-    <div class="cards-layout">
-    {
-        announcements.map(announcement => {
-            return (
-                <div class="announcement-card">
-                    <span class="announcement-date">{new Date(announcement.date).toLocaleDateString()}</span>
-                    <h3 class="announcement-title">{announcement.title}</h3>
-                    <p class="announcement-body">{announcement.description}</p>
-                </div>
-            )
-        })
-    }
-</div>
-       
+    <div class="cards-layout" id="announcements-list">
+        <p class="announcement-empty">Loading announcements…</p>
+    </div>
+
 </section>
 <section class = "experience-section">
     <div class = "featuredMissions-section">
@@ -225,6 +203,48 @@ try {
 </div>
 
 </Layout>
+
+<script>
+  const list = document.getElementById("announcements-list");
+
+  // Escape user-entered text so a title/description can't inject HTML
+  const esc = (s) =>
+    String(s ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
+    );
+
+  async function loadAnnouncements() {
+    if (!list) return;
+    try {
+      const res = await fetch("/api/announcements");
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
+      const data = await res.json();
+      const announcements = Array.isArray(data) ? data : [];
+
+      if (announcements.length === 0) {
+        list.innerHTML = `<p class="announcement-empty">No announcements yet.</p>`;
+        return;
+      }
+
+      list.innerHTML = announcements
+        .map(
+          (a) => `
+        <div class="announcement-card">
+          <span class="announcement-date">${esc(new Date(a.date).toLocaleDateString())}</span>
+          <h3 class="announcement-title">${esc(a.title)}</h3>
+          <p class="announcement-body">${esc(a.description)}</p>
+        </div>`
+        )
+        .join("");
+    } catch (err) {
+      console.error("Could not load announcements:", err);
+      list.innerHTML = `<p class="announcement-empty">Couldn't load announcements right now.</p>`;
+    }
+  }
+
+  loadAnnouncements();
+</script>
 
 <style>
 .intro-section {
@@ -465,6 +485,12 @@ a::after {
     margin: 0;
     color: #1B2430;
     line-height: 1.5;
+}
+
+.announcement-empty {
+    margin-top: 60px;
+    color: #64748B;
+    text-align: center;
 }
 
 .page-layout {

@@ -5,7 +5,7 @@ import Layout from "../layouts/layout.astro";
 let rows = [];
 let loadError = null;
 try {
-  const response = await fetch("http://localhost:4321/api/quotes");
+  const response = await fetch("/api/quotes");
   const data = await response.json();
   // The API returns an array on success, or { error } on failure.
   rows = Array.isArray(data) ? data : [];
