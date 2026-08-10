@@ -1,19 +1,10 @@
 import { configDotenv } from "dotenv";
 import nodemailer from "nodemailer";
-import pg from "pg";
+import { neon } from "@netlify/neon"
 export const prerender = false;
 configDotenv();
 
-const { Pool } = pg;
-
-//Connects the API to the database to save submissions
-export const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "zecoat_quotes",
-  password: process.env.POSTGRES_PASSWORD,
-  port: 5432
-})
+const sql = neon(process.env.NETLIFY_DATABASE_URL);
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com", //find out who hosts zecoat email
@@ -51,6 +42,7 @@ export async function POST({ request }) {
     const data = await request.json();
 
     const { form, configuration, type } = data;
+    const { firstName, lastName, company, email, phoneNumber, comments } = form ?? {};
 
     let info;
 
@@ -98,16 +90,16 @@ export async function POST({ request }) {
 NEW ZECOAT QUOTE REQUEST
 
 --- Contact ---
-Name: ${form.firstName} ${form.lastName}
-Company: ${form.company || "-"}
-Email: ${form.email}
-Phone: ${form.phone || "-"}
+Name: ${firstName} ${lastName}
+Company: ${company || "-"}
+Email: ${email}
+Phone: ${phoneNumber || "-"}
 
 --- Configuration (${mirrors.length} mirror${mirrors.length > 1 ? "s" : ""}) ---
 ${mirrorsText}
 
 --- Additional Comments ---
-${form.comments || "None"}
+${comments || "None"}
 
 This request was submitted via the ZeCoat website coating configurator.
   `,
@@ -138,10 +130,10 @@ This request was submitted via the ZeCoat website coating configurator.
           <table role="presentation" width="100%" style="background:#f8fafc;border:1px solid #eaecf0;border-radius:10px;">
             <tr><td style="padding:16px 20px;">
               <table role="presentation" width="100%">
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;width:90px;">Name</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.firstName} ${form.lastName}</td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${form.email}" style="color:#2563eb;text-decoration:none;font-weight:600;">${form.email}</a></td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.company || "-"}</td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.phone || "-"}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;width:90px;">Name</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${firstName} ${lastName}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${email}" style="color:#2563eb;text-decoration:none;font-weight:600;">${email}</a></td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${company || "-"}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${phoneNumber || "-"}</td></tr>
               </table>
             </td></tr>
           </table>
@@ -156,7 +148,7 @@ This request was submitted via the ZeCoat website coating configurator.
         <!-- Comments -->
         <tr><td style="padding:8px 32px 0;">
           <p style="margin:0 0 6px;font-size:12px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Additional Comments</p>
-          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${form.comments || "None"}</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${comments || "None"}</p>
         </td></tr>
 
         <!-- CTA -->
@@ -177,7 +169,7 @@ This request was submitted via the ZeCoat website coating configurator.
 });
 
 // Adds the inquiry to the database
-await pool.query(
+await sql
   `
   INSERT INTO submissions (
   first_name,
@@ -188,17 +180,17 @@ await pool.query(
   configuration,
   notes
   )
-  VALUES ($1, $2, $3, $4, $5, $6, $7)
-  `, [
-    form.firstName,
-    form.lastName,
-    form.company,
-    form.email,
-    form.phone,
-    JSON.stringify(configuration),
-    form.comments
-  ]
-);
+  VALUES (
+      ${firstName},
+      ${lastName},
+      ${company},
+      ${email},
+      ${phoneNumber},
+      ${configuration},
+      ${notes}
+      )
+      `;
+
 } if (type === "general") {
       info = await transporter.sendMail({
     from: `"ZeCoat" <${process.env.SMTP_USER}>`, // sender address
@@ -207,13 +199,13 @@ await pool.query(
       text: `
 NEW ZECOAT INQUIRY
 
-Name: ${form.firstName} ${form.lastName}
-Company: ${form.company}
-Email: ${form.email}
-Phone: ${form.phone}
+Name: ${firstName} ${lastName}
+Company: ${company}
+Email: ${email}
+Phone: ${phoneNumber}
 
 --- Additional Details ---
-${form.comments}
+${comments}
 
 This message was submitted via the ZeCoat website contact form.
   `,
@@ -244,10 +236,10 @@ This message was submitted via the ZeCoat website contact form.
           <table role="presentation" width="100%" style="background:#f8fafc;border:1px solid #eaecf0;border-radius:10px;">
             <tr><td style="padding:16px 20px;">
               <table role="presentation" width="100%">
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;width:90px;">Name</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.firstName} ${form.lastName}</td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${form.email}" style="color:#2563eb;text-decoration:none;font-weight:600;">${form.email}</a></td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.company}</td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${form.phone}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;width:90px;">Name</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${firstName} ${lastName}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${email}" style="color:#2563eb;text-decoration:none;font-weight:600;">${email}</a></td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${company}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${phoneNumber}</td></tr>
               </table>
             </td></tr>
           </table>
@@ -256,7 +248,7 @@ This message was submitted via the ZeCoat website contact form.
         <!-- Message -->
         <tr><td style="padding:20px 32px 0;">
           <p style="margin:0 0 6px;font-size:12px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Message</p>
-          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${form.comments || "None"}</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${comments || "None"}</p>
         </td></tr>
 
         <!-- CTA -->

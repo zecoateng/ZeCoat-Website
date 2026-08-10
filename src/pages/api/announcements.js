@@ -5,7 +5,7 @@ configDotenv();
 
 
 // Connects the API to the database to save submissions  
-const sql = neon();
+const sql = neon(process.env.NETLIFY_DATABASE_URL);
   
 
 
@@ -85,7 +85,7 @@ export async function GET() {
       ;
 
     return new Response(
-      JSON.stringify(result.rows),
+      JSON.stringify(result),
       {
         status: 200,
         headers: {

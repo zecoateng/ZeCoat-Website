@@ -1,23 +1,15 @@
-import pg from "pg";
+import { neon } from "@netlify/neon"
 
-const { Pool } = pg;
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "zecoat_quotes",
-  password: process.env.POSTGRES_PASSWORD,
-  port: 5432
-});
+const sql = neon(process.env.NETLIFY_DATABASE_URL);
 
 export async function GET() {
     try {
-        const result = await pool.query (
-            "SELECT * FROM quotes ORDER BY ID DESC"
-        );
+        const result = await sql `
+            SELECT * FROM quotes ORDER BY ID DESC`;
+
 
     return new Response(
-        JSON.stringify(result.rows),
+        JSON.stringify(result),
         {
             status: 200,
             headers: {

@@ -2,19 +2,23 @@
 
 Welcome to the ZeCoat website project.
 
-This document explains how to update, maintain, and deploy the ZeCoat website. The goal of this guide is to allow future employees, developers, or website managers to safely update the website without needing to understand every part of the code.
+This guide is meant to help anyone who needs to update, maintain, or make changes to the website in the future.
+
+The website does have both a frontend and a database connected to it, so some changes require more technical knowledge. This guide explains where things are located, how to make basic updates, and what to avoid.
 
 ---
 
-# Overview
+# What This Website Uses
 
-The ZeCoat website is built using the following technologies:
+The ZeCoat website is built using several different technologies:
 
-- **Astro** - Website framework used to create the pages
-- **React** - Used for the interactive website components, such as the contact page, order form, and calculators
-- **Netlify** - Hosts the website and handles deployments
-- **PostgreSQL Database** - Stores website information such as announcements, contact submissions, and quote requests
-- **GitHub** - Stores the website code and tracks changes
+- **Astro** - The main framework used to create the website pages.
+- **React** - Used for interactive features such as forms, calculators, and configurators.
+- **Netlify** - Hosts the website and automatically publishes updates.
+- **PostgreSQL Database** - Stores information submitted through the website.
+- **GitHub** - Stores the website code and tracks changes.
+
+You do not need to understand every technology listed above to make normal website updates. Most changes involve editing text, replacing images, or adding new content.
 
 ---
 
@@ -22,7 +26,7 @@ The ZeCoat website is built using the following technologies:
 
 Before editing the website, install the following programs.
 
-## 1. Node.js
+## Node.js
 
 Node.js allows the website tools to run.
 
@@ -33,8 +37,6 @@ https://nodejs.org/
 Install the recommended **LTS version**.
 
 To verify installation:
-
-Open Command Prompt or PowerShell and run:
 
 ```
 node -v
@@ -50,15 +52,15 @@ v22.12.0
 
 ---
 
-## 2. Git
+## Git
 
-Git tracks website changes and connects the computer to GitHub.
+Git keeps track of website changes and connects the website to GitHub.
 
 Download:
 
 https://git-scm.com/downloads
 
-Verify installation:
+Check installation:
 
 ```
 git --version
@@ -66,13 +68,15 @@ git --version
 
 ---
 
-## 3. Visual Studio Code
+## Visual Studio Code
 
 Visual Studio Code is the recommended program for editing the website.
 
 Download:
 
 https://code.visualstudio.com/
+
+This is where most website changes should be made.
 
 ---
 
@@ -86,25 +90,25 @@ Clone the repository:
 git clone https://github.com/adrianquijada/zecoat-website.git
 ```
 
-Enter the website folder:
+Enter the project folder:
 
 ```
-cd zecoat-website
+cd <THE NAME OF YOUR FOLDER>
 ```
 
-Install required packages:
+Install the required packages:
 
 ```
 npm install
 ```
 
-This may take a few minutes.
+This downloads everything required for the website to run.
 
 ---
 
 # Running the Website Locally
 
-Before making changes, test the website locally.
+Before making changes, it is recommended to run the website on your computer first.
 
 Start the development server:
 
@@ -112,7 +116,7 @@ Start the development server:
 npm run dev
 ```
 
-You should see:
+You should see something like:
 
 ```
 Local: http://localhost:4321/
@@ -120,7 +124,9 @@ Local: http://localhost:4321/
 
 Open that address in your browser.
 
-The website is now running on your computer.
+You are now viewing a local version of the website.
+
+Changes made locally will not affect the live website until they are uploaded.
 
 To stop the website:
 
@@ -134,26 +140,26 @@ CTRL + C
 
 # Website File Structure
 
-The main website files are located inside:
+Most website files are located inside:
 
 ```
 src/
 ```
 
-Important folders:
+The important folders are:
 
 ```
 src/
-|
+
 ├── pages/
-|      Website pages
-|
+│      Website pages
+
 ├── components/
-|      Reusable website sections
-|
+│      Reusable website sections
+
 ├── layouts/
-|      Overall website structure
-|
+│      Overall page structure
+
 └── data/
        Website information
 ```
@@ -174,129 +180,7 @@ netlify/database/
 
 # Editing Website Text
 
-Most website text is stored inside `.astro` files.
-
-Example:
-
-```
-src/pages/about.astro
-```
-
-You may see:
-
-```html
-<h1>
-About ZeCoat
-</h1>
-```
-
-Changing it to:
-
-```html
-<h1>
-About ZeCoat Corporation
-</h1>
-```
-
-will update the website.
-
-After saving:
-
-1. Refresh your browser
-2. Check that the changes appear
-
----
-
-# Adding or Changing Images
-
-Images are stored in:
-
-```
-public/
-```
-
-Example:
-
-```
-public/
-|
-├── facility.jpg
-├── telescope.png
-└── coating-machine.jpg
-```
-
-To add an image:
-
-1. Place the image inside the `public` folder
-2. Reference it in the website
-
-Example:
-
-```html
-<img src="/facility.jpg">
-```
-
-Important rules:
-
-- Avoid spaces in filenames
-- Use simple names
-- File names are case-sensitive
-
-Good:
-
-```
-facility-building.jpg
-```
-
-Bad:
-
-```
-Facility Building Final Image.jpg
-```
-
----
-
-# Updating Technologies and Capabilities
-
-Technology and capability cards are usually stored in:
-
-```
-src/data/
-```
-
-Look for files containing:
-
-```javascript
-export const technologies = [
-```
-
-or:
-
-```javascript
-export const capabilities = [
-```
-
-Example:
-
-```javascript
-{
- title: "FUV Aluminum",
- description:
- "A specialized aluminum coating designed for ultraviolet astronomy."
-}
-```
-
-To add a new item:
-
-1. Copy an existing item
-2. Change the title
-3. Change the description
-4. Add the correct image
-5. Add the correct page link if needed
-
----
-
-# Updating Website Pages
+Most normal website updates involve changing text.
 
 Website pages are located in:
 
@@ -324,9 +208,121 @@ src/pages/contact.astro
 
 Contact page.
 
+Inside these files you will see website text.
+
+Example:
+
+```html
+<h1>
+About ZeCoat
+</h1>
+```
+
+Changing it to:
+
+```html
+<h1>
+About ZeCoat Corporation
+</h1>
+```
+
+will update the website.
+
+After saving:
+
+1. Refresh your browser
+2. Confirm the change looks correct
+
 ---
 
-# Important Components
+# Adding or Changing Images
+
+Images are stored in:
+
+```
+public/
+```
+
+Example:
+
+```
+public/
+
+facility.jpg
+mirror-coating.png
+telescope.jpg
+```
+
+To add a new image:
+
+1. Place the image inside the `public` folder
+2. Reference it in the website code
+
+Example:
+
+```html
+<img src="/facility.jpg">
+```
+
+Try to keep image names simple.
+
+Recommended:
+
+```
+facility-building.jpg
+```
+
+Avoid:
+
+```
+Facility Building Final Image 2.jpg
+```
+
+Spaces and capital letters can cause problems.
+
+---
+
+# Updating Technologies and Capabilities
+
+Technology and capability cards are stored in:
+
+```
+src/data/
+```
+
+Look for files containing:
+
+```javascript
+export const technologies = [
+```
+
+or:
+
+```javascript
+export const capabilities = [
+```
+
+Example:
+
+```javascript
+{
+title: "FUV Aluminum",
+description:
+"Specialized aluminum coatings designed for ultraviolet astronomy."
+}
+```
+
+To add a new item:
+
+1. Copy an existing item
+2. Change the title
+3. Change the description
+4. Add the correct image
+5. Add the correct page link if needed
+
+---
+
+# Important Website Components
 
 ## Header
 
@@ -342,6 +338,7 @@ Controls:
 - Logo
 - Main website links
 
+---
 
 ## Footer
 
@@ -353,18 +350,30 @@ src/components/Footer.astro
 
 Controls:
 
-- Footer links
 - Contact information
+- Footer links
 - Copyright information
 
+---
 
-## Cards and Sections
+## Components Folder
 
-Most reusable website sections are stored in:
+Location:
 
 ```
 src/components/
 ```
+
+This contains reusable website sections.
+
+Examples:
+
+- Cards
+- Buttons
+- Forms
+- Page sections
+
+If something appears on multiple pages, it is probably stored here.
 
 ---
 
@@ -372,13 +381,13 @@ src/components/
 
 The website uses a PostgreSQL database.
 
-The database stores:
+The database currently stores:
 
 - Announcements
-- Contact form submissions
+- Contact submissions
 - Quote requests
 
-Database migrations are located at:
+Database migration files are located here:
 
 ```
 netlify/database/migrations
@@ -390,13 +399,11 @@ netlify/database/migrations
 
 Important:
 
-Do not edit old migration files.
+**Do not edit old migration files.**
 
-Once a migration has been applied, it cannot be changed.
+Once a migration has been applied, it is considered permanent.
 
-If a database change is needed:
-
-Create a new migration instead.
+If the database needs a change, create a new migration.
 
 Examples of database changes:
 
@@ -420,13 +427,13 @@ description
 created_at
 ```
 
-The website automatically retrieves announcements from the database and displays them.
+The website automatically retrieves announcements and displays them.
 
 ---
 
 # API Routes
 
-API routes handle communication between the website and database.
+API routes connect the website to the database.
 
 They are located here:
 
@@ -443,24 +450,29 @@ src/pages/api/announcements
 These files handle:
 
 - Saving information
-- Reading information
+- Loading information
 - Sending form submissions
+- Connecting to the database
 
-Do not modify API files unless you understand backend code.
+Do not modify API files unless you understand backend development.
+
+A small mistake here can break forms or database connections.
 
 ---
 
-# Making Website Changes Live
+# Updating the Live Website
 
-After making changes:
+When you are ready to publish changes:
 
-## Step 1: Check changed files
+## Step 1: Check changes
 
 Run:
 
 ```
 git status
 ```
+
+This shows which files have changed.
 
 ---
 
@@ -498,19 +510,23 @@ Run:
 git push
 ```
 
-Netlify will automatically detect the changes and update the website.
+Netlify will automatically detect the changes and update the live website.
 
 ---
 
 # Manual Deployment
 
-If needed, install Netlify CLI:
+Normally GitHub handles deployment automatically.
+
+If manual deployment is needed:
+
+Install Netlify CLI:
 
 ```
 npm install -g netlify-cli
 ```
 
-Deploy manually:
+Deploy:
 
 ```
 netlify deploy --prod
@@ -526,17 +542,23 @@ To check the database:
 netlify database status
 ```
 
-A healthy database should show:
+A working database should show:
 
 ```
 Applied migrations
 ```
 
+If something is wrong, check:
+
+- Database is enabled
+- Migrations are applied
+- Environment variables exist
+
 ---
 
 # Common Problems
 
-## Website will not start
+## Website Will Not Start
 
 Try reinstalling packages:
 
@@ -552,29 +574,25 @@ npm run dev
 
 ---
 
-## Changes are not showing
+## Changes Are Not Showing
 
 Try:
 
 1. Save the file
-2. Refresh browser
-3. Restart development server
+2. Refresh the browser
+3. Restart the development server
 
 ---
 
-## Database errors
+## Database Errors
 
-Check:
+Run:
 
 ```
 netlify database status
 ```
 
-Make sure:
-
-- Database is enabled
-- Migrations are applied
-- Environment variables exist
+Check that migrations are applied.
 
 ---
 
@@ -584,28 +602,31 @@ Common causes:
 
 - Missing files
 - Incorrect file names
-- Code syntax errors
+- Code errors
 - Missing packages
 
-Check the Netlify build logs for details.
+Check the Netlify deployment logs for the exact error.
 
 ---
 
-# Development Best Practices
+# Recommended Workflow
 
-Before making major changes:
+Before making changes:
 
-1. Create a backup
-2. Commit working changes
-3. Change one thing at a time
-4. Test locally
-5. Deploy only after confirming everything works
+1. Make sure the website currently works
+2. Make one change at a time
+3. Test locally
+4. Save changes with Git
+5. Push changes to GitHub
+6. Confirm Netlify deployed successfully
+
+Avoid making many changes at once. It makes problems much harder to find.
 
 ---
 
 # Project Information
 
-Website:
+Company:
 
 ZeCoat Corporation
 
@@ -629,9 +650,9 @@ Astro
 
 # Final Notes
 
-This website was designed to be easily maintained.
+This website was built to be maintained without requiring a complete rebuild.
 
-Normal updates should include:
+Most normal updates should include:
 
 - Changing text
 - Adding images
@@ -639,7 +660,7 @@ Normal updates should include:
 - Adding announcements
 - Updating company information
 
-Major changes involving:
+Changes involving:
 
 - Database structure
 - Authentication
@@ -648,4 +669,4 @@ Major changes involving:
 
 should be handled by someone with web development experience.
 
-Always test changes before publishing them to the live website.
+Always test changes locally before publishing them to the live website.

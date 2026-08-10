@@ -90,9 +90,10 @@ const removeMirror = (indexToRemove) => {
                 </div>
             <div className = "page-layout">
             <div className = "form-layout">
-                {configuration.map((config) => (
+                {configuration.map((config, index) => (
                     <ConfigureForm
                     key={config.orderNumber}
+                    index={index}
                     configurationObject={config}
                     updateConfiguration={updateConfiguration}
                     />
