@@ -205,8 +205,6 @@ const featuredTechnologies = [
 </Layout>
 
 <script>
-  const list = document.getElementById("announcements-list");
-
   // Escape user-entered text so a title/description can't inject HTML
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) =>
@@ -214,7 +212,9 @@ const featuredTechnologies = [
     );
 
   async function loadAnnouncements() {
-    if (!list) return;
+    // Re-query each run: ClientRouter swaps in a fresh DOM on every navigation
+    const list = document.getElementById("announcements-list");
+    if (!list) return; // not on the homepage
     try {
       const res = await fetch("/api/announcements");
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
@@ -243,7 +243,9 @@ const featuredTechnologies = [
     }
   }
 
-  loadAnnouncements();
+  // ClientRouter navigates without a full page reload, so run on every Astro
+  // page load — this fires on the initial load AND after each client-side nav.
+  document.addEventListener("astro:page-load", loadAnnouncements);
 </script>
 
 <style>
