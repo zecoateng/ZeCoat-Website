@@ -460,7 +460,9 @@ a::after {
     text-align: center;
 }
 
-.announcement-card {
+/* These cards are injected by client-side JS, so they never get Astro's
+   scoped data attribute — the styles must be :global() to reach them. */
+:global(.announcement-card) {
     flex: 1;
     max-width: 380px;
     padding: 1.5rem;
@@ -470,24 +472,24 @@ a::after {
     box-shadow: 0 4px 12px rgba(22, 32, 46, 0.06);
 }
 
-.announcement-date {
+:global(.announcement-date) {
     font-size: 0.85rem;
     font-weight: 600;
     color: #C6870F;
 }
 
-.announcement-title {
+:global(.announcement-title) {
     margin: 0.5rem 0;
     color: #16202E;
 }
 
-.announcement-body {
+:global(.announcement-body) {
     margin: 0;
     color: #1B2430;
     line-height: 1.5;
 }
 
-.announcement-empty {
+:global(.announcement-empty) {
     margin-top: 60px;
     color: #64748B;
     text-align: center;
