@@ -1,6 +1,7 @@
 import { neon } from "@netlify/neon"
 
 const sql = neon(process.env.NETLIFY_DATABASE_URL);
+export const prerender = false
 
 export async function GET() {
     try {
