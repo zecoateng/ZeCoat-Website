@@ -1,11 +1,11 @@
 import { configDotenv } from "dotenv";
-import { neon } from "@netlify/neon"
+import { getDatabase } from "@netlify/database";
 export const prerender = false;
 configDotenv();
 
 
 // Connects the API to the database to save submissions  
-const sql = neon(process.env.NETLIFY_DATABASE_URL);
+const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
   
 
 

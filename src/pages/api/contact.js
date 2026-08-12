@@ -1,10 +1,10 @@
 import { configDotenv } from "dotenv";
 import nodemailer from "nodemailer";
-import { neon } from "@netlify/neon"
+import { getDatabase } from "@netlify/database";
 export const prerender = false;
 configDotenv();
 
-const sql = neon(process.env.NETLIFY_DATABASE_URL);
+const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com", //find out who hosts zecoat email
@@ -42,7 +42,7 @@ export async function POST({ request }) {
     const data = await request.json();
 
     const { form, configuration, type } = data;
-    const { firstName, lastName, company, email, phoneNumber, comments } = form ?? {};
+    const { firstName, lastName, company, email, phone: phoneNumber, comments } = form ?? {};
 
     let info;
 
@@ -171,7 +171,7 @@ This request was submitted via the ZeCoat website coating configurator.
 // Adds the inquiry to the database
 await sql
   `
-  INSERT INTO submissions (
+  INSERT INTO quotes (
   first_name,
   last_name,
   company,
@@ -187,7 +187,7 @@ await sql
       ${email},
       ${phoneNumber},
       ${configuration},
-      ${notes}
+      ${comments ?? null}
       )
       `;
 

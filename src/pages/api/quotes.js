@@ -1,6 +1,6 @@
-import { neon } from "@netlify/neon"
+import { getDatabase } from "@netlify/database";
 
-const sql = neon(process.env.NETLIFY_DATABASE_URL);
+const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
 export const prerender = false
 
 export async function GET() {
