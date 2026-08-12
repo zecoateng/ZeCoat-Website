@@ -253,7 +253,7 @@ This message was submitted via the ZeCoat website contact form.
 
         <!-- CTA -->
         <tr><td style="padding:24px 32px 32px;">
-          <a href="http://localhost:4321/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
+          <a href="${process.env.URL}/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
         </td></tr>
 
         <!-- Footer -->
