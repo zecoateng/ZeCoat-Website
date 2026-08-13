@@ -28,6 +28,10 @@ const DIMENSION_FIELDS = {
     ["flatToFlat", "Flat-to-Flat (mm)"],
     ["thickness", "Thickness (mm)"],
   ],
+  Oval: [
+    ["length", "Length (in)"],
+    ["width", "Width (in)"],
+  ],
 };
 
 function formatDimensions(config) {

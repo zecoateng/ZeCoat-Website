@@ -12,15 +12,11 @@ const DIMENSION_FIELDS = {
     { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
     { key: "thickness", label: "Thickness (mm)" },
   ],
+  Oval: [
+    { key: "length", label: "Length (in)" },
+    { key: "width", label: "Width (in)" },
+  ],
 };
-
-function formatDimensions(config) {
-  const fields = DIMENSION_FIELDS[config.shape] || [];
-  const parts = fields
-    .filter((f) => config.dimensions?.[f.key])
-    .map((f) => f.label + ": " + config.dimensions[f.key]);
-  return parts.length ? parts.join(", ") : "—";
-}
 
 export default function ReviewQuote({ configuration, setStep }) {
   const mirrors = Array.isArray(configuration) ? configuration : [configuration];
@@ -78,10 +74,22 @@ export default function ReviewQuote({ configuration, setStep }) {
             <span>Shape</span>
             <b>{config.shape || "—"}</b>
           </div>
-          <div className="rq-row">
-            <span>Dimensions</span>
-            <b>{formatDimensions(config)}</b>
-          </div>
+          {(DIMENSION_FIELDS[config.shape] || []).some((f) => config.dimensions?.[f.key]) ? (
+            (DIMENSION_FIELDS[config.shape] || []).map(
+              (f) =>
+                config.dimensions?.[f.key] && (
+                  <div className="rq-row" key={f.key}>
+                    <span>{f.label}</span>
+                    <b>{config.dimensions[f.key]}</b>
+                  </div>
+                )
+            )
+          ) : (
+            <div className="rq-row">
+              <span>Dimensions</span>
+              <b>—</b>
+            </div>
+          )}
           <div className="rq-row">
             <span>Coating</span>
             <b>{config.coating || "—"}</b>

@@ -12,6 +12,10 @@ const DIMENSION_FIELDS = {
     { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
     { key: "thickness", label: "Thickness (mm)" },
   ],
+  Oval: [
+    { key: "length", label: "Length (in)" },
+    { key: "width", label: "Width (in)" }
+  ]
 };
 
 export default function SummaryComponent({

@@ -67,12 +67,6 @@ const timeline = [
     category: "Spacecraft Accomplishments",
     title: "Habitable Worlds Observatory Thermal Films",
     description: "ZeCoat is currently leading the development of multi-layered thermal control films on polymer membranes to insulate and protect next-generation deep-space observatories."
-  },
-
-  {
-    category: "Active in Space",
-    title: "Self-Coating Space Telescopes",
-    description: "Under recent NASA contracts, David Sheikh has developed a battery-powered aluminum deposition process that can autonomously apply or refresh high-reflectance optical coatings while on orbit."
   }
 ];
 
@@ -86,11 +80,12 @@ const centerItems = timeline.filter(item => item.category === "Active in Space")
 <Layout>
 <div class = "about-container">
 <h1 class = "title" >About ZeCoat Corporation</h1>
-<p>ZeCoat Corporation was founded in 2011 by David and Gillian Sheikh.  In 2012, Joshua Saadia joined ZeCoat and over the past decade, they have assembled a talented group of experts in the field of coating design, physical chemistry, electronics, mechanical design and software development to provide specialized vacuum capabilities to the astronomy community. 
+<p>ZeCoat Corporation develops advanced thin-film optical coatings and vacuum-deposition technologies for demanding astronomy, aerospace, and scientific applications. Founded in 2011, we bring together expertise in coating design, physical chemistry, electronics, mechanical engineering, and software development to solve challenges that conventional coating systems cannot.
 
-ZeCoat has developed a unique vacuum coating system, which utilizes a motion-controlled electron beam evaporator,  which can uniformly coat substrates up to 2-meters in diameter with exceptional layer precision   (+/- 1.5%). 
+At our manufacturing facility in Granite City, IL, our cleanroom, optical measurement laboratory, and motion-controlled electron-beam evaporation systems enable us to coat substrates up to two meters in diameter with exceptional uniformity and layer precision. Our capabilities include protected silver, far-ultraviolet aluminum, protected gold, multilayer dielectric, thermal-control, silicon-cladding, and ultra-black coatings.
 
-In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. The Illinois facility is centered on 3-acres, and is located on the Mississippi river with direct access to a municipal barge port. 
+Technologies developed by our team have supported landmark missions and programs including the Kepler Space Telescope, Mars InSight, PACE, Chandrayaan-1, NuSTAR, and NASA’s starshade research. Today, we continue to advance the field through next-generation coatings, large-optic deposition systems, roll-to-roll processes, and technologies designed to apply or renew optical coatings in space.
+
 </p>
 </div>
 <div class = "ceo-wrapper">
@@ -309,6 +304,22 @@ In 2020, ZeCoat relocated from Torrance, California to Granite City, Illinois. T
     transform: translateX(-50%);
 
     top: -8px; 
+}
+
+.timeline-line::after {
+    content: "";
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #E7A21C;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    bottom: -8px; 
 }
 
 .timeline-item.center {

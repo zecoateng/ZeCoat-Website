@@ -16,6 +16,8 @@ export default function QuoteBuilder(){
         dimensions: {
             width: "",
             height: "",
+            length: "",
+            width: "",
             diameter: "",
             flatToFlat: "",
             thickness: "",
@@ -48,6 +50,8 @@ export default function QuoteBuilder(){
                 width: "",
                 height: "",
                 diameter: "",
+                length: "",
+                width: "",
                 flatToFlat: "",
                 thickness: "",
                 units: "mm",

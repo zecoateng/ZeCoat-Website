@@ -113,8 +113,11 @@ const initials = (first, last) =>
                           {m.coating && <span class="chip">{m.coating}</span>}
                           {m.quantity && <span class="chip">Qty {m.quantity}</span>}
                         </div>
-                        {(d.width || d.height || d.diameter || d.flatToFlat || d.thickness) && (
+                        {(d.length || d.width || d.height || d.diameter || d.flatToFlat || d.thickness) && (
                           <div class="specs">
+                            {d.length && (
+                              <div class="spec"><span>Length</span><b>{d.length}</b></div>
+                            )}
                             {d.width && (
                               <div class="spec"><span>Width</span><b>{d.width}</b></div>
                             )}

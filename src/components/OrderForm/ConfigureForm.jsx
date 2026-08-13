@@ -1,8 +1,8 @@
 import "../../styles/ProductConfigurator.css";
 
 const MATERIALS = ["Silicon", "Aluminum", "Glass", "Silicon Carbide"];
-const SHAPES = ["Round", "Rectangle", "Hexagon"];
-const COATINGS = ["ZC-1251", "ZC-XXXX", "ZC-YYYY"];
+const SHAPES = ["Round", "Rectangle", "Hexagon", "Oval"];
+const COATINGS = ["Protected Silver", "Enhanced Protected Silver", "Radiation Hardened Protective Silver", "Protective Gold", "Silicon Cladding", "FUV Aluminum", "Protected Aluminum", "Black Coating", "I'm not sure, help me decide"];
 
 const DIMENSION_FIELDS = {
   Round: [{ key: "diameter", label: "Diameter (in)" }],
@@ -14,6 +14,10 @@ const DIMENSION_FIELDS = {
   Hexagon: [
     { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
     { key: "thickness", label: "Thickness (mm)" },
+  ],
+  Oval: [
+    { key: "length", label: "Length (in)" },
+    { key: "width", label: "Width (in)" }
   ],
 };
 
@@ -64,7 +68,7 @@ export default function ConfigureForm({
     <>
       <div className="design-layout">
         <div className="field material">
-          <span className="field-label">Material</span>
+          <span className="field-label">Substrate Material</span>
           <div className="btn-group">
             {MATERIALS.map((material) => (
               <button

@@ -8,8 +8,8 @@ export default function Resources() {
         poissonRatio: 0.17,
         subThickness: 0.75,
         subWidth: 25.4,
-        deflection: null,
-        filmThickness: null,
+        deflection: "",
+        filmThickness: "",
 });
 
 const [stressCalc, setStressCalc] = useState(0);
@@ -22,18 +22,22 @@ const updateStress = (e) => {
 };
 
 const calculateStress = () => {
-  const YM = stressInputs.youngModulus ??  0;
-  const PR = stressInputs.poissonRatio ?? 0.17;
-  const ST = stressInputs.subThickness ?? 0.75;
-  const W = stressInputs.subWidth ?? 0.75;
-  const defl = stressInputs.deflection;
-  const FT = stressInputs.filmThickness;
+  // Convert all inputs to SI (meters / pascals)
+  const E = Number(stressInputs.youngModulus) * 1e9;   // GPa -> Pa
+  const nu = Number(stressInputs.poissonRatio);
+  const ts = Number(stressInputs.subThickness) * 1e-3; // mm -> m
+  const w = Number(stressInputs.subWidth) * 1e-3;      // mm -> m
+  const defl = Number(stressInputs.deflection) * 1e-6; // um -> m
+  const tf = Number(stressInputs.filmThickness) * 1e-6;// um -> m
 
-  if (!defl || !FT) return null;
+  if (!defl || !tf) return;
 
-    const a = (( YM * ST ** 2) / (3 * (1-PR)))
-    setStressCalc((a * (( defl /FT)/( defl ) ** 2 + (W /2) ** 2)).toFixed(4))
-    return;
+  // Stoney equation with radius of curvature from the sagitta relation:
+  // R = (delta^2 + (w/2)^2) / (2*delta)
+  const a = (E * ts ** 2) / (3 * (1 - nu));
+  const sigmaPa = (a * (defl / tf)) / (defl ** 2 + (w / 2) ** 2);
+
+  setStressCalc((sigmaPa / 1e6).toFixed(1)); // Pa -> MPa
 }
 
 
@@ -83,12 +87,12 @@ const calculateStress = () => {
         <div class="calculator-output">
           <div class="output-section">
             <h3>Results</h3>
-            <div id="stress" class="output-value">Stress: {stressCalc} mPA</div>
+            <div id="stress" class="output-value">Stress: {stressCalc} MPa</div>
           </div>
 
           <div class="info-box">
             <p><strong>Formula:</strong></p>
-            <p class="formula">σ = (Es × ts² / 3(1-ν)) × (δ / tf) × (1 / (tf² + w²/4))</p>
+            <p class="formula">σ = (Es × ts² / 3(1−ν)) × (δ / tf) × 1 / (δ² + w²/4)</p>
           </div>
         </div>
       </div>

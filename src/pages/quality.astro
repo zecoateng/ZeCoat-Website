@@ -3,9 +3,8 @@ import Layout from "../layouts/layout.astro"
 
 // ── Compliance badges shown under the title ──────────────────────────────
 const credentials = [
-  "AS9100:2016 Certified",
-  "IAQG Registered Supplier",
-  "ISO 9001-Aligned QMS",
+  { label: "AS9100:2016 Certified", href: "/pdfs/AS0016A_10019038%20AS0016A_EN.pdf" },
+  { label: "ISO 9001-Aligned QMS", href: "/pdfs/QM15_10019038%20QM15_EN.pdf" },
 ]
 
 // ── "Information for External Providers" requirements (A–M) ───────────────
@@ -112,7 +111,11 @@ const dfarsClauses = [
       AS9100:2016 standard.
     </p>
     <ul class="badges">
-      {credentials.map(c => <li class="badge">{c}</li>)}
+      {credentials.map(c => (
+        <li>
+          <a class="badge" href={c.href} target="_blank" rel="noopener">{c.label}</a>
+        </li>
+      ))}
     </ul>
   </header>
 
@@ -257,6 +260,7 @@ const dfarsClauses = [
   }
 
   .badge {
+    display: inline-block;
     background: #1E5568;
     color: white;
     font-size: 0.85rem;
@@ -264,6 +268,12 @@ const dfarsClauses = [
     padding: 0.4rem 0.9rem;
     border-radius: 999px;
     letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .badge:hover {
+    background: #174352;
   }
 
   .prose {

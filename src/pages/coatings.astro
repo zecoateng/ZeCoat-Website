@@ -6,43 +6,61 @@ const coatings = [
     title: "Protected Silver",
     image: "/MirrorImage.webp",
     description:
-      "High-performance protected silver coating delivering exceptional broadband reflectance across the visible and near-infrared. A flight-proven workhorse for astronomical and imaging optics."
+      "High-performance protected silver coating delivering exceptional broadband reflectance across the visible and near-infrared. A flight-proven workhorse for astronomical and imaging optics.",
+    back: "Reflectance: Avg. R 96% over 350–1000 nm\nDurability: Passes MIL-13830-B\nFlight Heritage: Kepler Space Telescope primary mirror\nVariations: May be modified to enhance reflection, durability, and/or wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter"
   },
   {
     title: "Enhanced Protected Silver",
     image: "/coatings.webp",
     description:
-      "An optimized silver stack engineered for higher reflectance and improved environmental durability, ideal for demanding ground- and space-based instruments."
+      "An optimized silver stack engineered for higher reflectance, with greater than 94% average reflectance across the 400–1100 nm spectral range, and improved environmental durability. Ideal for demanding ground and space-based instruments.",
+    back:
+      "Placeholder back text — replace with specs, wavelength range, durability notes, etc."
   },
   {
     title: "Radiation Hardened Protected Silver",
     image: "/satelite-image.webp",
     description:
-      "Protected silver formulated to withstand high-radiation orbital environments while maintaining reflectance and adhesion over long-duration missions."
+      "Protected silver formulated to withstand high-radiation orbital environments while maintaining reflectance and adhesion over long-duration missions.",
+    back:
+      "Placeholder back text — replace with specs, wavelength range, durability notes, etc."
   },
   {
     title: "Protected Gold",
     image: "/dock-layout.webp",
     description:
-      "Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability."
+      "Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability.",
+    back:
+      "Reflectance: Avg. R > 98% over 800 nm to >5000 nm\nDurability: Passes MIL-13830-B\nVariations: May be modified to enhance reflection, durability, and wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter"
   },
   {
     title: "Silicon Cladding",
     image: "/chamber.webp",
     description:
-      "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero CTE surfaces."
+      "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero CTE surfaces.",
+    back:
+      "A thick layer of silicon (100+ microns) may be applied as a means of optical finishing for a low-stress, near-zero-CTE surface. The amount of silicon is tailorable.\nMax Substrate Size: Up to 2.0 meters\n"
   },
   {
     title: "FUV Aluminum",
     image: "/HWOImage.webp",
     description:
-      "Far-ultraviolet aluminum coating optimized for high reflectance down to 121 nm, developed for next-generation UV space telescopes."
+      "Far-ultraviolet aluminum coating optimized for high reflectance down to 121 nm, developed for next-generation UV space telescopes.",
+    back:
+      "Reflectance: R > 96% @ 121 nm\nDurability: Passes MIL-13830-B\nVariations: May be modified to enhance reflection, durability, and wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter\n"
   },
   {
     title: "Black Coating",
     image: "/Mars-Insight-Lander.webp",
     description:
-      "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures."
+      "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures.",
+    back:
+      "Avg. R < 1.5%; Max R < 2.4% from 450–850 nm @ 8° AOI\nContact us for more information on this coating."
+  },
+  {
+    title:"Protected Aluminum",
+    image: "/Mars-Insight-Lander.webp",
+    description: ""
   }
 ];
 ---
@@ -57,11 +75,21 @@ const coatings = [
 
     <div class="coatings-grid">
       {coatings.map(coating => (
-        <article class="coating-card">
-          <img src={coating.image} alt={coating.title} />
-          <div class="coating-card-body">
-            <h3>{coating.title}</h3>
-            <p>{coating.description}</p>
+        <article class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front coating-card">
+              <img src={coating.image} alt={coating.title} />
+              <div class="coating-card-body">
+                <h3>{coating.title}</h3>
+                <p>{coating.description}</p>
+              </div>
+            </div>
+            <div class="flip-back coating-card">
+              <div class="coating-card-body">
+                <h3>{coating.title}</h3>
+                <p>{coating.back ?? "More details coming soon."}</p>
+              </div>
+            </div>
           </div>
         </article>
       ))}
@@ -82,6 +110,15 @@ const coatings = [
   </section>
 
 </Layout>
+
+<script>
+  function initCoatingFlips() {
+    document.querySelectorAll(".flip-card").forEach((card) => {
+      card.addEventListener("click", () => card.classList.toggle("flipped"));
+    });
+  }
+  document.addEventListener("astro:page-load", initCoatingFlips);
+</script>
 
 <style>
 
@@ -109,7 +146,7 @@ const coatings = [
 
   .coatings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2rem;
   }
 
@@ -118,6 +155,8 @@ const coatings = [
     border: 1px solid #DCE2E8;
     border-radius: 14px;
     overflow: hidden;
+    height: 100%;
+    max-height: 100000px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
     display: flex;
     flex-direction: column;
@@ -125,7 +164,6 @@ const coatings = [
   }
 
   .coating-card:hover {
-    transform: translateY(-8px);
     box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
   }
 
@@ -151,6 +189,41 @@ const coatings = [
   .coating-card-body p {
     color: #1B2430;
     line-height: 1.6;
+  }
+
+  /* Card flip */
+  .flip-card {
+    perspective: 1200px;
+    cursor: pointer;
+  }
+
+  .flip-inner {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+  }
+
+  .flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front,
+  .flip-back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    overflow-y: auto;
+  }
+
+  .flip-back .coating-card-body p {
+    white-space: pre-line;
+    font-size: 0.92rem;
   }
 
   /* Custom coating services */
