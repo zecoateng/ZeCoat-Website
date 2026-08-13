@@ -1,17 +1,19 @@
 ---
 import Layout from "../layouts/layout.astro";
+import { getDatabase } from "@netlify/database";
 
-// Fetches the API
+// Render on every request so the dashboard always shows fresh quotes
+export const prerender = false;
+
+const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
+
 let rows = [];
 let loadError = null;
 try {
-  const response = await fetch("/api/quotes");
-  const data = await response.json();
-  // The API returns an array on success, or { error } on failure.
-  rows = Array.isArray(data) ? data : [];
-  if (!Array.isArray(data)) loadError = data?.error || "Could not load quotes.";
+  rows = await sql`SELECT * FROM quotes ORDER BY id DESC`;
 } catch (err) {
-  loadError = "Could not reach the quotes API.";
+  console.error("Dashboard quotes query failed:", err);
+  loadError = "Could not load quotes.";
 }
 
 // Normalize each row: parse the configuration JSON whether it comes back
@@ -25,7 +27,9 @@ const quotes = rows.map((q) => {
       config = null;
     }
   }
-  return { ...q, config: config || {} };
+  // New quotes store an array of mirrors; old ones stored a single object.
+  const mirrors = Array.isArray(config) ? config : config ? [config] : [];
+  return { ...q, mirrors };
 });
 
 // A couple of quick stats for the header.
@@ -67,8 +71,6 @@ const initials = (first, last) =>
     <div class="grid" id="grid">
       {
         quotes.map((quote) => {
-          const c = quote.config || {};
-          const size = c.size || {};
           const haystack = `${quote.first_name || ""} ${quote.last_name || ""} ${quote.company || ""} ${quote.email || ""}`.toLowerCase();
           return (
             <article class="card" data-search={haystack}>
@@ -95,32 +97,45 @@ const initials = (first, last) =>
                 )}
               </div>
 
-              {(c.material || c.shape || c.coating || c.quantity) && (
+              {quote.mirrors.length > 0 && (
                 <div class="config">
                   <h3 class="config-title">Configuration</h3>
-                  <div class="chips">
-                    {c.material && <span class="chip">{c.material}</span>}
-                    {c.shape && <span class="chip">{c.shape}</span>}
-                    {c.coating && <span class="chip">{c.coating}</span>}
-                    {c.quantity && <span class="chip">Qty {c.quantity}</span>}
-                  </div>
-
-                  {(size.width || size.height || size.diameter || size.thickness) && (
-                    <div class="specs">
-                      {size.width && (
-                        <div class="spec"><span>Width</span><b>{size.width}</b></div>
-                      )}
-                      {size.height && (
-                        <div class="spec"><span>Height</span><b>{size.height}</b></div>
-                      )}
-                      {size.diameter && (
-                        <div class="spec"><span>Diameter</span><b>{size.diameter}</b></div>
-                      )}
-                      {size.thickness && (
-                        <div class="spec"><span>Thickness</span><b>{size.thickness}</b></div>
-                      )}
-                    </div>
-                  )}
+                  {quote.mirrors.map((m, i) => {
+                    const d = m.dimensions ?? m.size ?? {};
+                    return (
+                      <div class="mirror-block">
+                        {quote.mirrors.length > 1 && (
+                          <p class="mirror-label">Mirror #{m.orderNumber ?? i + 1}</p>
+                        )}
+                        <div class="chips">
+                          {m.material && <span class="chip">{m.material}</span>}
+                          {m.shape && <span class="chip">{m.shape}</span>}
+                          {m.coating && <span class="chip">{m.coating}</span>}
+                          {m.quantity && <span class="chip">Qty {m.quantity}</span>}
+                        </div>
+                        {(d.width || d.height || d.diameter || d.flatToFlat || d.thickness) && (
+                          <div class="specs">
+                            {d.width && (
+                              <div class="spec"><span>Width</span><b>{d.width}</b></div>
+                            )}
+                            {d.height && (
+                              <div class="spec"><span>Height</span><b>{d.height}</b></div>
+                            )}
+                            {d.diameter && (
+                              <div class="spec"><span>Diameter</span><b>{d.diameter}</b></div>
+                            )}
+                            {d.flatToFlat && (
+                              <div class="spec"><span>Flat-to-Flat</span><b>{d.flatToFlat}</b></div>
+                            )}
+                            {d.thickness && (
+                              <div class="spec"><span>Thickness</span><b>{d.thickness}</b></div>
+                            )}
+                          </div>
+                        )}
+                        {m.notes && <p class="mirror-notes">{m.notes}</p>}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -463,6 +478,30 @@ const initials = (first, last) =>
 
   .spec b {
     color: #334155;
+  }
+
+  .mirror-block {
+    padding: 0.6rem 0;
+  }
+
+  .mirror-block + .mirror-block {
+    border-top: 1px dashed #E2E8F0;
+  }
+
+  .mirror-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748B;
+    margin: 0 0 0.4rem;
+  }
+
+  .mirror-notes {
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    color: #64748B;
+    font-style: italic;
   }
 
   .notes {
