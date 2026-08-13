@@ -11,23 +11,23 @@ const coatings = [
   },
   {
     title: "Enhanced Protected Silver",
-    image: "/coatings.webp",
+    image: "/EnhancedProtectiveSilver.webp",
     description:
       "An optimized silver stack engineered for higher reflectance, with greater than 94% average reflectance across the 400–1100 nm spectral range, and improved environmental durability. Ideal for demanding ground and space-based instruments.",
     back:
-      "Placeholder back text — replace with specs, wavelength range, durability notes, etc."
+      "More details coming soon."
   },
   {
     title: "Radiation Hardened Protected Silver",
-    image: "/satelite-image.webp",
+    image: "/RadHardSilverCoating.webp",
     description:
       "Protected silver formulated to withstand high-radiation orbital environments while maintaining reflectance and adhesion over long-duration missions.",
     back:
-      "Placeholder back text — replace with specs, wavelength range, durability notes, etc."
+      "More details coming soon."
   },
   {
     title: "Protected Gold",
-    image: "/dock-layout.webp",
+    image: "",
     description:
       "Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability.",
     back:
@@ -35,7 +35,7 @@ const coatings = [
   },
   {
     title: "Silicon Cladding",
-    image: "/chamber.webp",
+    image: "/SiliconCladding.webp",
     description:
       "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero CTE surfaces.",
     back:
@@ -43,7 +43,7 @@ const coatings = [
   },
   {
     title: "FUV Aluminum",
-    image: "/HWOImage.webp",
+    image: "",
     description:
       "Far-ultraviolet aluminum coating optimized for high reflectance down to 121 nm, developed for next-generation UV space telescopes.",
     back:
@@ -51,7 +51,7 @@ const coatings = [
   },
   {
     title: "Black Coating",
-    image: "/Mars-Insight-Lander.webp",
+    image: "",
     description:
       "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures.",
     back:
@@ -59,10 +59,28 @@ const coatings = [
   },
   {
     title:"Protected Aluminum",
-    image: "/Mars-Insight-Lander.webp",
-    description: ""
+    image: "",
+    description: "More details coming soon.",
+    back: "More details coming soon."
+  },
+  {
+    title:"UV-enhanced Protected Silver",
+    image:"",
+    description:"More details coming soon",
+    back:"More details coming soon"
   }
 ];
+
+// Splits back-side text into "Label: value" spec lines (plain lines pass through)
+function parseBack(text) {
+  return (text ?? "").split("\n").filter(Boolean).map((line) => {
+    const idx = line.indexOf(": ");
+    if (idx > 0 && idx < 40) {
+      return { label: line.slice(0, idx), value: line.slice(idx + 2) };
+    }
+    return { text: line };
+  });
+}
 ---
 
 <Layout>
@@ -70,7 +88,7 @@ const coatings = [
   <section class="standard-coatings">
     <div class="section-heading">
       <h2>Commercial Coatings</h2>
-      <p>This is our portfolio of standard commercial coatings available. If you are interested in any of these materials and would like more information, please go to the order tab to request a quote and we will be in contact.</p>
+      <p>Explore our portfolio of standard commercial coatings. If you are interested in a specific material or would like additional information, please visit the<strong> Request Quote tab</strong>. A member of our team will follow up with you to discuss your requirements and provide further details.</p>
     </div>
 
     <div class="coatings-grid">
@@ -87,7 +105,19 @@ const coatings = [
             <div class="flip-back coating-card">
               <div class="coating-card-body">
                 <h3>{coating.title}</h3>
-                <p>{coating.back ?? "More details coming soon."}</p>
+                {parseBack(coating.back ?? "More details coming soon.").map((item) =>
+                  item.label ? (
+                    <p class="spec-line">
+                      <strong>{item.label}:</strong> {item.value.includes("zecoat.com") ? (
+                        <a href={`mailto:${item.value}`}>{item.value}</a>
+                      ) : (
+                        item.value
+                      )}
+                    </p>
+                  ) : (
+                    <p class="spec-text">{item.text}</p>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -221,9 +251,31 @@ const coatings = [
     overflow-y: auto;
   }
 
-  .flip-back .coating-card-body p {
-    white-space: pre-line;
-    font-size: 0.92rem;
+  .flip-back .coating-card-body {
+    gap: 0.4rem;
+    overflow-y: auto;
+  }
+
+  .spec-line,
+  .spec-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #1B2430;
+  }
+
+  .spec-line strong {
+    color: #16202E;
+  }
+
+  .spec-line a {
+    color: #C6870F;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .spec-line a:hover {
+    text-decoration: underline;
   }
 
   /* Custom coating services */

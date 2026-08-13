@@ -28,7 +28,7 @@ const DIMENSION_FIELDS = {
     ["flatToFlat", "Flat-to-Flat (mm)"],
     ["thickness", "Thickness (mm)"],
   ],
-  Oval: [
+  Elliptical: [
     ["length", "Length (in)"],
     ["width", "Width (in)"],
   ],

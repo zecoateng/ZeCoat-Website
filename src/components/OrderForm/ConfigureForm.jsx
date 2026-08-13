@@ -1,8 +1,8 @@
 import "../../styles/ProductConfigurator.css";
 
 const MATERIALS = ["Silicon", "Aluminum", "Glass", "Silicon Carbide"];
-const SHAPES = ["Round", "Rectangle", "Hexagon", "Oval"];
-const COATINGS = ["Protected Silver", "Enhanced Protected Silver", "Radiation Hardened Protective Silver", "Protective Gold", "Silicon Cladding", "FUV Aluminum", "Protected Aluminum", "Black Coating", "I'm not sure, help me decide"];
+const SHAPES = ["Round", "Rectangle", "Hexagon", "Elliptical"];
+const COATINGS = ["Protected Silver", "Enhanced Protected Silver", "Radiation Hardened Protective Silver", "Protective Gold", "Silicon Cladding", "FUV Aluminum", "Protected Aluminum", "Black Coating", "Undecided"];
 
 const DIMENSION_FIELDS = {
   Round: [{ key: "diameter", label: "Diameter (in)" }],
@@ -15,7 +15,7 @@ const DIMENSION_FIELDS = {
     { key: "flatToFlat", label: "Flat-to-Flat (mm)" },
     { key: "thickness", label: "Thickness (mm)" },
   ],
-  Oval: [
+  Elliptical: [
     { key: "length", label: "Length (in)" },
     { key: "width", label: "Width (in)" }
   ],
