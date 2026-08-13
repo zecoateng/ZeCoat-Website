@@ -186,7 +186,7 @@ await sql
       ${company},
       ${email},
       ${phoneNumber},
-      ${configuration},
+      ${JSON.stringify(configuration)},
       ${comments ?? null}
       )
       `;
