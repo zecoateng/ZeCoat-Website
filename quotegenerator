@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeCoat Pricing Portal</title>
+
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body {
+      margin: 0;
+      padding: 80px 0 0 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: #f6f7fb;
+    }
+
+    .card {
+      width: 760px;
+      max-width: 95%;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(20, 30, 60, 0.08);
+      padding: 22px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: 20px;
+    }
+
+    p.lead {
+      margin: 8px 0 16px 0;
+      color: #333;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    label {
+      min-width: 200px;
+      color: #444;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      padding: 8px 10px;
+      border: 1px solid #d6d9e6;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    button {
+      background: #2b6ef6;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.secondary {
+      background: #e7e9f8;
+      color: #111;
+    }
+
+    .result {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f0f6ff;
+      color: #05204a;
+      font-weight: 600;
+    }
+
+    .warning {
+      color: #8b0000;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .login {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    form label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+
+    form button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="card">
+
+  <!-- ================= LOGIN VIEW ================= -->
+  <div id="loginView" class="login">
+    <h1>ZeCoat Pricing Calculator - Login </h1>
+    <p class="lead">Please sign in to access the pricing calculator.</p>
+
+    <div class="row">
+      <label>Username</label>
+      <input id="username" type="text">
+    </div>
+
+    <div class="row">
+      <label>Password</label>
+      <input id="password" type="password">
+    </div>
+
+    <div style="text-align:right;">
+      <button id="loginBtn">Sign In</button>
+    </div>
+  </div>
+
+  <!-- ================= MIRROR CALCULATOR ================= -->
+  <div id="mirrorCalcView" style="display:none;">
+    <h1>ZC-1251 Mirror Coating — Price Calculator</h1>
+    <h1>Enter Lot Size —</h1>
+
+    <p class="lead">
+        Please enter the number of primary and secondary mirrors less than 10-cm in diameter to
+        be coated with ZC-1251. The price includes all conformance testing, end-item-data 
+        package and the certificate of compliance. The lot size is defined as the number of mirrors 
+        that will be delivered to ZeCoat at the same time.
+    </p>
+
+    <div class="row">
+      <label for="mirrorCount">Number of mirrors</label>
+      <input id="mirrorCount" type="number" min="6" value="100" step="1" />
+    </div>
+
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <button id="mirrorCalcBtn">Calculate Price</button>
+    </div>
+
+    <div id="mirrorResult"></div>
+
+    <form action="https://formspree.io/f/xzzjqbzd"
+          method="POST"
+          id="mirrorQuoteForm"
+          style="display:none; margin-top:16px;">
+
+      <h3>Request Formal Quote</h3>
+
+      <label>Name
+        <input type="text" name="Name:" required>
+      </label>
+
+      <label>Email
+        <input type="email" name="Email:" required>
+      </label>
+
+      <label>
+        Organization
+        <input type="text" name="Organization:" />
+      </label>
+
+      <label>
+        Additional Comments
+        <textarea name="Comments:" rows="3"></textarea>
+      </label>
+
+      <input type="hidden" name="Mirror Count:" id="formMirrorCount">
+      <input type="hidden" name="Product:" value="ZC-1251 Mirror Coating">
+      <input type="hidden" name="Unit Price:" id="formMirrorUnit">
+      <input type="hidden" name="Lot Price:" id="formMirrorLot">
+      <input type="hidden" name="Date:" id="formDate" />
+
+      <button type="submit"> Send Formal Quote</button>
+    </form>
+
+    <p class="note">
+      Minimum lot size is 6 pieces.<br />
+      Maximum lot size is 100 pieces.
+    </p>
+  </div>
+
+<!-- ================= CHAMBER CALCULATOR ================= -->
+<div id="chamberCalcView" style="display:none;">
+  <h1>Mirror Coating — Price Calculator</h1>
+
+  <p class="lead">
+    Please enter the number of primary and secondary mirrors less than 10-cm in diameter to
+    be coated with ZC-1251. The price includes all conformance testing, end-item-data 
+    package and the certificate of compliance. The lot size is defined as the number of 
+    mirrors that will be delivered to ZeCoat at the same time.<br />
+  <br />
+    <h1>Choose package and Enter Lot Size —</h1><br />
+
+    Type 1 Mirror = SiC less than 15-cm diameter<br />
+    Type 2 Mirror = SiC less than 30-cm diameter<br />
+    Type 3 Mirror = Al less than 10-cm diameter<br />
+    Combo Package = Combination of all three mirrors (equal number of each)<br />
+  </p>
+
+  <div class="row">
+    <label for="chamberPackage">Chamber Package</label>
+    <select id="chamberPackage">
+      <option value="">Select a package</option>
+      <option value="Type_1">All Type 1 Mirrors</option>
+      <option value="Type_2">All Type 2 Mirrors</option>
+      <option value="Type_3">All Type 3 Mirrors</option>
+      <option value="Combo">Combo Package</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label for="chamberMirrorCount">Number of mirrors</label>
+    <input id="chamberMirrorCount" type="number" min="3" value="45">
+  </div>
+
+  <div style="display:flex; justify-content:flex-end;">
+    <button id="chamberCalcBtn">Calculate Price</button>
+  </div>
+  <div id="chamberMessageArea"></div>
+  <div id="chamberResult"></div>
+
+  <form action="https://formspree.io/f/xzzjqbzd"
+        method="POST"
+        id="chamberQuoteForm"
+        style="display:none; margin-top:16px;">
+
+    <h3>Request Formal Quote</h3>
+
+    <label>Name
+      <input type="text" name="Name:" required>
+    </label>
+
+    <label>Email
+      <input type="email" name="Email:" required>
+    </label>
+
+    <label>Organization
+      <input type="text" name="Organization:">
+    </label>
+
+    <label>Additional Comments
+      <textarea name="Comments:" rows="3"></textarea>
+    </label>
+
+    <input type="hidden" name="Product:" value="Battery Deposition Chamber">
+    <input type="hidden" name="Package:" id="formChamberPackage">
+    <input type="hidden" name="Mirror Count:" id="formChamberMirrors">
+    <input type="hidden" name="Estimated Price:" id="formChamberPrice">
+      <p class="note">
+        *A formal quote will be sent to you within 48 hours
+      </p>
+    <button type="submit">Send Formal Quote</button>
+
+  </form>
+
+  <p class="note">
+    Minimum lot size is 3 pieces.<br />
+    Maximum lot size is 45 pieces.
+  </p>
+</div>
+
+</div>
+
+<script>
+/* ================= USERS ================= */
+const USERS = {
+  LM10202025: { password: "Coat1$3&7!", product: "chamber" },
+  JL3H: { password: "6311990505", product: "chamber" },
+  dave: { password: "271828", product: "chamber"}
+};
+
+/* ================= LOGIN ================= */
+loginBtn.onclick = () => {
+  const u = username.value.trim();
+  const p = password.value;
+
+  if (!USERS[u] || USERS[u].password !== p) {
+    alert("Invalid credentials.");
+    return;
+  }
+
+  loginView.style.display = "none";
+
+  if (USERS[u].product === "mirror")
+    mirrorCalcView.style.display = "block";
+
+  if (USERS[u].product === "chamber")
+    chamberCalcView.style.display = "block";
+};
+
+/* ================= MIRROR PRICING ================= */
+const mirrorCount = document.getElementById("mirrorCount");
+const mirrorCalcBtn = document.getElementById("mirrorCalcBtn");
+const mirrorResult = document.getElementById("mirrorResult");
+const mirrorMessageArea = document.createElement("div");
+mirrorResult.before(mirrorMessageArea);
+
+const mirrorQuoteForm = document.getElementById("mirrorQuoteForm");
+
+function computeMirrorUnitPrice(X) {
+
+  return 54616.536*Math.pow(X,-0.425); 
+}
+
+function formatCurrency(n) {
+  return n.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  });
+}
+
+function showMirrorResult(X) {
+  mirrorMessageArea.innerHTML = "";
+  mirrorResult.innerHTML = "";
+  mirrorQuoteForm.style.display = "none";
+
+  if (!Number.isFinite(X) || X <= 0) {
+    mirrorMessageArea.innerHTML =
+      '<div class="warning">Please enter a valid positive integer number of mirrors.</div>';
+    return;
+  }
+
+  const MIN = 6;
+  const MAX = 100;
+
+  if (X < MIN || X > MAX) {
+    mirrorMessageArea.innerHTML =
+      '<div class="warning">Please contact ZeCoat for pricing (entered lot size is outside our published min/max).</div>';
+    return;
+  }
+
+  const unitPrice = computeMirrorUnitPrice(X);
+  const lotPrice = unitPrice * X;
+
+  const unitRounded = Math.round(unitPrice);
+  const lotRounded = Math.round(lotPrice);
+
+  mirrorResult.innerHTML = `
+    <div class="result">
+      <div>Lot size: <strong>${X.toLocaleString()}</strong></div>
+      <div style="margin-top:8px;">Unit price (per mirror):
+        <strong>${formatCurrency(unitRounded)}</strong>
+      </div>
+      <div style="margin-top:6px;">Total lot price:
+        <strong>${formatCurrency(lotRounded)}</strong>
+      </div>
+      <button id="mirrorBuyBtn" style="margin-top:12px;">
+        Email Formal Quote
+      </button>
+    </div>
+  `;
+
+  document.getElementById("formMirrorCount").value = X;
+  document.getElementById("formMirrorUnit").value = unitRounded;
+  document.getElementById("formMirrorLot").value = lotRounded;
+
+  document.getElementById("mirrorBuyBtn").addEventListener("click", () => {
+    mirrorQuoteForm.style.display = "block";
+    mirrorQuoteForm.scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+mirrorCalcBtn.addEventListener("click", () => {
+  showMirrorResult(Number(mirrorCount.value));
+});
+
+
+/* ================= CHAMBER PRICING ================= */
+// Pricing equations per package
+const CHAMBER_PACKAGES = {
+  Type_1: (x) => 79052*Math.pow(x,-0.617),
+  Type_2: (x) => 65557*Math.pow(x,-0.4),
+  Type_3: (x) => 54616.536*Math.pow(x,-0.425),
+  Combo_Package: (x) => 83892*Math.pow(x,-0.572),
+};
+
+const chamberPackage = document.getElementById("chamberPackage");
+const chamberMirrorCount = document.getElementById("chamberMirrorCount");
+const chamberCalcBtn = document.getElementById("chamberCalcBtn");
+const chamberResult = document.getElementById("chamberResult");
+const chamberMessageArea = document.getElementById("chamberMessageArea");
+
+const chamberQuoteForm = document.getElementById("chamberQuoteForm");
+
+
+
+chamberCalcBtn.addEventListener("click", () => {
+  const pkg = chamberPackage.value;
+  const X = Number(chamberMirrorCount.value);
+
+  chamberMessageArea.innerHTML = "";
+  chamberResult.innerHTML = "";
+  chamberQuoteForm.style.display = "none";
+
+  if (!pkg) {
+    chamberResult.innerHTML =
+      '<div class="warning">Please select a chamber package.</div>';
+    return;
+  }
+
+  if (!Number.isFinite(X) || X <= 0) {
+    chamberResult.innerHTML =
+      '<div class="warning">Please enter a valid number of mirrors.</div>';
+    return;
+  }
+
+  const MIN = 3;
+  const MAX = 45;
+
+  if (X < MIN || X > MAX) {
+    chamberMessageArea.innerHTML =
+      '<div class="warning">Please contact ZeCoat for pricing (entered lot size is outside our published min/max).</div>';
+    return;
+  }
+
+  // Unit price PER MIRROR
+  const unitPrice = Math.round(CHAMBER_PACKAGES[pkg](X));
+
+  // Total lot price
+  const lotPrice = Math.round(unitPrice * X);
+
+  chamberResult.innerHTML = `
+    <div class="result">
+      <div>Selected package: <strong>${pkg.toUpperCase()}</strong></div>
+      <div style="margin-top:6px;">
+        Mirror count: <strong>${X}</strong>
+      </div>
+      <div style="margin-top:6px;">
+        Unit price (per mirror): <strong>${formatCurrency(unitPrice)}</strong>
+      </div>
+      <div style="margin-top:6px;">
+        Total lot price: <strong>${formatCurrency(lotPrice)}</strong>
+      </div>
+      <button id="chamberBuyBtn" style="margin-top:12px;">
+        Email Formal Quote
+      </button>
+    </div>
+  `;
+
+  // Populate form fields
+  document.getElementById("formChamberPackage").value = pkg;
+  document.getElementById("formChamberMirrors").value = X;
+  document.getElementById("formChamberPrice").value = lotPrice;
+
+  document.getElementById("chamberBuyBtn").addEventListener("click", () => {
+    chamberQuoteForm.style.display = "block";
+    chamberQuoteForm.scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+</script>
+
+</body>
+</html>
