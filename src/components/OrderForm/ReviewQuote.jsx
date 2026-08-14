@@ -59,7 +59,7 @@ export default function ReviewQuote({ configuration, setStep }) {
         ← Back
       </button>
 
-      <h2 className="rq-title">Review Your Quote</h2>
+      <h2 className="rq-title">Review Request for Quote</h2>
 
       {mirrors.map((config, i) => (
         <div className="rq-summary" key={config.orderNumber ?? i}>

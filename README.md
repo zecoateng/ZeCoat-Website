@@ -1,672 +1,290 @@
 # ZeCoat Website Maintenance Guide
 
-Welcome to the ZeCoat website project.
+This is the guide for keeping the ZeCoat website running. It is written for
+people who do **not** work on websites every day. It explains where everything
+is, how to do common tasks, and what to do when something breaks.
 
-This guide is meant to help anyone who needs to update, maintain, or make changes to the website in the future.
-
-The website does have both a frontend and a database connected to it, so some changes require more technical knowledge. This guide explains where things are located, how to make basic updates, and what to avoid.
-
----
-
-# What This Website Uses
-
-The ZeCoat website is built using several different technologies:
-
-- **Astro** - The main framework used to create the website pages.
-- **React** - Used for interactive features such as forms, calculators, and configurators.
-- **Netlify** - Hosts the website and automatically publishes updates.
-- **PostgreSQL Database** - Stores information submitted through the website.
-- **GitHub** - Stores the website code and tracks changes.
-
-You do not need to understand every technology listed above to make normal website updates. Most changes involve editing text, replacing images, or adding new content.
+**The website:** https://zecoat.com
 
 ---
 
-# Required Software
+## Quick Facts
 
-Before editing the website, install the following programs.
+| Thing | What it is |
+|---|---|
+| Live website | https://zecoat.com |
+| Where the site is hosted | Netlify (project name: `mellifluous-dieffenbachia-98917d`) |
+| Where the code lives | GitHub: `zecoateng/ZeCoat-Website` |
+| Database | Netlify Database (built into Netlify — stores announcements and quote requests) |
+| Email sending | Resend (sends the contact form and quote request emails) |
+| What it is built with | Astro + React (JavaScript frameworks) |
 
-## Node.js
-
-Node.js allows the website tools to run.
-
-Download:
-
-https://nodejs.org/
-
-Install the recommended **LTS version**.
-
-To verify installation:
-
-```
-node -v
-```
-
-You should see a version number.
-
-Example:
-
-```
-v22.12.0
-```
+The most important idea in this whole document: **the website updates itself
+automatically whenever code is pushed to GitHub.** Nobody ever needs to
+"upload" the website anywhere. Push code → Netlify rebuilds the site → the
+live site updates about a minute later.
 
 ---
 
-## Git
+## The Most Common Task: Posting an Announcement
 
-Git keeps track of website changes and connects the website to GitHub.
+Announcements appear on the homepage in the "Announcements" section.
+You do NOT need to touch any code to post one.
 
-Download:
+1. Go to **https://zecoat.com/admindashboard**
+2. Scroll to the **"Post an Announcement"** form
+3. Fill in the Title, Date, and Description
+4. Click **Post Announcement**
+5. Open the homepage — your announcement appears in the Announcements section
 
-https://git-scm.com/downloads
-
-Check installation:
-
-```
-git --version
-```
-
----
-
-## Visual Studio Code
-
-Visual Studio Code is the recommended program for editing the website.
-
-Download:
-
-https://code.visualstudio.com/
-
-This is where most website changes should be made.
+Notes:
+- The homepage shows the **3 newest** announcements.
+- ⚠️ **Important:** the admin dashboard page is currently NOT password
+  protected. Anyone who knows the address can see it (including customer
+  quote requests). Do not share the `/admindashboard` link publicly.
+  Adding a password to this page is on the to-do list at the bottom.
 
 ---
 
-# Downloading the Website
+## Where Customer Messages Go
 
-The website code is stored on GitHub.
+There are two forms customers can use:
 
-Clone the repository:
+**The Contact form** (zecoat.com/contact) and **the Order form**
+(zecoat.com/order — the mirror configurator).
 
-```
-git clone https://github.com/adrianquijada/zecoat-website.git
-```
+When a customer submits either one, two things happen:
 
-Enter the project folder:
+1. **An email arrives** at the inbox set up to receive them
+   (currently `aquijada@zecoat.com` — see "Changing who receives emails" below).
+2. **Quote requests are also saved to the database** and appear as cards on
+   **zecoat.com/admindashboard**, so there is a permanent record even if the
+   email is lost.
 
-```
-cd <THE NAME OF YOUR FOLDER>
-```
-
-Install the required packages:
-
-```
-npm install
-```
-
-This downloads everything required for the website to run.
+To browse the raw saved data: log in to Netlify → open the site → click the
+**Database** tab. The tables are `announcements`, `quotes`, and `submissions`.
 
 ---
 
-# Running the Website Locally
+## Editing Text and Images on the Site
 
-Before making changes, it is recommended to run the website on your computer first.
+Each page of the website is one file in the code. To change words on a page,
+edit that file, then push to GitHub (see "Making a code change" below).
 
-Start the development server:
+| Page | File to edit |
+|---|---|
+| Homepage | `src/pages/index.astro` |
+| About Us | `src/pages/about.astro` |
+| Coatings | `src/pages/coatings.astro` |
+| Quality Assurance | `src/pages/quality.astro` |
+| Contact page text | `src/components/ContactForm.jsx` |
+| R&D / Technologies list | `src/pages/technologies/index.astro` |
+| Individual technology pages | `src/pages/technologies/` (one file each) |
+| Header menu / Footer | `src/components/Header.astro` and `Footer.astro` |
 
-```
-npm run dev
-```
+### Coating cards (the flip cards)
 
-You should see something like:
-
-```
-Local: http://localhost:4321/
-```
-
-Open that address in your browser.
-
-You are now viewing a local version of the website.
-
-Changes made locally will not affect the live website until they are uploaded.
-
-To stop the website:
-
-Press:
+The cards on the Coatings page live in a list at the top of
+`src/pages/coatings.astro`. Each card looks like this in the code:
 
 ```
-CTRL + C
-```
-
----
-
-# Website File Structure
-
-Most website files are located inside:
-
-```
-src/
-```
-
-The important folders are:
-
-```
-src/
-
-├── pages/
-│      Website pages
-
-├── components/
-│      Reusable website sections
-
-├── layouts/
-│      Overall page structure
-
-└── data/
-       Website information
-```
-
-Images are stored in:
-
-```
-public/
-```
-
-Database files are stored in:
-
-```
-netlify/database/
-```
-
----
-
-# Editing Website Text
-
-Most normal website updates involve changing text.
-
-Website pages are located in:
-
-```
-src/pages/
-```
-
-Examples:
-
-```
-src/pages/index.astro
-```
-
-Homepage.
-
-```
-src/pages/about.astro
-```
-
-About page.
-
-```
-src/pages/contact.astro
-```
-
-Contact page.
-
-Inside these files you will see website text.
-
-Example:
-
-```html
-<h1>
-About ZeCoat
-</h1>
-```
-
-Changing it to:
-
-```html
-<h1>
-About ZeCoat Corporation
-</h1>
-```
-
-will update the website.
-
-After saving:
-
-1. Refresh your browser
-2. Confirm the change looks correct
-
----
-
-# Adding or Changing Images
-
-Images are stored in:
-
-```
-public/
-```
-
-Example:
-
-```
-public/
-
-facility.jpg
-mirror-coating.png
-telescope.jpg
-```
-
-To add a new image:
-
-1. Place the image inside the `public` folder
-2. Reference it in the website code
-
-Example:
-
-```html
-<img src="/facility.jpg">
-```
-
-Try to keep image names simple.
-
-Recommended:
-
-```
-facility-building.jpg
-```
-
-Avoid:
-
-```
-Facility Building Final Image 2.jpg
-```
-
-Spaces and capital letters can cause problems.
-
----
-
-# Updating Technologies and Capabilities
-
-Technology and capability cards are stored in:
-
-```
-src/data/
-```
-
-Look for files containing:
-
-```javascript
-export const technologies = [
-```
-
-or:
-
-```javascript
-export const capabilities = [
-```
-
-Example:
-
-```javascript
 {
-title: "FUV Aluminum",
-description:
-"Specialized aluminum coatings designed for ultraviolet astronomy."
-}
+  title: "Protected Silver",
+  image: "/MirrorImage.webp",
+  description: "Text shown on the FRONT of the card.",
+  back: "Text shown on the BACK of the card (it flips when clicked)."
+},
 ```
 
-To add a new item:
+The back text uses a simple trick: any line written as `Label: value`
+(for example `Reflectance: Avg. R 96%`) is displayed with the label in bold,
+like a spec sheet. Separate lines with `\n` inside the quotes.
 
-1. Copy an existing item
-2. Change the title
-3. Change the description
-4. Add the correct image
-5. Add the correct page link if needed
+### Images
+
+- All images live in the `public/` folder. An image saved as
+  `public/MyPhoto.webp` is used in code as `/MyPhoto.webp`.
+- Use the **WebP** format (much smaller files = faster site). The free tool
+  https://squoosh.app converts any image to WebP in the browser.
+- Recommended sizes when exporting new images:
+
+| Where the image goes | Export size |
+|---|---|
+| Coating cards | 1200 × 600 (keep the subject centered — edges get cropped) |
+| R&D / technology list | 800 × 640 |
+| Headshots on About page | 1000 × 800 |
 
 ---
 
-# Important Website Components
+## Making a Code Change (the full loop)
 
-## Header
+This is what a developer does to change anything in the code.
 
-Location:
+### One-time setup on a new computer
 
-```
-src/components/Header.astro
-```
+1. Install **Git**: https://git-scm.com
+2. Install **Node.js** (version 22 or newer): https://nodejs.org
+3. Install the **Netlify CLI**: open a terminal and run
+   `npm install -g netlify-cli`
+4. Get the code:
+   `git clone https://github.com/zecoateng/ZeCoat-Website.git`
+   (you need access to the `zecoateng` GitHub account)
+5. Inside the project folder, run `npm install` (downloads all the libraries —
+   takes a minute)
+6. Connect to Netlify: `netlify login` (log in as the company account),
+   then `netlify link` and pick the ZeCoat project
+7. Create a file named `.env` in the project folder containing:
 
-Controls:
+   ```
+   SMTP_PASS=(the Resend API key — get it from the Resend dashboard)
+   MAIL_FROM=(the sending address — see the Email section)
+   ```
 
-- Navigation menu
-- Logo
-- Main website links
+   ⚠️ **Never** put real keys/passwords into Git, chat messages, or code
+   files. The `.env` file stays on your computer only — it is deliberately
+   ignored by Git.
 
----
+### Day-to-day loop
 
-## Footer
+1. In the project folder, run: `netlify dev`
+2. Open **http://localhost:8888** in a browser — this is your private copy
+   of the site. Edit code, save, and the page updates instantly.
+3. Note: local development uses its **own empty practice database**. Test
+   announcements and test quotes you create locally will NOT appear on the
+   real site, and real data will not appear locally. This is on purpose —
+   you can't break the real site from here.
+4. When happy, publish it:
 
-Location:
+   ```
+   git add .
+   git commit -m "Short description of what you changed"
+   git push
+   ```
 
-```
-src/components/Footer.astro
-```
-
-Controls:
-
-- Contact information
-- Footer links
-- Copyright information
-
----
-
-## Components Folder
-
-Location:
-
-```
-src/components/
-```
-
-This contains reusable website sections.
-
-Examples:
-
-- Cards
-- Buttons
-- Forms
-- Page sections
-
-If something appears on multiple pages, it is probably stored here.
+5. Netlify notices the push and rebuilds the live site automatically.
+   Watch it at Netlify → Deploys. Green = live. Red = something failed
+   (click the deploy to read the error).
 
 ---
 
-# Database Information
+## Environment Variables (the site's secrets)
 
-The website uses a PostgreSQL database.
+"Environment variables" are secret values the site needs (like the email
+key). They live in **two separate places**, and this is the #1 source of
+"it works on my computer but not on the real site" confusion:
 
-The database currently stores:
+- **Your computer:** the `.env` file (used only by `netlify dev`)
+- **The live site:** Netlify → Site configuration → **Environment variables**
 
-- Announcements
-- Contact submissions
-- Quote requests
+If you change or add a secret, set it in **both** places. After changing one
+on Netlify, you must **trigger a new deploy** (Deploys → Trigger deploy)
+before it takes effect — the running site does not pick up changes by itself.
 
-Database migration files are located here:
+Current variables:
 
-```
-netlify/database/migrations
-```
+| Name | What it is |
+|---|---|
+| `SMTP_PASS` | The Resend API key (lets the site send email) |
+| `MAIL_FROM` | The address emails are sent "from" |
+| `ADMIN_PASSWORD` | The password for the /admindashboard page (username is `admin`) |
 
----
-
-# Database Rules
-
-Important:
-
-**Do not edit old migration files.**
-
-Once a migration has been applied, it is considered permanent.
-
-If the database needs a change, create a new migration.
-
-Examples of database changes:
-
-- Adding a new table
-- Adding a new field
-- Changing stored information
+The database needs **no** variable — it connects automatically through
+Netlify.
 
 ---
 
-# Announcements
+## The Email System (Resend)
 
-Announcements are stored in the database.
+The site sends email through **Resend** (resend.com). The key it uses can
+ONLY send email — it cannot read anyone's inbox, so it is safe by design.
 
-The announcement table contains:
+**Current state / remaining setup:** until the `zecoat.com` domain is
+verified inside the Resend dashboard, emails must be sent from
+`onboarding@resend.dev` and can only be delivered to the email address that
+owns the Resend account. To finish the setup:
 
-```
-id
-title
-date
-description
-created_at
-```
+1. In Resend → Domains → add `zecoat.com`
+2. Resend shows 2–3 DNS records → whoever manages the zecoat.com domain
+   adds them
+3. When Resend shows "Verified", change `MAIL_FROM` to something like
+   `quotes@zecoat.com` (in BOTH the Netlify variables and local `.env`),
+   then trigger a deploy
 
-The website automatically retrieves announcements and displays them.
+**Changing who receives the emails:** the destination address is written in
+`src/pages/api/contact.js` — search for `to:` (it appears twice, once for
+quote requests and once for general inquiries).
 
----
-
-# API Routes
-
-API routes connect the website to the database.
-
-They are located here:
-
-```
-src/pages/api/
-```
-
-Examples:
-
-```
-src/pages/api/announcements
-```
-
-These files handle:
-
-- Saving information
-- Loading information
-- Sending form submissions
-- Connecting to the database
-
-Do not modify API files unless you understand backend development.
-
-A small mistake here can break forms or database connections.
+**If the key is ever exposed** (pasted somewhere public, committed to Git):
+log in to Resend → API Keys → delete it → create a new one → update it in
+both places → redeploy. Takes five minutes and fully fixes the problem.
 
 ---
 
-# Updating the Live Website
+## The Database
 
-When you are ready to publish changes:
-
-## Step 1: Check changes
-
-Run:
-
-```
-git status
-```
-
-This shows which files have changed.
-
----
-
-## Step 2: Add changes
-
-Run:
-
-```
-git add .
-```
+- **What's in it:** `announcements` (homepage announcements), `quotes`
+  (order-form submissions), `submissions` (reserved for contact messages).
+- **Where to look at it:** Netlify → the site → **Database** tab → browse
+  tables and rows.
+- **Local vs real:** running `netlify dev` uses a separate practice
+  database. The real data only lives in production.
+- **Changing the database structure** (adding tables/columns): the folder
+  `netlify/database/migrations/` holds the setup scripts.
+  ⚠️ **NEVER edit a migration file that has already been applied** — the
+  deploy will fail with "migration has been modified after being applied."
+  Always create a NEW migration file for any change
+  (`netlify database migrations new --description "what it does"`).
 
 ---
 
-## Step 3: Save changes
+## Changing the Order Form (mirror configurator)
 
-Create a commit:
+- **Materials and coating options** are simple lists at the top of
+  `src/components/OrderForm/ConfigureForm.jsx` — edit the `MATERIALS` and
+  `COATINGS` arrays.
+- **Shapes are special.** Each shape has its own dimension fields, and that
+  information is duplicated in **four files**. If you add or rename a shape,
+  you must update `DIMENSION_FIELDS` in ALL of these, or dimensions will
+  silently stop showing somewhere:
+  1. `src/components/OrderForm/ConfigureForm.jsx`
+  2. `src/components/OrderForm/ReviewQuote.jsx`
+  3. `src/components/OrderForm/SummaryComponent.jsx`
+  4. `src/pages/api/contact.js` (the email)
 
-```
-git commit -m "Describe your changes"
-```
-
-Example:
-
-```
-git commit -m "Updated technology descriptions"
-```
-
----
-
-## Step 4: Upload changes
-
-Run:
-
-```
-git push
-```
-
-Netlify will automatically detect the changes and update the live website.
+  (If the new shape uses a brand-new dimension name, also add it to the
+  dimension list in `src/pages/admindashboard.astro`.)
 
 ---
 
-# Manual Deployment
+## When Something Breaks (troubleshooting)
 
-Normally GitHub handles deployment automatically.
+**Golden rule: read the logs — the real error is always written there.**
+Netlify → the site → **Logs → Functions** shows live errors from the forms
+and database. **Deploys → (click the deploy)** shows build errors.
 
-If manual deployment is needed:
-
-Install Netlify CLI:
-
-```
-npm install -g netlify-cli
-```
-
-Deploy:
-
-```
-netlify deploy --prod
-```
+| Symptom | Most likely cause and fix |
+|---|---|
+| Works on localhost but not on the live site | An environment variable is missing on Netlify, or you forgot to trigger a deploy after changing one |
+| Contact/order form says it failed | Check Logs → Functions while submitting; the error names itself (usually email key or database) |
+| Emails not arriving | Check the spam folder; check the Resend dashboard → Logs (shows every send attempt); confirm `MAIL_FROM` rules above |
+| Deploy failed: "migration has been modified" | Someone edited an already-applied migration file — put it back exactly as it was and make a NEW migration instead |
+| Announcements section empty | Open zecoat.com/api/announcements directly — `[]` means the database is fine but empty; an error means check Function logs |
+| Site looks broken after a deploy | Netlify → Deploys → open the previous good deploy → "Publish deploy" instantly rolls the site back while you investigate |
 
 ---
 
-# Checking Database Status
+## To-Do List (known loose ends)
 
-To check the database:
-
-```
-netlify database status
-```
-
-A working database should show:
-
-```
-Applied migrations
-```
-
-If something is wrong, check:
-
-- Database is enabled
-- Migrations are applied
-- Environment variables exist
-
----
-
-# Common Problems
-
-## Website Will Not Start
-
-Try reinstalling packages:
-
-```
-npm install
-```
-
-Then:
-
-```
-npm run dev
-```
-
----
-
-## Changes Are Not Showing
-
-Try:
-
-1. Save the file
-2. Refresh the browser
-3. Restart the development server
-
----
-
-## Database Errors
-
-Run:
-
-```
-netlify database status
-```
-
-Check that migrations are applied.
-
----
-
-## Deployment Failed
-
-Common causes:
-
-- Missing files
-- Incorrect file names
-- Code errors
-- Missing packages
-
-Check the Netlify deployment logs for the exact error.
-
----
-
-# Recommended Workflow
-
-Before making changes:
-
-1. Make sure the website currently works
-2. Make one change at a time
-3. Test locally
-4. Save changes with Git
-5. Push changes to GitHub
-6. Confirm Netlify deployed successfully
-
-Avoid making many changes at once. It makes problems much harder to find.
-
----
-
-# Project Information
-
-Company:
-
-ZeCoat Corporation
-
-Repository:
-
-https://github.com/adrianquijada/zecoat-website
-
-Hosting:
-
-Netlify
-
-Database:
-
-Netlify PostgreSQL Database
-
-Framework:
-
-Astro
-
----
-
-# Final Notes
-
-This website was built to be maintained without requiring a complete rebuild.
-
-Most normal updates should include:
-
-- Changing text
-- Adding images
-- Updating technology descriptions
-- Adding announcements
-- Updating company information
-
-Changes involving:
-
-- Database structure
-- Authentication
-- Backend systems
-- Website architecture
-
-should be handled by someone with web development experience.
-
-Always test changes locally before publishing them to the live website.
+- [ ] Verify `zecoat.com` in Resend and switch `MAIL_FROM` to a real
+      company address (needs DNS access)
+- [x] Password-protect `/admindashboard` — DONE (username `admin`; the
+      password is the `ADMIN_PASSWORD` environment variable)
+- [ ] Delete `src/pages/api/quotes.js` — nothing uses it anymore, and it
+      publicly exposes the quote list at zecoat.com/api/quotes
+- [ ] Fill in the card backs for "Enhanced Protected Silver" and
+      "Radiation Hardened Protected Silver" on the Coatings page
+      (they still say placeholder text)
+- [ ] Replace the team photo placeholder and "The Team" text on the About
+      page with a real photo and description
+- [ ] Make sure the Netlify, GitHub (`zecoateng`), and Resend accounts are
+      all owned by company logins with credentials stored somewhere safe

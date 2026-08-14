@@ -7,12 +7,12 @@ configDotenv();
 const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com", //find out who hosts zecoat email
+    host: "smtp.resend.com",
     port: 587,
     secure: false,
     auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: "resend",
+    pass: process.env.SMTP_PASS, // Resend API key
   },
 });
 
@@ -87,7 +87,7 @@ export async function POST({ request }) {
           .join("");
 
         info = await transporter.sendMail({
-    from: `"ZeCoat" <${process.env.SMTP_USER}>`, // sender address
+    from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
     to: "aquijada@zecoat.com", // list of recipients
     subject: `New Quote Request — ${mirrors.length} mirror${mirrors.length > 1 ? "s" : ""}`, // subject line
       text: `
@@ -197,7 +197,7 @@ await sql
 
 } if (type === "general") {
       info = await transporter.sendMail({
-    from: `"ZeCoat" <${process.env.SMTP_USER}>`, // sender address
+    from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
     to: "aquijada@zecoat.com", // list of recipients
     subject: "New Message", // subject line
       text: `

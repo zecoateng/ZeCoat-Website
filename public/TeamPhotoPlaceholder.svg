@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800">
+  <rect width="1000" height="800" fill="#F8F9FB"/>
+  <rect x="24" y="24" width="952" height="752" fill="none" stroke="#CBD4DC" stroke-width="3" stroke-dasharray="14 10" rx="12"/>
+  <text x="500" y="400" text-anchor="middle" dominant-baseline="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="600" fill="#4E586A">
+    The team pic image would go here
+  </text>
+</svg>
