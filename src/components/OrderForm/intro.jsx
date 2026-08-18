@@ -20,7 +20,7 @@ export default function Intro({ setStep }) {
                 Chief Technical Officer for technical review. After
                 evaluating your specifications, our team will contact you with
                 pricing, lead times, and any recommendations necessary to
-                achieve the desired optical performance.
+                achieve the desired optical performance. NOTE: CURRENTLY A WORK IN PROGRESS.
             </p>
             <div className = "button-spacing">
             <button onClick={() => setStep("configure")}>
