@@ -1,8 +1,35 @@
 ---
-const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
+const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details coming soon."} = Astro.props
 ---
 
-{variant === "experiences" ? (
+{variant === "flip" ? (
+  <article
+    class="flip-card"
+    data-flip-card
+    role="button"
+    tabindex="0"
+    aria-pressed="false"
+    aria-label={`${cardTitle} — press to show more details`}
+  >
+    <div class="flip-inner">
+      <div class="card default flip-face flip-front">
+        <div class="img-wrap">
+          <img src={imgSrc} class="card-img-top" alt={cardTitle} />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{cardTitle}</h3>
+          <p class="card-text">{cardBody}</p>
+        </div>
+      </div>
+      <div class="card default flip-face flip-back">
+        <div class="card-body">
+          <h3 class="card-title">{cardTitle}</h3>
+          <p class="card-text">{back}</p>
+        </div>
+      </div>
+    </div>
+  </article>
+) : variant === "experiences" ? (
   <div class="card experiences">
     <img src={imgSrc} class="card-img-top" alt={cardTitle} />
     <div class="card-body">
@@ -119,4 +146,90 @@ const {imgSrc, cardTitle, cardBody, variant = "default"} = Astro.props
   .card.experiences .card-title {
     font-size: 20px;
   }
+
+  /* ---------- Flip variant ----------
+     Used by the three "What We Do" cards on the home page. The front face sits
+     in normal flow and sets the card's height; the back face is layered on top,
+     rotated 180deg, and revealed when .flipped is toggled on the wrapper. */
+
+  .flip-card {
+    width: 100%;
+    max-width: 400px;
+    perspective: 1200px;
+    cursor: pointer;
+  }
+
+  .flip-card:focus-visible {
+    outline: 2px solid #E7A21C;
+    outline-offset: 4px;
+    border-radius: 16px;
+  }
+
+  .flip-inner {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+  }
+
+  .flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* Each face fills the card and hides itself while rotated away from the viewer.
+     max-width is reset here because .card.default caps at 400px, which is now
+     handled by .flip-card instead. */
+  .flip-card .flip-face {
+    height: 100%;
+    max-width: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card .flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    overflow-y: auto;
+    justify-content: center;
+  }
+
+  /* Lift the whole card on hover, matching the .featured cards below it */
+  .flip-card:hover .flip-face {
+    box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-inner {
+      transition: none;
+    }
+  }
 </style>
+
+
+<script>
+  // Clicking a flip card (or pressing Enter/Space while it is focused) toggles
+  // it between its front and back face. Re-runs on every Astro page load
+  // because ClientRouter swaps in a fresh DOM on client-side navigation.
+  function initCardFlips() {
+    document.querySelectorAll<HTMLElement>("[data-flip-card]").forEach((card) => {
+      if (card.dataset.flipBound === "true") return;
+      card.dataset.flipBound = "true";
+
+      const toggle = () => {
+        const flipped = card.classList.toggle("flipped");
+        card.setAttribute("aria-pressed", String(flipped));
+      };
+
+      card.addEventListener("click", toggle);
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggle();
+        }
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initCardFlips);
+</script>

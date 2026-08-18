@@ -6,19 +6,22 @@ const capabilitiesLayout = [
     {
         imgSrc: "/MirrorImage.webp",
         cardTitle: "Meter-class Mirror Coatings",
-        cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings."
+        cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings.",
+        back: "More details coming soon."
 
     },
      {
         imgSrc: "/chamber.webp",
         cardTitle: "Research & Development",
-        cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis."
+        cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis.",
+        back: "More details coming soon."
 
     },
      {
         imgSrc: "/ProductionCoating.webp",
         cardTitle: "Production-Scale Coating",
-        cardBody: "ZeCoat offers production-ready coating capabilites, accommodating parts and batches within a coating area of up to two meters, with lead times as short as 4-12 weeks."
+        cardBody: "ZeCoat offers production-ready coating capabilites, accommodating parts and batches within a coating area of up to two meters, with lead times as short as 4-12 weeks.",
+        back: "More details coming soon."
     }
 ]
 
@@ -110,9 +113,11 @@ const featuredTechnologies = [
     capabilitiesLayout.map(capabilities => {
         return (
             <Cards
+            variant = "flip"
             imgSrc = {capabilities.imgSrc}
             cardTitle = {capabilities.cardTitle}
-            cardBody = {capabilities.cardBody}/>
+            cardBody = {capabilities.cardBody}
+            back = {capabilities.back}/>
 
         )
     })

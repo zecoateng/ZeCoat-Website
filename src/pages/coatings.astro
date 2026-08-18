@@ -93,7 +93,7 @@ function parseBack(text) {
 
     <div class="coatings-grid">
       {coatings.map(coating => (
-        <article class="flip-card">
+        <article class="flip-card" data-coating-flip>
           <div class="flip-inner">
             <div class="flip-front coating-card">
               <img src={coating.image} alt={coating.title} />
@@ -143,7 +143,18 @@ function parseBack(text) {
 
 <script>
   function initCoatingFlips() {
-    document.querySelectorAll(".flip-card").forEach((card) => {
+    // Scoped to this page's own cards via [data-coating-flip].
+    //
+    // A bare ".flip-card" selector would also match the flip cards on the home
+    // page. ClientRouter runs a script module only once, but the astro:page-load
+    // listener it registers stays alive on `document` for the rest of the
+    // session — so after visiting this page, this function fires on EVERY later
+    // navigation. With a generic selector it would attach a second click handler
+    // to the home page's cards, and each click would toggle "flipped" twice,
+    // leaving them looking unclickable.
+    document.querySelectorAll<HTMLElement>("[data-coating-flip]").forEach((card) => {
+      if (card.dataset.flipBound === "true") return;
+      card.dataset.flipBound = "true";
       card.addEventListener("click", () => card.classList.toggle("flipped"));
     });
   }
