@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+<div class = "page-layout">
+<div class = "text-portion">
+<div class = "text">
+<h1>Overview: FUV Aluminum</h1>
+<p>Far-ultraviolet (FUV) broadband reflective coatings are critical for next-generation space observatories studying the ultraviolet universe. Traditional aluminum coatings degrade rapidly in the UV, limiting mission lifetimes and scientific capability. ZeCoat develops advanced FUV aluminum coatings with significantly enhanced reflectance across the entire far-ultraviolet spectrum, enabling deeper observations and longer mission durations for NASA's most ambitious UV astronomy missions.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>The Technology</h1>
+<p>ZeCoat's FUV aluminum coating technology builds on decades of experience developing space-qualified optical coatings. Using precision vacuum deposition techniques, we apply protective and enhancing layers over aluminum substrates to dramatically improve reflectance in the far-ultraviolet region (120-180 nm) while maintaining excellent visible and near-infrared performance. Our multi-layer coating designs shield the aluminum from oxidation and contamination, preserving optical performance throughout the mission lifetime. The coatings are optimized for low-scatter, high-reflectance performance suitable for primary mirrors, secondary mirrors, and spectrograph optics on large space telescopes. Through NASA SBIR funding and collaborative development programs, ZeCoat continues to advance these coatings toward even higher performance targets for future UV observatories.
+</p>
+</div>
+<hr>
+<div class = "text">
+<h1>Abstract &amp; Publications</h1>
+<ul class="pub-list">
+<li>Advanced FUV Broadband Reflective Coatings for Space Telescopes — ZeCoat Technical Reports</li>
+<li>Multi-Layer Coating Designs for Enhanced Ultraviolet Reflectance — Research and Development</li>
+</ul>
+</div>
+</div>
+<div class = "right-column">
+<h2>Benefits</h2>
+<ul>
+    <li>Significantly enhanced reflectance across the far-ultraviolet spectrum.</li>
+    <li>Long-term UV performance with protection against oxidation and contamination.</li>
+    <li>Optimized for mission-critical space telescope applications.</li>
+</ul>
+<hr>
+<h2>Applications</h2>
+<ul>
+    <li>Primary and secondary mirrors for UV space observatories.</li>
+    <li>Spectrograph and detector optics requiring high UV throughput.</li>
+    <li>NASA's next-generation ultraviolet astronomy missions.</li>
+</ul>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+.img {
+    width: 100%;
+    display: block;
+    border: 5px solid #DCE3EA;
+}
+
+.text p {
+    font-size: 16px;
+}
+
+.text-portion {
+    width: 100%;
+    max-width: 750px;
+}
+
+.right-column {
+    max-width: 500px;
+}
+
+.text h1,
+.text h2 {
+    margin: 0;
+}
+
+@media(max-width: 600px) {
+    .page-layout {
+        display: flex;
+        flex-direction: column;
+    } /*fix the overflow later*/
+
+}
+
+/* Publications list */
+.pub-list {
+    margin-top: 0.75rem;
+    padding-left: 1.2rem;
+}
+
+.pub-list li {
+    margin-bottom: 0.5rem;
+}
+
+.pub-list a {
+    text-decoration: underline;
+}
+
+</style>

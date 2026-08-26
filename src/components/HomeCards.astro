@@ -1,8 +1,30 @@
 ---
-const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details coming soon."} = Astro.props
+const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details coming soon.", href} = Astro.props
 ---
 
-{variant === "flip" ? (
+{variant === "link" ? (
+  <a href={href} class="card-link">
+    <article class="card default">
+      <div class="img-wrap">
+        <img src={imgSrc} class="card-img-top" alt={cardTitle} />
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{cardTitle}</h3>
+        <p class="card-text">{cardBody}</p>
+      </div>
+    </article>
+  </a>
+) : variant === "featured-link" ? (
+  <a href={href} class="featured-link">
+    <div class="card featured">
+      <img src={imgSrc} class="card-img-top" alt={cardTitle} />
+      <div class="card-body">
+        <h3 class="card-title">{cardTitle}</h3>
+        <p class="card-text">{cardBody}</p>
+      </div>
+    </div>
+  </a>
+) : variant === "flip" ? (
   <article
     class="flip-card"
     data-flip-card
@@ -50,6 +72,18 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
 )}
 
 <style>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .featured-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
   .card {
     box-sizing: border-box;
   }
@@ -73,6 +107,16 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
     box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
   }
 
+  .card-link .card.default:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
+  }
+
+  .featured-link .card.featured:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
+  }
+
   .card.default .img-wrap,
   .card.featured .img-wrap {
     overflow: hidden;
@@ -90,6 +134,14 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
 
   .card.default:hover .card-img-top,
   .card.featured:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .card-link .card.default:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .featured-link .card.featured:hover .card-img-top {
     transform: scale(1.05);
   }
 

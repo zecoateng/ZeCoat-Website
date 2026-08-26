@@ -4,24 +4,22 @@ import Cards from '../components/HomeCards.astro'
 
 const capabilitiesLayout = [
     {
-        imgSrc: "/MirrorImage.webp",
+        imgSrc: "/ProtectiveSilver.webp",
         cardTitle: "Meter-class Mirror Coatings",
         cardBody: "ZeCoat specializes in durable, space-qualified coatings for satellite systems, as well as ground-based observatory coatings.",
-        back: "More details coming soon."
-
+        href: "/coatings"
     },
      {
         imgSrc: "/chamber.webp",
         cardTitle: "Research & Development",
         cardBody: "ZeCoat has advanced the field of thin film optical coatings through multiple  NASA research grants awarded over the past 25-years. ZeCoat also offers R&D services on a time-and-materials basis.",
-        back: "More details coming soon."
-
+        href: "/technologies"
     },
      {
         imgSrc: "/ProductionCoating.webp",
         cardTitle: "Production-Scale Coating",
         cardBody: "ZeCoat offers production-ready coating capabilites, accommodating parts and batches within a coating area of up to two meters, with lead times as short as 4-12 weeks.",
-        back: "More details coming soon."
+        href: "/coatings"
     }
 ]
 
@@ -73,17 +71,20 @@ const featuredTechnologies = [
     {
         imgSrc: "/MicrometeroidImage.webp",
         cardTitle: "Micrometeroid Protection",
-        cardBody: "More details coming soon..."
+        cardBody: "More details coming soon...",
+        href: "/technologies/MicroProtect"
     },
     {
         imgSrc: "/SelfCoatingTelescope.webp",
         cardTitle: "Self-Coating Telescope",
-        cardBody: "ZeCoat's self-coating telescope re-coats its own mirror in orbit with fresh aluminum, reaching deeper into the ultraviolet than ground-coated optics can."
+        cardBody: "ZeCoat's self-coating telescope re-coats its own mirror in orbit with fresh aluminum, reaching deeper into the ultraviolet than ground-coated optics can.",
+        href: "/technologies/SelfCoating"
     },
     {
-        imgSrc: "/EnhancedProtectiveSilver.webp",
-        cardTitle: "FUV Aluminum",
-        cardBody: "More details coming soon..."
+        imgSrc: "/BPD.webp",
+        cardTitle: "BPD's for FUV Aluminum",
+        cardBody: "More details coming soon...",
+        href: "/technologies/BPD"
     }
 ]
 
@@ -113,11 +114,11 @@ const featuredTechnologies = [
     capabilitiesLayout.map(capabilities => {
         return (
             <Cards
-            variant = "flip"
+            variant = "link"
             imgSrc = {capabilities.imgSrc}
             cardTitle = {capabilities.cardTitle}
             cardBody = {capabilities.cardBody}
-            back = {capabilities.back}/>
+            href = {capabilities.href}/>
 
         )
     })
@@ -169,10 +170,11 @@ const featuredTechnologies = [
     featuredTechnologies.map(experiences => {
         return (
             <Cards
-            variant = "featured"
+            variant = "featured-link"
             imgSrc = {experiences.imgSrc}
             cardTitle = {experiences.cardTitle}
-            cardBody = {experiences.cardBody}/>
+            cardBody = {experiences.cardBody}
+            href = {experiences.href}/>
 
         )
     })
@@ -610,4 +612,3 @@ a::after {
 }
 
 </style>
-
