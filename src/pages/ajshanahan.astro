@@ -7,8 +7,10 @@ import Layout from '../layouts/layout.astro';
 <div class="profile-container">
 <div class="profile-content">
 <div class="profile-header">
-<img src="/AJpic.webp" alt="AJ Shanahan" class="profile-photo">
 <h1>AJ Shanahan</h1>
+<div class="profile-photo-wrap">
+<img src="/AJpic.webp" alt="AJ Shanahan" class="profile-photo">
+</div>
 </div>
 
 <div class="section">
@@ -69,19 +71,36 @@ Mr. Shanahan is a recent graduate of Washington University in Saint Louis with a
 
 .profile-header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    gap: 30px;
     margin-bottom: 40px;
+}
+
+/* Two equal halves: the name is centered in the left half,
+   the photo is centered in the right half. */
+.profile-header > h1,
+.profile-photo-wrap {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.profile-header > h1 {
     text-align: center;
 }
 
+.profile-photo-wrap {
+    display: flex;
+    justify-content: center;
+}
+
 .profile-photo {
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
     border-radius: 12px;
     object-fit: cover;
     object-position: center;
-    margin-bottom: 20px;
+    flex-shrink: 0;
     border: 3px solid #E2E8F0;
     box-shadow: 0 4px 12px rgba(16, 24, 40, 0.1);
 }
@@ -146,8 +165,8 @@ hr {
     }
 
     .profile-photo {
-        width: 80px;
-        height: 80px;
+        width: 150px;
+        height: 150px;
         margin-bottom: 15px;
     }
 
