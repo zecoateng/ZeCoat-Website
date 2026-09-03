@@ -73,7 +73,14 @@ document.addEventListener("astro:page-load", () => {
 <nav class = "navigation">
 <ul>
 <li><a href = "/">Home</a></li>
-<li><a href = "/about">About</a></li>
+<li class="dropdown">
+  <a class = "dropdown-link">About</a>
+
+  <ul class="dropdown-menu">
+    <li><a href="/about/meet-the-team">Meet the Team</a></li>
+    <li><a href="/about/key-missions">Key Missions</a></li>
+  </ul>
+</li>
 <li><a href = "/coatings">Coatings</a></li>
 
 <li><a href = "/technologies">R&D</a></li>

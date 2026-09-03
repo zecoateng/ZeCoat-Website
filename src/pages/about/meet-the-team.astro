@@ -1,0 +1,207 @@
+---
+import Layout from '../../layouts/layout.astro'
+---
+
+<Layout>
+<div class = "about-container">
+<h1 class = "title" >About ZeCoat Corporation</h1>
+<p>ZeCoat Corporation develops advanced thin-film optical coatings and vacuum-deposition technologies for demanding astronomy, aerospace, and scientific applications. Founded in 2011, we bring together expertise in coating design, physical chemistry, electronics, mechanical engineering, and software development to solve challenges that conventional coating systems cannot.
+
+At our manufacturing facility in Granite City, IL, our cleanroom, optical measurement laboratory, and motion-controlled electron-beam evaporation systems enable us to coat substrates up to two meters in diameter with exceptional uniformity and layer precision. Our capabilities include protected silver, far-ultraviolet aluminum, protected gold, multilayer dielectric, thermal-control, silicon-cladding, and ultra-black coatings.
+
+Technologies developed by our team have supported landmark missions and programs including the Kepler Space Telescope, Mars InSight, PACE, Chandrayaan-1, NuSTAR, and NASA's starshade research. Today, we continue to advance the field through next-generation coatings, large-optic deposition systems, roll-to-roll processes, and technologies designed to apply or renew optical coatings in space.
+
+</p>
+</div>
+<div class = "ceo-wrapper">
+<div class = "ceo-layout">
+<div class = "ceo-image">
+<img src = "/DavidHeadshot.webp" alt = "David Sheikh, CEO and Founder"/>
+</div>
+<div class = "ceo-description">
+<div class= "name-group">
+<h1>David Sheikh</h1>
+<h2>CEO, Founder</h2>
+</div>
+<p>David A. Sheikh is the co-founder and CEO of ZeCoat Corporation, where he leads the development of advanced optical coating technologies for space, astronomy, and scientific research. With nearly four decades of experience in chemical engineering and vacuum deposition, he specializes in designing high-performance mirror coatings, thermal control coatings, and precision thin films for both ground-based and space-based optical systems.</p>
+</div>
+</div>
+<div class = "ceo-layout">
+<div class = "ceo-image">
+</div>
+<div class = "ceo-description">
+<div class= "name-group">
+<h1>Joshua Saadia</h1>
+<h2>Operations Manager</h2>
+</div>
+<p>Joshua Saadia oversees engineering operations, manufacturing, and quality management at ZeCoat Corporation. With more than 20 years of experience in thin-film coatings and vacuum systems, he has supported major aerospace programs and helps bring advanced coating technologies from research into production.</p>
+</div>
+<div class = "ceo-image">
+<img src = "/JoshHeadshot.webp" alt = "Joshua Saadia, Operations Manager"/>
+</div>
+</div>
+<div class = "ceo-layout">
+<div class = "ceo-image">
+<img src = "/TeamPhotoPlaceholder.svg" alt = "The ZeCoat team"/>
+</div>
+<div class = "ceo-description">
+<div class= "name-group">
+<h1>Our Technical Team</h1>
+</div>
+<p>Placeholder — a short description of the ZeCoat team goes here.</p>
+</div>
+</div>
+</div>
+</Layout>
+
+<style>
+
+.ceo-description {
+    display:flex;
+    flex-direction: column;
+    max-width: 600px;
+    font-size: 18px;
+}
+
+.ceo-image img {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px; 
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    border: 1px solid #DCE3EA;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 16px;
+}
+
+.ceo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  margin-bottom: 150px;
+}
+
+.title-cards {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.ceo-image:hover img {
+    transform: scale(1.03);
+}
+
+.section-title {
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    border-bottom: 3px solid black;
+}
+
+.ceo-layout {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 4vw, 150px);
+    padding-inline: 20px;
+}
+
+.title {
+    font-size: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 8rem;
+    padding-inline: 20px;
+}
+
+.about-container p {
+    max-width: 125ch;
+    margin-top: 5;
+}
+
+.name-group {
+    display: flex;
+    flex-direction: column;
+    gap: -1000rem;
+}
+
+.ceo-description h1,
+.ceo-description h2{
+    margin: 0;
+}
+
+
+@media (max-width: 1000px) {
+
+  .title{
+    font-size: 48px;
+    text-align:center;
+  }
+  
+  .ceo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+  .ceo-layout{
+    flex-direction:column;
+    align-items:center;
+    gap:2rem;
+  }
+
+  .ceo-description{
+    text-align:center;
+    align-items:center;
+  }
+
+  .ceo-image img{
+    max-width:450px;
+    width:100%;
+    height:auto;
+  }
+
+}
+
+@media (max-width:768px){
+
+.about-container{
+
+    padding-inline:24px;
+}
+
+.about-container p{
+
+    line-height:1.8;
+}
+}
+
+@media (max-width:768px){
+
+.ceo-description h1{
+
+    font-size:2rem;
+}
+
+.ceo-description h2{
+
+    font-size:1.2rem;
+}
+
+.ceo-description h3{
+
+    font-size:1rem;
+    line-height:1.7;
+}
+
+}
+
+</style>

@@ -1,0 +1,331 @@
+---
+import Layout from '../../layouts/layout.astro'
+import ProjectCard from '../../components/AboutCards.astro'
+
+const timeline = [
+  {
+    category: "Telescope Coatings",
+    title: "Kepler Space Telescope",
+    description: "Mr. Sheikh developed the protected silver coating for the primary mirror of NASA's Kepler mission, which was vital for maximizing light reflectivity to discover Earth-sized exoplanets."
+  },
+
+  {
+    category: "Telescope Coatings",
+    title: "Moon Mineralogy Mapper (M³)",
+    description: "Mr. Sheikh created the protected silver coatings used on the M³ imaging spectrometer, a NASA instrument carried by India's Chandrayaan-1 spacecraft that helped confirm water molecules on the Moon."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "Mars InSight Seismometer Cover",
+    description: "In 2014, the ZeCoat team designed the critical thermal control coating applied to the inner and outer shield of SEIS (the seismometer) on the Mars InSight Lander, protecting the sensitive instrument from intense Martian temperature swings and reducing solar glint."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "NuSTAR Space Telescope",
+    description: "Mr. Sheikh developed x-ray transparent optics covers and solar rejection filters to block interfering sunlight while allowing high-energy X-rays to pass through safely."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "NanoSail-D Spacecraft",
+    description: "Mr. Sheikh developed a highly reflective aluminum coating deposited directly onto ultra-thin, 2-micron polyimide film for NASA's early solar sail demonstrations."
+  },
+
+  {
+    category: "Telescope Coatings",
+    title: "Far-Ultraviolet (FUV) Broadband Coatings",
+    description: "The ZeCoat team designed & manufactured an advanced aluminum-based physical vapor deposition coating. This technique achieved over 90% reflectance in the FUV band at Lyman-alpha."
+  },
+
+  {
+    category: "Telescope Coatings",
+    title: "UV-Enhanced Protected Silver",
+    description: "ZeCoat engineered a specialized, exceptionally durable silver mirror coating that maintains high reflectivity from 350 nm through the long-wavelength infrared spectrum. The coating was flown on the OCI instrument aboard NASA's PACE mission."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "ISIS High-altitude Airship",
+    description: "Mr. Sheikh developed a roll-to-roll coating process to apply silver to thin polyimide membranes to create the reflective surface on the outside of a high-altitude airship."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "Starshade for Planet Hunting",
+    description: "ZeCoat developed a durable, ultra-black coating technology that could significantly improve NASA's ability to directly detect and study Earth-like exoplanets by suppressing unwanted reflected light."
+  },
+
+  {
+    category: "Telescope Coatings",
+    title: "Habitable Worlds Observatory (HWO) Project",
+    description: "ZeCoat is currently leading the development of FUV broadband reflective coatings for a NASA D.19 Industrial Partnership program."
+  },
+
+  {
+    category: "Telescope Coatings",
+    title: "Ground-Based Astronomy Mirror Coatings",
+    description: "ZeCoat is currently leading the development of FUV broadband reflective coatings for a NASA D.19 Industrial Partnership program."
+  },
+
+  {
+    category: "Spacecraft Accomplishments",
+    title: "Habitable Worlds Observatory Thermal Films",
+    description: "ZeCoat is currently leading the development of multi-layered thermal control films on polymer membranes to insulate and protect next-generation deep-space observatories."
+  }
+];
+
+const leftItems = timeline.filter(item => item.category === "Spacecraft Accomplishments");
+const rightItems = timeline.filter(item => item.category === "Telescope Coatings");
+const centerItems = timeline.filter(item => item.category === "Active in Space");
+---
+
+<Layout>
+<div class = "timeline-wrapper">
+<div class = "timeline-header">
+<div class = "timeline-title">Key Achievements</div>
+</div>
+<div class="timeline-layout">
+  <div class="timeline-line"></div>
+
+  <div class="timeline-column left-column">
+    <div class = "title-cards">Spacecraft Accomplishments</div>
+    {
+      leftItems.map(item => (
+        <ProjectCard
+          title={item.title}
+          description={item.description}
+        />
+      ))
+    }
+  </div>
+
+  <div class="timeline-column right-column">
+    <div class = "title-cards">Telescope Coatings</div>
+    {
+      rightItems.map(item => (
+        <ProjectCard
+          title={item.title}
+          description={item.description}
+        />
+      ))
+    }
+  </div>
+
+</div>
+
+{
+  centerItems.map(item => (
+    <div class="timeline-end">
+      <ProjectCard
+        title={item.title}
+        description={item.description}
+      />
+    </div>
+  ))
+}
+</div>
+</Layout>
+
+<style>
+
+.timeline-wrapper {
+    margin-block: 50px;
+}
+
+.title-cards {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    border-bottom: 3px solid black;
+}
+
+.timeline-title {
+    font-size: 40px;
+    letter-spacing: -0.03em;
+}
+
+.timeline-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1800px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 150px;
+    margin-inline: 20px;
+}
+
+.timeline-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.timeline-item {
+    width: 45%;
+    position: relative;
+}
+
+.timeline-end {
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;      /* tight spacing */
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;      /* even with left column by default */
+    margin-top: 0;
+}
+
+/* Staggered zig-zag only when there's room for it */
+@media (min-width: 1200px) {
+    .right-column {
+        gap: 4rem;
+        margin-top: 150px;
+    }
+}
+ 
+.timeline-wrapper {
+  margin-block: 50px;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 3px;
+    background: #CBD4DC;
+    z-index: 1;
+}
+
+.timeline-line::before {
+    content: "";
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #E7A21C;
+
+    left: 67%;
+    transform: translateX(-50%);
+
+    top: -8px; 
+}
+
+.timeline-line::after {
+    content: "";
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #E7A21C;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    bottom: -8px; 
+}
+
+.timeline-item.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.project-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;    
+    margin-inline: auto;
+    align-items: center;
+    margin-bottom: 5rem;
+    padding-inline: 20px
+}
+
+.title-cards {
+  text-align: center;
+}
+
+.name-group {
+    display: flex;
+    flex-direction: column;
+    gap: -1000rem;
+}
+
+
+@media (max-width: 1000px) {
+
+  .title{
+    font-size: 48px;
+    text-align:center;
+  }
+
+}
+
+@media (max-width:900px){
+
+.timeline-layout{
+    grid-template-columns:1fr;
+    gap:2rem;
+}
+
+
+.timeline-column{
+    padding-left:50px;
+}
+
+
+.timeline-line{
+    left:24px;
+    transform:none;
+}
+
+.left-column,
+.right-column{
+    margin-top:0;
+    
+}
+}
+
+@media (max-width:768px){
+
+.timeline-wrapper {
+    padding-inline:24px;
+}
+
+}
+
+</style>
