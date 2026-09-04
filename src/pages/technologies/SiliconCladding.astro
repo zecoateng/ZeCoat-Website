@@ -30,6 +30,9 @@ import Layout from '../../layouts/layout.astro';
 </div>
 </div>
 <div class = "right-column">
+<div class = "featured-image-section">
+<img src="/SiliconCladding.webp" alt="Silicon Cladding for Lightweight Mirrors" class="featured-image" />
+</div>
 <h2>Benefits</h2>
 <ul>
     <li>Adds a dense, polishable surface to lightweight substrates.</li>
@@ -49,6 +52,23 @@ import Layout from '../../layouts/layout.astro';
 </Layout>
 
 <style>
+
+.featured-image-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.featured-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    border: 1px solid #E2E8F0;
+    object-fit: cover;
+}
 
 .page-layout {
     display: flex;
@@ -74,10 +94,12 @@ import Layout from '../../layouts/layout.astro';
 .text-portion {
     width: 100%;
     max-width: 750px;
+    flex: 1;
 }
 
 .right-column {
-    max-width: 500px;
+    max-width: 400px;
+    flex-shrink: 0;
 }
 
 .text h1,
@@ -85,12 +107,14 @@ import Layout from '../../layouts/layout.astro';
     margin: 0;
 }
 
-@media(max-width: 600px) {
+@media(max-width: 900px) {
     .page-layout {
-        display: flex;
         flex-direction: column;
-    } /*fix the overflow later*/
-
+    }
+    
+    .right-column {
+        max-width: 100%;
+    }
 }
 
 /* Publications list */
