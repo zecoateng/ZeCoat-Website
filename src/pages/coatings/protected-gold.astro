@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/layout.astro';
+import CoatingTile from '../../components/CoatingTile.astro';
+---
+
+<Layout>
+  <div class="page-layout">
+    <div class="back-link">
+      <a href="/coatings">&larr; Back to Coatings</a>
+    </div>
+    <div class="page-header">
+      <h1>Protected Gold</h1>
+      <p>Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability.</p>
+    </div>
+
+    <div class="variant-grid">
+      <CoatingTile
+        title="Long-Wave IR Gold — Nancy Grace Roman Space Telescope"
+        image="/goldcoating.webp"
+        description="Long-wavelength infrared gold coating developed for NASA's Nancy Grace Roman Space Telescope."
+        link="/coatings/protected-gold/roman-long-ir"
+      />
+    </div>
+
+    <div class="quote-cta">
+      <a href="/contact">Request a Quote</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 1.5rem;
+}
+
+.back-link {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 0;
+}
+
+.back-link a {
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.page-header {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+    font-size: clamp(2rem, 4vw + 1rem, 60px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    color: black;
+}
+
+.page-header p {
+    color: #475569;
+    line-height: 1.7;
+}
+
+.variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 360px));
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.quote-cta {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.quote-cta a {
+    display: inline-block;
+    background: #E7A21C;
+    color: #1B2430;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #E7A21C;
+    box-shadow: 0 8px 24px rgba(235, 189, 37, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quote-cta a:hover {
+    background: #C6870F;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}
+
+</style>

@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [];
+
+const bands = [];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Black Coating"
+    familyLabel="Roll to Roll"
+    familyHref="/coatings/roll-to-roll"
+    image="/BlackCoating.webp"
+    description="More detail coming soon."
+    specs={specs}
+    bands={bands}
+  />
+</Layout>

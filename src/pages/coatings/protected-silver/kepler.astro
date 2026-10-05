@@ -1,0 +1,25 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [
+        { label: "Flight Heritage", value: "Kepler Space Telescope primary mirror" },
+        { label: "Durability", value: "Passes MIL-13830-B" }
+      ];
+
+const bands = [
+        { band: "350-1000 nm", avg: "96%", max: "", min: "" }
+      ];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Kepler"
+    familyLabel="Protected Silver"
+    familyHref="/coatings/protected-silver"
+    image="/Kepler-Space-Telescope.webp"
+    description="Protected silver coating flown on the Kepler Space Telescope primary mirror, delivering exceptional broadband reflectance across the visible and near-infrared."
+    specs={specs}
+    bands={bands}
+  />
+</Layout>

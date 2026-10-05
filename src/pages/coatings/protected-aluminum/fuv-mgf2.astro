@@ -1,0 +1,25 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [
+        { label: "Durability", value: "Passes MIL-13830-B" },
+        { label: "Full technical overview", value: "/technologies/FUVCoating" }
+      ];
+
+const bands = [
+        { band: "121 nm", avg: ">96%", max: "", min: "" }
+      ];
+---
+
+<Layout>
+  <CoatingDetail
+    title="FUV Aluminum (Magnesium Fluoride)"
+    familyLabel="Protected Aluminum"
+    familyHref="/coatings/protected-aluminum"
+    image="/BPD.webp"
+    description="Far-ultraviolet aluminum coating protected with a magnesium fluoride overcoat, optimized for high reflectance down to 121 nm."
+    specs={specs}
+    bands={bands}
+  />
+</Layout>

@@ -22,14 +22,16 @@ export const technologies = [
     description:
       "ZeCoat develops protected-aluminum coatings that maximize far-ultraviolet reflectance, letting next-generation telescopes and instruments capture faint UV signals with exceptional efficiency. Precise deposition control — and large-area, multi-source methods — extends these coatings toward the largest future mirrors.",
     image: "/BPD.webp",
-    link: "/technologies/FUVCoating"
+    link: "/technologies/FUVCoating",
+    imageFit: "contain"
   },
   {
     title: "Self-Coating Telescope",
     description:
       "An aluminum mirror oxidizes the moment it meets air, which cuts off far-ultraviolet reflectance. ZeCoat's self-coating telescope carries a compact, battery-powered deposition system that lays down a fresh, bare aluminum surface in orbit — reaching deeper into the ultraviolet and letting a mission refresh its own mirror.",
     image: "/SelfCoatingTelescope.webp",
-    link: "/technologies/SelfCoating"
+    link: "/technologies/SelfCoating",
+    imageFit: "contain"
   },
   {
     title: "Micrometeroid Protection",
@@ -57,6 +59,7 @@ export const technologies = [
       description={technology.description}
       image={technology.image}
       link={technology.link}
+      imageFit={technology.imageFit}
     />
   ))
 }

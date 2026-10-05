@@ -1,0 +1,24 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [
+        { label: "Test Condition", value: "8° AOI" }
+      ];
+
+const bands = [
+        { band: "450-850 nm", avg: "<1.5%", max: "<2.4%", min: "" }
+      ];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Vis-IR Straylight Suppression"
+    familyLabel="Black Coatings"
+    familyHref="/coatings/black-coatings"
+    image="/BlackCoating.webp"
+    description="Black coating engineered for straylight suppression and contrast control across the visible to infrared spectrum."
+    specs={specs}
+    bands={bands}
+  />
+</Layout>

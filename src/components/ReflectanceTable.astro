@@ -1,0 +1,81 @@
+---
+// Table of reflectance-by-band data for a coating variant detail page.
+// `bands` is an array of { band, avg, max, min } strings, e.g.
+// { band: "350-1000 nm", avg: "96%", max: "98%", min: "93%" }.
+// Leave `bands` empty (or omit) to show a "coming soon" placeholder.
+const { bands = [] } = Astro.props;
+---
+
+{bands.length > 0 ? (
+  <div class="reflectance-table-wrap">
+    <table class="reflectance-table">
+      <thead>
+        <tr>
+          <th>Band</th>
+          <th>Avg. Reflectance</th>
+          <th>Max Reflectance</th>
+          <th>Min Reflectance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {bands.map((row) => (
+          <tr>
+            <td>{row.band}</td>
+            <td>{row.avg}</td>
+            <td>{row.max}</td>
+            <td>{row.min}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <p class="reflectance-placeholder">Reflectance data coming soon.</p>
+)}
+
+<style>
+  .reflectance-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #DCE2E8;
+    border-radius: 12px;
+  }
+
+  .reflectance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .reflectance-table th,
+  .reflectance-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .reflectance-table thead th {
+    background: #16202E;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .reflectance-table tbody tr:nth-child(odd) {
+    background: #F8F9FB;
+  }
+
+  .reflectance-table tbody tr:nth-child(even) {
+    background: #ffffff;
+  }
+
+  .reflectance-table tbody td {
+    color: #1B2430;
+    border-top: 1px solid #EAEDF1;
+  }
+
+  .reflectance-placeholder {
+    color: #64748B;
+    font-style: italic;
+    padding: 1rem 0;
+  }
+</style>

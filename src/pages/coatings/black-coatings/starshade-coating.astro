@@ -1,0 +1,25 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [];
+
+const bands = [];
+
+const publications = [
+        { title: "New Ultra-Black Coating Could Enable the Search for Life on Exoplanets — NASA Science", url: "https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/new-ultra-black-coating-could-enable-the-search-for-life-on-exoplanets/" }
+      ];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Starshade Coating"
+    familyLabel="Black Coatings"
+    familyHref="/coatings/black-coatings"
+    image="/StarShades&BlackCoating.webp"
+    description="ZeCoat developed an ultra-black coating, roughly 100 times thinner than prior approaches, that absorbs incoming light instead of scattering it, using stacked thin, partially transparent metal layers separated by dielectric glass. Applied to starshade edges and, via ZeCoat's roll-to-roll process, across entire starshade membranes, the coating cuts reflected light by about a factor of 20 — low enough for a telescope to image faint exoplanets alongside their much brighter host stars. NASA has supported the work through SBIR contracts, with potential follow-on applications in satellite darkening and thermal control."
+    specs={specs}
+    bands={bands}
+    publications={publications}
+  />
+</Layout>

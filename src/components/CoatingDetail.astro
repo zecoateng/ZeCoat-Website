@@ -1,0 +1,219 @@
+---
+// Shared content block for a single coating-variant detail page
+// (e.g. /coatings/protected-silver/kepler). Used inside <Layout>.
+import ReflectanceTable from './ReflectanceTable.astro';
+
+const {
+  title,
+  familyLabel,
+  familyHref,
+  image,
+  description,
+  specs = [],
+  bands = [],
+  publications = [],
+} = Astro.props;
+---
+
+<div class="detail-layout">
+  <div class="back-link">
+    <a href={familyHref}>&larr; Back to {familyLabel}</a>
+  </div>
+
+  <div class="detail-header">
+    <h1>{title}</h1>
+  </div>
+
+  {image && (
+    <div class="detail-image-wrap">
+      <img src={image} alt={title} class="detail-image" />
+    </div>
+  )}
+
+  <div class="detail-body">
+    <p class="detail-description">{description}</p>
+
+    {specs.length > 0 && (
+      <ul class="detail-specs">
+        {specs.map((item) => (
+          <li><strong>{item.label}:</strong> {item.value}</li>
+        ))}
+      </ul>
+    )}
+
+    <h2 class="table-heading">Reflectance by Band</h2>
+    <ReflectanceTable bands={bands} />
+
+    {publications.length > 0 && (
+      <>
+        <h2 class="table-heading pub-heading">Publications</h2>
+        <ul class="pub-list">
+          {publications.map((pub) => (
+            <li>
+              <a href={pub.url} target="_blank" rel="noopener">{pub.title}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </div>
+
+  <div class="quote-cta">
+    <a href="/contact">Request a Quote</a>
+  </div>
+</div>
+
+<style>
+  .detail-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .back-link {
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .back-link a {
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .back-link a:hover {
+    text-decoration: underline;
+  }
+
+  .detail-header {
+    text-align: center;
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .detail-header h1 {
+    font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: black;
+    margin: 0;
+  }
+
+  .detail-image-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .detail-image {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.1);
+    border: 1px solid #E2E8F0;
+  }
+
+  .detail-body {
+    width: 100%;
+  }
+
+  .detail-description {
+    color: #1B2430;
+    line-height: 1.75;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-specs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .detail-specs li {
+    color: #1B2430;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .detail-specs strong {
+    color: #16202E;
+  }
+
+  .table-heading {
+    font-size: 1.4rem;
+    color: #16202E;
+    margin-bottom: 1rem;
+  }
+
+  .pub-heading {
+    margin-top: 2.5rem;
+  }
+
+  .pub-list {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .pub-list li {
+    margin-bottom: 0.5rem;
+    color: #1B2430;
+  }
+
+  .pub-list a {
+    color: #C6870F;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .pub-list a:hover {
+    text-decoration: underline;
+  }
+
+  .quote-cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .quote-cta a {
+    display: inline-block;
+    background: #E7A21C;
+    color: #1B2430;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #E7A21C;
+    box-shadow: 0 8px 24px rgba(235, 189, 37, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .quote-cta a:hover {
+    background: #C6870F;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    .detail-header h1 {
+      font-size: 2rem;
+    }
+
+    .detail-description {
+      font-size: 1rem;
+    }
+  }
+</style>

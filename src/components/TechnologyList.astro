@@ -1,10 +1,10 @@
 ---
-const {title, description, image, link} = Astro.props;
+const {title, description, image, link, imageFit = "cover"} = Astro.props;
 ---
 
     <div class="ceo-layout">
     <div class="ceo-image">
-        <img src={image} alt={title} />
+        <img src={image} alt={title} style={`object-fit: ${imageFit};`} />
     </div>
 
     <div class="ceo-description">

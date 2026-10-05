@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/layout.astro';
+import CoatingTile from '../../components/CoatingTile.astro';
+---
+
+<Layout>
+  <div class="page-layout">
+    <div class="back-link">
+      <a href="/coatings">&larr; Back to Coatings</a>
+    </div>
+    <div class="page-header">
+      <h1>Protected Silver</h1>
+      <p>ZeCoat's most decorated coating family. Our protected silver stack delivers exceptional broadband reflectance across the ultraviolet, visible, and near-infrared, and has flown on some of NASA's most demanding optical missions. Explore the mission-tailored variants below.</p>
+    </div>
+
+    <div class="variant-grid">
+      <CoatingTile
+        title="UV Coating — Ocean Color Instrument (OCI)"
+        image="/ProtectiveSilver.webp"
+        description="Ultraviolet-optimized protected silver coating developed for the Ocean Color Instrument (OCI)."
+        link="/coatings/protected-silver/oci"
+      />
+      <CoatingTile
+        title="UV Coating — GLIRM"
+        image="/ProtectiveSilver.webp"
+        description="Ultraviolet-optimized protected silver coating developed for the GLIRM project."
+        link="/coatings/protected-silver/glirm"
+      />
+      <CoatingTile
+        title="VIS-NIR Coating — SACHI"
+        image="/ProtectiveSilver.webp"
+        description="Visible to near-infrared protected silver coating developed for the SACHI instrument."
+        link="/coatings/protected-silver/sachi"
+      />
+      <CoatingTile
+        title="VIS-NIR Coating"
+        image="/ProtectiveSilver.webp"
+        description="Visible to near-infrared protected silver coating. Name coming soon."
+        link="/coatings/protected-silver/vis-nir-2"
+      />
+      <CoatingTile
+        title="ZC-1251"
+        image="/ProtectiveSilver.webp"
+        description="ZeCoat's ZC-1251 infrared protected silver coating."
+        link="/coatings/protected-silver/zc-1251"
+      />
+      <CoatingTile
+        title="M³ Program"
+        image="/ProtectiveSilver.webp"
+        description="Protected silver coating developed for the M³ program."
+        link="/coatings/protected-silver/m3-program"
+      />
+      <CoatingTile
+        title="Kepler"
+        image="/Kepler-Space-Telescope.webp"
+        description="Protected silver coating flown on the Kepler Space Telescope primary mirror."
+        link="/coatings/protected-silver/kepler"
+      />
+    </div>
+
+    <div class="quote-cta">
+      <a href="/contact">Request a Quote</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 1.5rem;
+}
+
+.back-link {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 0;
+}
+
+.back-link a {
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.page-header {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+    font-size: clamp(2rem, 4vw + 1rem, 60px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    color: black;
+}
+
+.page-header p {
+    color: #475569;
+    line-height: 1.7;
+}
+
+.variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 360px));
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.quote-cta {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.quote-cta a {
+    display: inline-block;
+    background: #E7A21C;
+    color: #1B2430;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #E7A21C;
+    box-shadow: 0 8px 24px rgba(235, 189, 37, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quote-cta a:hover {
+    background: #C6870F;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}
+
+</style>

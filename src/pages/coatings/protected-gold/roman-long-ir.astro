@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [
+        { label: "Durability", value: "Passes MIL-13830-B" }
+      ];
+
+const bands = [
+        { band: "800 nm to >5000 nm", avg: ">98%", max: "", min: "" }
+      ];
+
+const publications = [
+        { title: "Reflective engineered diffusers on the Roman Space Telescope Wide Field Instrument", url: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12677/1267703/Reflective-engineered-diffusers-on-the-Roman-Space-Telescope-Wide-Field/10.1117/12.2674196.full" }
+      ];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Long-Wave IR Gold — Nancy Grace Roman Space Telescope"
+    familyLabel="Protected Gold"
+    familyHref="/coatings/protected-gold"
+    image="/goldcoating.webp"
+    description="Long-wavelength infrared gold coating developed for NASA's Nancy Grace Roman Space Telescope, offering extremely high reflectance with long-term stability."
+    specs={specs}
+    bands={bands}
+    publications={publications}
+  />
+</Layout>

@@ -1,86 +1,51 @@
 ---
 import Layout from '../layouts/layout.astro'
+import CoatingTile from '../components/CoatingTile.astro'
 
 const coatings = [
   {
     title: "Protected Silver",
-    image: "ProtectiveSilver.webp",
+    image: "/ProtectiveSilver.webp",
     description:
       "High-performance protected silver coating delivering exceptional broadband reflectance across the visible and near-infrared. A flight-proven workhorse for astronomical and imaging optics.",
-    back: "Reflectance: Avg. R 96% over 350–1000 nm\nDurability: Passes MIL-13830-B\nFlight Heritage: Kepler Space Telescope primary mirror\nVariations: May be modified to enhance reflection, durability, and/or wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter"
-  },
-  {
-    title: "Enhanced Protected Silver",
-    image: "",
-    description:
-      "An optimized silver stack engineered for higher reflectance, with greater than 94% average reflectance across the 400–1100 nm spectral range, and improved environmental durability. Ideal for demanding ground and space-based instruments.",
-    back:
-      "More details coming soon."
-  },
-  {
-    title: "Radiation Hardened Protected Silver",
-    image: "/RadHardSilverCoating.webp",
-    description:
-      "Protected silver formulated to withstand high-radiation orbital environments while maintaining reflectance and adhesion over long-duration missions.",
-    back:
-      "More details coming soon."
+    link: "/coatings/protected-silver"
   },
   {
     title: "Protected Gold",
     image: "/ProtectedGold.webp",
     description:
       "Infrared gold coating offering extremely high reflectance from the near- to mid-infrared, protected for handling and long-term stability.",
-    back:
-      "Reflectance: Avg. R > 98% over 800 nm to >5000 nm\nDurability: Passes MIL-13830-B\nVariations: May be modified to enhance reflection, durability, and wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter"
+    link: "/coatings/protected-gold"
+  },
+  {
+    title: "Protected Aluminum",
+    image: "/ProtectedAluminum.webp",
+    description:
+      "Broadband aluminum coatings for general-purpose optics, with a far-ultraviolet variant optimized for next-generation UV space telescopes.",
+    link: "/coatings/protected-aluminum"
+  },
+  {
+    title: "Black Coatings",
+    image: "/BlackCoating.webp",
+    description:
+      "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures.",
+    link: "/coatings/black-coatings"
   },
   {
     title: "Silicon Cladding",
     image: "/SiliconCladding.webp",
     description:
-      "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero CTE surfaces.",
-    back:
-      "A thick layer of silicon (100+ microns) may be applied as a means of optical finishing for a low-stress, near-zero-CTE surface. The amount of silicon is tailorable.\nMax Substrate Size: Up to 2.0 meters\n"
+      "Tailorable silicon cladding over 100 microns thick for optical finishing, figure correction, and near-zero-CTE surfaces.",
+    link: "/coatings/silicon-cladding"
   },
   {
-    title: "FUV Aluminum",
-    image: "/BPD.webp",
+    title: "Roll to Roll",
+    image: "/RolltoRollCoating.webp",
     description:
-      "Far-ultraviolet aluminum coating optimized for high reflectance down to 121 nm, developed for next-generation UV space telescopes.",
-    back:
-      "Reflectance: R > 96% @ 121 nm\nDurability: Passes MIL-13830-B\nVariations: May be modified to enhance reflection, durability, and wavelength range\nPrice Drivers: Substrate size, quantity, level of difficulty\nMax Substrate Size: 2.0-meter diameter\n"
-  },
-  {
-    title: "Black Coating",
-    image: "/BlackCoating.webp",
-    description:
-      "Low-reflectance black coating for stray-light suppression and contrast control on baffles, edges, and optical structures.",
-    back:
-      "Avg. R < 1.5%; Max R < 2.4% from 450–850 nm @ 8° AOI\nContact us for more information on this coating."
-  },
-  {
-    title:"Protected Aluminum",
-    image: "/ProtectedAluminum.webp",
-    description: "More details coming soon.",
-    back: "More details coming soon."
-  },
-  {
-    title:"UV-enhanced Protected Silver",
-    image:"",
-    description:"More details coming soon",
-    back:"More details coming soon"
+      "Continuous vacuum deposition onto large, flexible membranes and films, extending our coatings to large-format space structures.",
+    link: "/coatings/roll-to-roll"
   }
 ];
-
-// Splits back-side text into "Label: value" spec lines (plain lines pass through)
-function parseBack(text) {
-  return (text ?? "").split("\n").filter(Boolean).map((line) => {
-    const idx = line.indexOf(": ");
-    if (idx > 0 && idx < 40) {
-      return { label: line.slice(0, idx), value: line.slice(idx + 2) };
-    }
-    return { text: line };
-  });
-}
 ---
 
 <Layout>
@@ -88,40 +53,17 @@ function parseBack(text) {
   <section class="standard-coatings">
     <div class="section-heading">
       <h2>Commercial Coatings</h2>
-      <p>Explore our portfolio of standard commercial coatings. If you are interested in a specific material or would like additional information, please visit the<strong> Request Quote tab</strong>. A member of our team will follow up with you to discuss your requirements and provide further details.</p>
+      <p>Explore our portfolio of standard commercial coatings. Click a coating to see its available variations, specifications, and heritage. If you are interested in a specific material or would like additional information, please visit the<strong> Request Quote tab</strong>. A member of our team will follow up with you to discuss your requirements and provide further details.</p>
     </div>
 
     <div class="coatings-grid">
       {coatings.map(coating => (
-        <article class="flip-card" data-coating-flip>
-          <div class="flip-inner">
-            <div class="flip-front coating-card">
-              <img src={coating.image} alt={coating.title} />
-              <div class="coating-card-body">
-                <h3>{coating.title}</h3>
-                <p>{coating.description}</p>
-              </div>
-            </div>
-            <div class="flip-back coating-card">
-              <div class="coating-card-body">
-                <h3>{coating.title}</h3>
-                {parseBack(coating.back ?? "More details coming soon.").map((item) =>
-                  item.label ? (
-                    <p class="spec-line">
-                      <strong>{item.label}:</strong> {item.value.includes("zecoat.com") ? (
-                        <a href={`mailto:${item.value}`}>{item.value}</a>
-                      ) : (
-                        item.value
-                      )}
-                    </p>
-                  ) : (
-                    <p class="spec-text">{item.text}</p>
-                  )
-                )}
-              </div>
-            </div>
-          </div>
-        </article>
+        <CoatingTile
+          title={coating.title}
+          image={coating.image}
+          description={coating.description}
+          link={coating.link}
+        />
       ))}
     </div>
   </section>
@@ -140,26 +82,6 @@ function parseBack(text) {
   </section>
 
 </Layout>
-
-<script>
-  function initCoatingFlips() {
-    // Scoped to this page's own cards via [data-coating-flip].
-    //
-    // A bare ".flip-card" selector would also match the flip cards on the home
-    // page. ClientRouter runs a script module only once, but the astro:page-load
-    // listener it registers stays alive on `document` for the rest of the
-    // session — so after visiting this page, this function fires on EVERY later
-    // navigation. With a generic selector it would attach a second click handler
-    // to the home page's cards, and each click would toggle "flipped" twice,
-    // leaving them looking unclickable.
-    document.querySelectorAll<HTMLElement>("[data-coating-flip]").forEach((card) => {
-      if (card.dataset.flipBound === "true") return;
-      card.dataset.flipBound = "true";
-      card.addEventListener("click", () => card.classList.toggle("flipped"));
-    });
-  }
-  document.addEventListener("astro:page-load", initCoatingFlips);
-</script>
 
 <style>
 
@@ -187,106 +109,8 @@ function parseBack(text) {
 
   .coatings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
     gap: 2rem;
-  }
-
-  .coating-card {
-    background: linear-gradient(180deg, #ffffff, #f7f9fc);
-    border: 1px solid #DCE2E8;
-    border-radius: 14px;
-    overflow: hidden;
-    height: 100%;
-    max-height: 100000px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .coating-card:hover {
-    box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
-  }
-
-  .coating-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .coating-card-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .coating-card-body h3 {
-    font-size: 1.35rem;
-    color: #16202E;
-  }
-
-  .coating-card-body p {
-    color: #1B2430;
-    line-height: 1.6;
-  }
-
-  /* Card flip */
-  .flip-card {
-    perspective: 1200px;
-    cursor: pointer;
-  }
-
-  .flip-inner {
-    position: relative;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.55s ease;
-  }
-
-  .flip-card.flipped .flip-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-front,
-  .flip-back {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  .flip-back {
-    position: absolute;
-    inset: 0;
-    transform: rotateY(180deg);
-    overflow-y: auto;
-  }
-
-  .flip-back .coating-card-body {
-    gap: 0.4rem;
-    overflow-y: auto;
-  }
-
-  .spec-line,
-  .spec-text {
-    margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: #1B2430;
-  }
-
-  .spec-line strong {
-    color: #16202E;
-  }
-
-  .spec-line a {
-    color: #C6870F;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .spec-line a:hover {
-    text-decoration: underline;
   }
 
   /* Custom coating services */
