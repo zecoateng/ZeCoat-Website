@@ -1,0 +1,55 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [];
+
+const bands = [
+  { band: "340-400 nm", avg: "95%", max: "", min: "63%" },
+  { band: "400-450 nm", avg: "97%", max: "", min: "91%" },
+  { band: "450-500 nm", avg: "97%", max: "", min: "93%" },
+  { band: "500-550 nm", avg: "97%", max: "", min: "95%" },
+  { band: "550-600 nm", avg: "97%", max: "", min: "93%" },
+  { band: "600-650 nm", avg: "96%", max: "", min: "93%" },
+  { band: "650-700 nm", avg: "96%", max: "", min: "93%" },
+  { band: "700-750 nm", avg: "96%", max: "", min: "93%" },
+  { band: "750-800 nm", avg: "97%", max: "", min: "93%" },
+  { band: "800-850 nm", avg: "98%", max: "", min: "95%" },
+  { band: "850-900 nm", avg: "98%", max: "", min: "96%" },
+  { band: "900-950 nm", avg: "98%", max: "", min: "97%" },
+  { band: "950-1000 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1000-1100 nm", avg: "99%", max: "", min: "97%" },
+  { band: "1100-1500 nm", avg: "98%", max: "", min: "96%" },
+  { band: "1500-2000 nm", avg: "97%", max: "", min: "96%" },
+  { band: "2000-2500 nm", avg: "98%", max: "", min: "96%" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B, B.3.9, B.4.4.7", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B, B.3.8, B.4.4.5", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "MIL-PRF-13830B", description: "+160 C / -80 C" },
+  { test: "Physical Cosmetic", spec: "MIL-PRF-13830B C.4.5.3.1 & C.5.3.2", description: "Visual" },
+  { test: "Cleanability", spec: "ZeCoat Modified MIL-PRF-13830B", description: "Ethyl alcohol clean" },
+];
+
+const publications = [
+  { title: "GLIMR | Earth", url: "https://earth.gsfc.nasa.gov/ocean/missions/glimr" },
+];
+---
+
+<Layout>
+  <CoatingDetail
+    linksHeading="Related Links"
+    title="UV-Enhanced Coating — ZC-1069"
+    familyLabel="Protected Silver"
+    familyHref="/coatings/protected-silver"
+    image="/GLIMRMirror.webp"
+    description="The Geostationary Littoral Imaging and Monitoring Radiometer (GLIMR) is a future NASA mission, planned for launch but not yet flown: a space-based instrument that will help scientists observe and monitor ocean biology, chemistry and ecology throughout the Gulf of America, the southeastern U.S. coastline and the Amazon River plume that stretches to the Atlantic Ocean. It measures spectral radiances across an approximately 340–1040 nm range."
+    specs={specs}
+    bands={bands}
+    durability={durability}
+    publications={publications}
+    reflectanceNote="* Scans shown are for an 8° angle of incidence (AOI). This coating has been approved for angles up to 56° AOI."
+  />
+</Layout>

@@ -15,43 +15,43 @@ import CoatingTile from '../../components/CoatingTile.astro';
 
     <div class="variant-grid">
       <CoatingTile
-        title="UV Coating — Ocean Color Instrument (OCI)"
-        image="/ProtectiveSilver.webp"
-        description="Ultraviolet-optimized protected silver coating developed for the Ocean Color Instrument (OCI)."
-        link="/coatings/protected-silver/oci"
-      />
-      <CoatingTile
-        title="UV Coating — GLIRM"
-        image="/ProtectiveSilver.webp"
-        description="Ultraviolet-optimized protected silver coating developed for the GLIRM project."
-        link="/coatings/protected-silver/glirm"
-      />
-      <CoatingTile
-        title="VIS-NIR Coating — SACHI"
-        image="/ProtectiveSilver.webp"
-        description="Visible to near-infrared protected silver coating developed for the SACHI instrument."
-        link="/coatings/protected-silver/sachi"
-      />
-      <CoatingTile
-        title="VIS-NIR Coating"
-        image="/ProtectiveSilver.webp"
-        description="Visible to near-infrared protected silver coating. Name coming soon."
-        link="/coatings/protected-silver/vis-nir-2"
-      />
-      <CoatingTile
         title="ZC-1251"
-        image="/ProtectiveSilver.webp"
-        description="ZeCoat's ZC-1251 infrared protected silver coating."
+        image="/ZC1251.webp"
+        description="Protected silver coating optimized for the long-wave infrared with low emissivity."
         link="/coatings/protected-silver/zc-1251"
       />
       <CoatingTile
-        title="M³ Program"
-        image="/ProtectiveSilver.webp"
-        description="Protected silver coating developed for the M³ program."
+        title="ZC-1392"
+        image="/ZC1392.webp"
+        description="Protected silver coating optimized for the visible and near-infrared band."
+        link="/coatings/protected-silver/zc-1392"
+      />
+      <CoatingTile
+        title="UV-Enhanced Coating — Ocean Color Instrument (OCI)"
+        image="/OCIObservatory.webp"
+        description="Protected silver coating for the Ocean Color Instrument on NASA's PACE mission, reflective above 95% from 340 nm to 2260 nm."
+        link="/coatings/protected-silver/oci"
+      />
+      <CoatingTile
+        title="UV-Enhanced Coating — ZC-1069"
+        image="/GLIMRCard.webp"
+        description="UV-enhanced protected silver coating for NASA's Geostationary Littoral Imaging and Monitoring Radiometer (GLIMR) mission, covering roughly 340–1040 nm."
+        link="/coatings/protected-silver/glimr"
+      />
+      <CoatingTile
+        title="VIS-NIR Coating — SĀCHI"
+        image="/SACHICard.webp"
+        description="Visible to near-infrared protected silver coating for the SĀCHI space domain awareness instrument."
+        link="/coatings/protected-silver/sachi"
+      />
+      <CoatingTile
+        title="VIS-NIR Coating — M³ Program"
+        image="/M3Moon.webp"
+        description="Protected silver coating for the Moon Mineralogy Mapper (M³) imaging spectrometer, which flew on India’s Chandrayaan-1 spacecraft."
         link="/coatings/protected-silver/m3-program"
       />
       <CoatingTile
-        title="Kepler"
+        title="VIS-NIR Coating — Kepler"
         image="/Kepler-Space-Telescope.webp"
         description="Protected silver coating flown on the Kepler Space Telescope primary mirror."
         link="/coatings/protected-silver/kepler"
@@ -77,7 +77,7 @@ import CoatingTile from '../../components/CoatingTile.astro';
 .back-link {
     align-self: flex-start;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 10px auto 0;
 }
 
@@ -115,11 +115,11 @@ import CoatingTile from '../../components/CoatingTile.astro';
 
 .variant-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 360px));
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 428px));
     justify-content: center;
     gap: 2rem;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1400px;
 }
 
 .quote-cta {

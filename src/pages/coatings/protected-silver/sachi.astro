@@ -2,19 +2,52 @@
 import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
-const specs = [];
+const specs = [
+  { label: "Flight Heritage", value: "Flying on Japan’s Quasi-Zenith Satellite System (QZSS) navigation satellites" },
+];
 
-const bands = [];
+const bands = [
+  { band: "420-450 nm", avg: "89%", max: "", min: "67%" },
+  { band: "450-500 nm", avg: "98%", max: "", min: "97%" },
+  { band: "500-550 nm", avg: "99%", max: "", min: "98%" },
+  { band: "550-600 nm", avg: "97%", max: "", min: "96%" },
+  { band: "600-650 nm", avg: "95%", max: "", min: "94%" },
+  { band: "650-700 nm", avg: "96%", max: "", min: "95%" },
+  { band: "700-750 nm", avg: "97%", max: "", min: "97%" },
+  { band: "750-800 nm", avg: "97%", max: "", min: "97%" },
+  { band: "800-850 nm", avg: "97%", max: "", min: "96%" },
+  { band: "850-900 nm", avg: "96%", max: "", min: "95%" },
+  { band: "900-950 nm", avg: "94%", max: "", min: "93%" },
+  { band: "950-1000 nm", avg: "93%", max: "", min: "93%" },
+  { band: "1000-1100 nm", avg: "94%", max: "", min: "93%" },
+  { band: "1100-1500 nm", avg: "98%", max: "", min: "96%" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B, B.4.4.6", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B, B.4.4.5", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B B.4.4.7", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "MIL-PRF-13830B B.4.4.4", description: "+75 C / -60 C" },
+  { test: "Cleanability", spec: "IEST-STD-CCR46", description: "" },
+];
+
+const publications = [
+  { title: "U.S. Space Force’s Space Systems Command and Japan launch first bilateral space effort | MIT Lincoln Laboratory", url: "https://www.ll.mit.edu/news/us-space-forces-space-systems-command-and-japan-launch-first-bilateral-space-effort" },
+];
 ---
 
 <Layout>
   <CoatingDetail
-    title="VIS-NIR Coating — SACHI"
+    linksHeading="Related Links"
+    title="VIS-NIR Coating — SĀCHI"
     familyLabel="Protected Silver"
     familyHref="/coatings/protected-silver"
-    image="/ProtectiveSilver.webp"
-    description="More detail coming soon."
+    image="/SACHIMirror.webp"
+    description="ZeCoat coated the visible to near-infrared mirrors for SĀCHI (Situational Awareness Camera Hosted Instrument). SĀCHI is a US–Japan partnership in which the United States provides space domain awareness (SDA) sensors to be hosted on board Japanese satellites as part of the Quasi-Zenith Satellite System (QZSS)."
     specs={specs}
     bands={bands}
+    durability={durability}
+    publications={publications}
+    reflectanceNote="* Scans shown are for an 8° angle of incidence (AOI). This coating has been approved for angles up to 55° AOI."
   />
 </Layout>

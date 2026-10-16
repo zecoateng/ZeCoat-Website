@@ -2,24 +2,47 @@
 import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
-const specs = [];
+const specs = [
+  { label: "Reflectance Goal", value: "Avg. R <1.5% and max R <2.4% from 450–850 nm" },
+];
 
-const bands = [];
+const bands = [
+  { band: "400-450 nm", avg: "1.0%", max: "2.4%", min: "" },
+  { band: "450-500 nm", avg: "0.3%", max: "0.4%", min: "" },
+  { band: "500-550 nm", avg: "0.7%", max: "0.9%", min: "" },
+  { band: "550-600 nm", avg: "1.1%", max: "1.3%", min: "" },
+  { band: "600-650 nm", avg: "1.4%", max: "1.5%", min: "" },
+  { band: "650-700 nm", avg: "1.5%", max: "1.5%", min: "" },
+  { band: "700-750 nm", avg: "1.3%", max: "1.4%", min: "" },
+  { band: "750-800 nm", avg: "1.0%", max: "1.2%", min: "" },
+  { band: "800-850 nm", avg: "0.7%", max: "1.0%", min: "" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "ZeCoat Modified 13830B B.4.4.4", description: "+100 C / -85 C" },
+];
+
 
 const publications = [
+        { title: "Antireflection coatings on starshade optical edges for solar glint suppression", url: "https://www.spiedigitallibrary.org/journals/Journal-of-Astronomical-Telescopes-Instruments-and-Systems/volume-7/issue-02/021208/Antireflection-coatings-on-starshade-optical-edges-for-solar-glint-suppression/10.1117/1.JATIS.7.2.021208.full" },
+        { title: "Broadband characterization of anti-reflection coated starshade optical edges for solar glint control", url: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11443/2563103/Broadband-characterization-of-anti-reflection-coated-starshade-optical-edges-for/10.1117/12.2563103.full" },
         { title: "New Ultra-Black Coating Could Enable the Search for Life on Exoplanets — NASA Science", url: "https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/new-ultra-black-coating-could-enable-the-search-for-life-on-exoplanets/" }
       ];
 ---
 
 <Layout>
   <CoatingDetail
-    title="Starshade Coating"
+    title="Starshade Edge Coatings"
     familyLabel="Black Coatings"
     familyHref="/coatings/black-coatings"
-    image="/StarShades&BlackCoating.webp"
-    description="ZeCoat developed an ultra-black coating, roughly 100 times thinner than prior approaches, that absorbs incoming light instead of scattering it, using stacked thin, partially transparent metal layers separated by dielectric glass. Applied to starshade edges and, via ZeCoat's roll-to-roll process, across entire starshade membranes, the coating cuts reflected light by about a factor of 20 — low enough for a telescope to image faint exoplanets alongside their much brighter host stars. NASA has supported the work through SBIR contracts, with potential follow-on applications in satellite darkening and thermal control."
+    image="/StarshadeChamber.webp"
+    description="ZeCoat founder David Sheikh developed an ultra-black coating of layered thin metal and glass films that traps light in nanoscale cavities; it is extremely thin and durable, roughly 100 times thinner than earlier coatings tested for starshades. In JPL tests on starshade edge prototypes, the coating reduced reflected light by about a factor of 20, enough to help a telescope image exoplanets."
     specs={specs}
     bands={bands}
+    durability={durability}
     publications={publications}
   />
 </Layout>

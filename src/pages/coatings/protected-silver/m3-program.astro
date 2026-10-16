@@ -2,19 +2,29 @@
 import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
-const specs = [];
+const specs = [
+  { label: "Flight Heritage", value: "Flew on India’s Chandrayaan-1 spacecraft" },
+  { label: "Reflectance", value: "Avg. R 96% over 430–3000 nm" },
+  { label: "Durability", value: "Passes MIL-13830-B" },
+];
 
 const bands = [];
+
+const publications = [
+  { title: "Moon Mineralogy Mapper - Moon Instruments - NASA Jet Propulsion Laboratory | NASA Jet Propulsion Laboratory (JPL)", url: "https://www.jpl.nasa.gov/missions/moon-mineralogy-mapper-m3/" },
+];
 ---
 
 <Layout>
   <CoatingDetail
-    title="M³ Program"
+    linksHeading="Related Links"
+    title="VIS-NIR Coating — M³ Program"
     familyLabel="Protected Silver"
     familyHref="/coatings/protected-silver"
-    image="/ProtectiveSilver.webp"
-    description="More detail coming soon."
+    image="/M3Moon.webp"
+    description="Mr. Sheikh created the protected silver coatings used on the M³ (Moon Mineralogy Mapper) imaging spectrometer. Paired with a specialized diffraction grating created at JPL to disperse wavelengths ranging from 430–3000 nm, this NASA instrument, carried by India’s Chandrayaan-1 spacecraft, helped confirm water molecules on the Moon."
     specs={specs}
     bands={bands}
+    publications={publications}
   />
 </Layout>

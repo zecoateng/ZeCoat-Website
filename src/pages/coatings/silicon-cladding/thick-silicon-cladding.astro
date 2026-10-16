@@ -1,0 +1,44 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import CoatingDetail from '../../../components/CoatingDetail.astro';
+
+const specs = [];
+
+const properties = {
+  title: "Process & Film Properties",
+  rows: [
+    { property: "Deposition Method", value: "Ion-assisted thermal evaporation" },
+    { property: "Substrate Temperature", value: "~100 °C" },
+    { property: "Residual Stress", value: "<~100 MPa" },
+    { property: "Polished Surface Roughness", value: "<2 Å RMS" },
+  ],
+};
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B Sect. B.3.9 / B.4.4.6", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B Sect. B.3.8 B.4.4.5", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B Sect. B.3.10 / B.4.4.7", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "MIL-PRF-13830B Sect. B.3.7 B.4.4.4", description: "+75 C / -80 C" },
+  { test: "Coating Surface Quality", spec: "MIL-PRF-13830B Sect. C.3.4.4 / C.4.5.3.4", description: "-" },
+];
+
+const publications = [
+  { title: "Low-Stress Silicon Cladding Made by Pulsed-Ion-Assisted Evaporation — Sheikh, 2015", url: "https://doi.org/10.1117/12.2191445" },
+  { title: "Low-Stress Silicon Cladding for Surface Finishing Large UVOIR Mirrors — NASA SBIR Phase II, 2014", url: "https://www.sbir.gov/awards/147519" },
+  { title: "Low-Stress Silicon Cladding for Surface Finishing Large UVOIR Mirrors — NASA SBIR Phase I, 2013", url: "https://www.sbir.gov/awards/140978" },
+];
+---
+
+<Layout>
+  <CoatingDetail
+    title="Thick Silicon Cladding"
+    familyLabel="Silicon Cladding"
+    familyHref="/coatings/silicon-cladding"
+    image="/SiliconCladdingMirror.webp"
+    description="ZeCoat's proprietary polishable silicon cladding lets aluminum and other lightweight mirror substrates be finished to the optical-quality roughness that demanding ultraviolet applications require."
+    specs={specs}
+    publications={publications}
+    properties={properties}
+    durability={durability}
+  />
+</Layout>

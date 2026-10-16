@@ -3,23 +3,28 @@ import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
 const specs = [
-        { label: "Flight Heritage", value: "Kepler Space Telescope primary mirror" },
-        { label: "Durability", value: "Passes MIL-13830-B" }
-      ];
+  { label: "Flight Heritage", value: "Kepler Space Telescope primary mirror" },
+  { label: "Reflectance", value: "Avg. R 96% over 350–1000 nm" },
+  { label: "Durability", value: "Passes MIL-13830-B" },
+];
 
-const bands = [
-        { band: "350-1000 nm", avg: "96%", max: "", min: "" }
-      ];
+const bands = [];
+
+const publications = [
+  { title: "Kepler / K2 - NASA Science", url: "https://science.nasa.gov/mission/kepler/" },
+];
 ---
 
 <Layout>
   <CoatingDetail
-    title="Kepler"
+    linksHeading="Related Links"
+    title="VIS-NIR Coating — Kepler"
     familyLabel="Protected Silver"
     familyHref="/coatings/protected-silver"
     image="/Kepler-Space-Telescope.webp"
     description="Protected silver coating flown on the Kepler Space Telescope primary mirror, delivering exceptional broadband reflectance across the visible and near-infrared."
     specs={specs}
     bands={bands}
+    publications={publications}
   />
 </Layout>

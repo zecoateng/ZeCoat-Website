@@ -2,9 +2,18 @@
 import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
-const specs = [];
+const specs = [
+  { label: "Status", value: "Project currently in development" },
+  { label: "Reflectance Goal", value: ">85% at 122 nm and >50% at 100 nm" },
+  { label: "Durability", value: "Passes MIL-13830-B" },
+];
 
 const bands = [];
+
+const publications = [
+  { title: "Advanced Al mirrors protected with LiF overcoat to realize stable mirror coatings for astronomical telescopes", url: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12188/2630585/Advanced-Al-mirrors-protected-with-LiF-overcoat-to-realize-stable/10.1117/12.2630585.full" },
+  { title: "Habitable Worlds Observatory - NASA Science", url: "https://science.nasa.gov/astrophysics/programs/habitable-worlds-observatory/" },
+];
 ---
 
 <Layout>
@@ -12,9 +21,10 @@ const bands = [];
     title="HWO FUV Aluminum (Lithium Fluoride)"
     familyLabel="Protected Aluminum"
     familyHref="/coatings/protected-aluminum"
-    image="/HWOImage.webp"
-    description="More detail coming soon."
+    image="/HWOConcept.webp"
+    description="ZeCoat Corporation has been selected for a NASA D.19 Industrial Partnership program to develop far‑ultraviolet (FUV) broadband reflective coatings for the Habitable Worlds Observatory (HWO). More specifically, a far-ultraviolet aluminum coating protected with a lithium fluoride overcoat. This is an ongoing project, with the goal of achieving reflectance levels of >85% at 122 nm and >50% at 100 nm."
     specs={specs}
     bands={bands}
+    publications={publications}
   />
 </Layout>

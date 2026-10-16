@@ -4,17 +4,36 @@ import CoatingDetail from '../../../components/CoatingDetail.astro';
 
 const specs = [];
 
-const bands = [];
+const bands = [
+  { band: "300-400 nm", avg: "90%", max: "", min: "89%" },
+  { band: "400-500 nm", avg: "92%", max: "", min: "91%" },
+  { band: "500-600 nm", avg: "90%", max: "", min: "89%" },
+  { band: "600-700 nm", avg: "91%", max: "", min: "90%" },
+  { band: "700-800 nm", avg: "91%", max: "", min: "90%" },
+  { band: "800-900 nm", avg: "90%", max: "", min: "90%" },
+  { band: "900-1000 nm", avg: "94%", max: "", min: "92%" },
+  { band: "1000-1500 nm", avg: "93%", max: "", min: "90%" },
+  { band: "1500-2000 nm", avg: "91%", max: "", min: "89%" },
+  { band: "2000-2500 nm", avg: "93%", max: "", min: "91%" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "ZeCoat Modified 13830B B.4.4.4", description: "+100 C / -75 C" },
+];
 ---
 
 <Layout>
   <CoatingDetail
-    title="Vis-NIR Aluminum (No 850 nm Dip)"
+    title="ZC-Al-300 (Aluminum without 850nm dip)"
     familyLabel="Protected Aluminum"
     familyHref="/coatings/protected-aluminum"
     image="/ProtectedAluminum.webp"
-    description="More detail coming soon."
+    description="A Vis-NIR aluminum coating optimized to minimize the dip around 850nm that brings reflectance down to 86%. This coating doesn't dip under 89% until it gets into the UV."
     specs={specs}
     bands={bands}
+    durability={durability}
   />
 </Layout>

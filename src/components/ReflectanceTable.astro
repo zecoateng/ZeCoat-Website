@@ -3,37 +3,93 @@
 // `bands` is an array of { band, avg, max, min } strings, e.g.
 // { band: "350-1000 nm", avg: "96%", max: "98%", min: "93%" }.
 // Leave `bands` empty (or omit) to show a "coming soon" placeholder.
-const { bands = [] } = Astro.props;
+// Optional `groups` ([{ label, bands }]) renders one small table per group
+// (e.g. one per qualification unit) instead of the single `bands` table.
+// With `merge`, the groups are shown side by side in ONE table (Avg./Max per
+// group); bands missing from a group show "—".
+const { bands = [], groups = [], merge = false } = Astro.props;
+const mergeTable = merge && groups.length > 1;
+const mergedBands = mergeTable
+  ? [...new Set(groups.flatMap((g) => g.bands.map((r) => r.band)))].sort(
+      (a, b) => parseInt(a) - parseInt(b)
+    )
+  : [];
+const cell = (g, band, key) => g.bands.find((r) => r.band === band)?.[key] || "—";
+const tables = groups.length > 0 ? groups : [{ label: "", bands }];
+const hasData = tables.some((t) => t.bands.length > 0);
 ---
 
-{bands.length > 0 ? (
-  <div class="reflectance-table-wrap">
-    <table class="reflectance-table">
-      <thead>
-        <tr>
-          <th>Band</th>
-          <th>Avg. Reflectance</th>
-          <th>Max Reflectance</th>
-          <th>Min Reflectance</th>
-        </tr>
-      </thead>
-      <tbody>
-        {bands.map((row) => (
+{hasData && mergeTable ? (
+  <div class="reflectance-group">
+    <div class="reflectance-table-wrap">
+      <table class="reflectance-table">
+        <thead>
           <tr>
-            <td>{row.band}</td>
-            <td>{row.avg}</td>
-            <td>{row.max}</td>
-            <td>{row.min}</td>
+            <th rowspan="2">Band</th>
+            {groups.map((g) => <th colspan="2" class="grp">{g.label}</th>)}
           </tr>
-        ))}
-      </tbody>
-    </table>
+          <tr>
+            {groups.map(() => (<><th class="grp">Avg.</th><th>Max</th></>))}
+          </tr>
+        </thead>
+        <tbody>
+          {mergedBands.map((band) => (
+            <tr>
+              <td>{band}</td>
+              {groups.map((g) => (<><td class="grp">{cell(g, band, "avg")}</td><td>{cell(g, band, "max")}</td></>))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
+) : hasData ? (
+  tables.map((t) => {
+    const showMax = t.bands.some((row) => row.max);
+    const showMin = t.bands.some((row) => row.min);
+    return (
+      <div class="reflectance-group">
+        {t.label && <h3 class="group-label">{t.label}</h3>}
+        <div class="reflectance-table-wrap">
+          <table class="reflectance-table">
+            <thead>
+              <tr>
+                <th>Band</th>
+                <th>Avg. Reflectance</th>
+                {showMax && <th>Max Reflectance</th>}
+                {showMin && <th>Min Reflectance</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {t.bands.map((row) => (
+                <tr>
+                  <td>{row.band}</td>
+                  <td>{row.avg}</td>
+                  {showMax && <td>{row.max}</td>}
+                  {showMin && <td>{row.min}</td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  })
 ) : (
   <p class="reflectance-placeholder">Reflectance data coming soon.</p>
 )}
 
 <style>
+  .reflectance-group + .reflectance-group {
+    margin-top: 0.7rem;
+  }
+
+  .group-label {
+    font-size: 0.85rem;
+    color: #16202E;
+    margin: 0 0 0.3rem;
+  }
+
   .reflectance-table-wrap {
     width: 100%;
     overflow-x: auto;
@@ -44,12 +100,12 @@ const { bands = [] } = Astro.props;
   .reflectance-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
   }
 
   .reflectance-table th,
   .reflectance-table td {
-    padding: 0.75rem 1rem;
+    padding: 0.3rem 0.7rem;
     text-align: left;
     white-space: nowrap;
   }
@@ -71,6 +127,14 @@ const { bands = [] } = Astro.props;
   .reflectance-table tbody td {
     color: #1B2430;
     border-top: 1px solid #EAEDF1;
+  }
+
+  .reflectance-table .grp {
+    border-left: 1px solid #EAEDF1;
+  }
+
+  .reflectance-table thead .grp {
+    border-left: 1px solid #3A4656;
   }
 
   .reflectance-placeholder {

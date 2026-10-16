@@ -2,19 +2,55 @@
 import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
-const specs = [];
+const specs = [
+  { label: "Flight Heritage", value: "Flying on NASA’s PACE mission" },
+];
 
-const bands = [];
+const bands = [
+        { band: "300-350 nm", avg: "71%", max: "", min: "40%" },
+        { band: "350-400 nm", avg: "96%", max: "", min: "94%" },
+        { band: "400-450 nm", avg: "97%", max: "", min: "96%" },
+        { band: "450-500 nm", avg: "98%", max: "", min: "97%" },
+        { band: "500-550 nm", avg: "98%", max: "", min: "98%" },
+        { band: "550-600 nm", avg: "98%", max: "", min: "97%" },
+        { band: "600-650 nm", avg: "97%", max: "", min: "96%" },
+        { band: "650-700 nm", avg: "97%", max: "", min: "96%" },
+        { band: "700-750 nm", avg: "98%", max: "", min: "97%" },
+        { band: "750-800 nm", avg: "99%", max: "", min: "98%" },
+        { band: "800-850 nm", avg: "99%", max: "", min: "98%" },
+        { band: "850-900 nm", avg: "99%", max: "", min: "98%" },
+        { band: "900-950 nm", avg: "99%", max: "", min: "98%" },
+        { band: "950-1000 nm", avg: "99%", max: "", min: "98%" },
+        { band: "1000-1500 nm", avg: "99%", max: "", min: "95%" },
+        { band: "1500-2000 nm", avg: "97%", max: "", min: "91%" },
+        { band: "2000-2300 nm", avg: "97%", max: "", min: "96%" }
+      ];
+
+const durability = [
+        { test: "Adhesion", spec: "MIL-PRF-13830B", description: "Slow-pull, 90-deg" },
+        { test: "Abrasion", spec: "MIL-PRF-13830B", description: "Moderate cheesecloth, 50 strokes" },
+        { test: "24-hr Humidity", spec: "MIL-PRF-13830B", description: "50C/95%/24-hr" },
+        { test: "DI Water Solubility", spec: "MIL-PRF-13830B", description: "24-hr" },
+        { test: "Thermal Cycle", spec: "ZeCoat Modified", description: "+60 C / -30 C" }
+      ];
+
+const publications = [
+        { title: "Ocean Color Instrument | NASA Earthdata", url: "https://www.earthdata.nasa.gov/data/instruments/oci" }
+      ];
 ---
 
 <Layout>
   <CoatingDetail
-    title="UV Coating — Ocean Color Instrument (OCI)"
+    linksHeading="Related Links"
+    title="UV-Enhanced Coating — Ocean Color Instrument (OCI)"
     familyLabel="Protected Silver"
     familyHref="/coatings/protected-silver"
-    image="/ProtectiveSilver.webp"
-    description="More detail coming soon."
+    image="/OCICoatedSamples.webp"
+    description="The Ocean Color Instrument (OCI) is the primary instrument on NASA's Plankton, Aerosol, Cloud, ocean Ecosystem (PACE) mission observatory, developed at GSFC. OCI is a hyperspectral scanning radiometer that measures spectral radiances from the ultraviolet to the shortwave infrared, using a rotating telescope to scan the ocean surface for advanced ocean color, cloud and aerosol science. ZeCoat's protected silver coating for OCI is designed to be reflective above 95% from 340 nm to 2260 nm."
     specs={specs}
     bands={bands}
+    durability={durability}
+    publications={publications}
+    reflectanceNote="* Scans shown are for an 8° angle of incidence (AOI)."
   />
 </Layout>

@@ -3,12 +3,34 @@ import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
 const specs = [
+        { label: "Flight Heritage", value: "Nancy Grace Roman Space Telescope" },
         { label: "Durability", value: "Passes MIL-13830-B" }
       ];
 
 const bands = [
-        { band: "800 nm to >5000 nm", avg: ">98%", max: "", min: "" }
-      ];
+  { band: "600-700 nm", avg: "90%", max: "", min: "81%" },
+  { band: "700-800 nm", avg: "95%", max: "", min: "92%" },
+  { band: "800-900 nm", avg: "96%", max: "", min: "94%" },
+  { band: "900-1000 nm", avg: "97%", max: "", min: "96%" },
+  { band: "1000-1100 nm", avg: "97%", max: "", min: "96%" },
+  { band: "1100-1200 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1200-1300 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1300-1400 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1400-1500 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1500-1600 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1600-1700 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1700-1800 nm", avg: "98%", max: "", min: "97%" },
+  { band: "1800-1900 nm", avg: "98%", max: "", min: "96%" },
+  { band: "1900-2000 nm", avg: "98%", max: "", min: "97%" },
+  { band: "2000-2500 nm", avg: "98%", max: "", min: "97%" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B B.3.9 & B.4.4.6", description: "Slow-pull, 90-deg" },
+  { test: "Abrasion", spec: "MIL-PRF-13830B B.3.8 & B.4.4.6", description: "Moderate cheesecloth, 50 strokes" },
+  { test: "Salt-Controlled Humidity", spec: "ZeCoat Modified 13830B", description: "24-hr, 80C/80%RH" },
+  { test: "Thermal Cycle", spec: "ZeCoat Modified 13830B", description: "+50 C / -173 C" },
+];
 
 const publications = [
         { title: "Reflective engineered diffusers on the Roman Space Telescope Wide Field Instrument", url: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12677/1267703/Reflective-engineered-diffusers-on-the-Roman-Space-Telescope-Wide-Field/10.1117/12.2674196.full" }
@@ -21,9 +43,10 @@ const publications = [
     familyLabel="Protected Gold"
     familyHref="/coatings/protected-gold"
     image="/goldcoating.webp"
-    description="Long-wavelength infrared gold coating developed for NASA's Nancy Grace Roman Space Telescope, offering extremely high reflectance with long-term stability."
+    description="Long-wavelength infrared gold coating developed for NASA's Nancy Grace Roman Space Telescope, offering extremely high reflectance with long-term stability. ZeCoat also coated specialty LOLO diffusers for the Roman Space Telescope's Wide Field Instrument. These diffusers significantly improve the ability of the observatory to make highly accurate measurements of target size and brightness, enabling this important mission to accomplish its critical science objectives."
     specs={specs}
     bands={bands}
+    durability={durability}
     publications={publications}
   />
 </Layout>

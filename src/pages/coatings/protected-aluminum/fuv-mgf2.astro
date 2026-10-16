@@ -3,13 +3,32 @@ import Layout from '../../../layouts/layout.astro';
 import CoatingDetail from '../../../components/CoatingDetail.astro';
 
 const specs = [
-        { label: "Durability", value: "Passes MIL-13830-B" },
-        { label: "Full technical overview", value: "/technologies/FUVCoating" }
+        { label: "Durability", value: "Passes MIL-13830-B" }
       ];
 
 const bands = [
-        { band: "121 nm", avg: ">96%", max: "", min: "" }
-      ];
+  { band: "200-210 nm", avg: "94%", max: "", min: "93%" },
+  { band: "210-220 nm", avg: "93%", max: "", min: "91%" },
+  { band: "220-230 nm", avg: "92%", max: "", min: "91%" },
+  { band: "230-240 nm", avg: "92%", max: "", min: "91%" },
+  { band: "240-250 nm", avg: "92%", max: "", min: "91%" },
+  { band: "250-260 nm", avg: "92%", max: "", min: "91%" },
+  { band: "260-270 nm", avg: "92%", max: "", min: "91%" },
+  { band: "270-280 nm", avg: "92%", max: "", min: "91%" },
+  { band: "280-290 nm", avg: "92%", max: "", min: "91%" },
+  { band: "290-300 nm", avg: "91%", max: "", min: "91%" },
+  { band: "300-400 nm", avg: "89%", max: "", min: "86%" },
+  { band: "400-500 nm", avg: "87%", max: "", min: "86%" },
+  { band: "500-600 nm", avg: "88%", max: "", min: "86%" },
+  { band: "600-700 nm", avg: "88%", max: "", min: "86%" },
+  { band: "700-800 nm", avg: "86%", max: "", min: "83%" },
+];
+
+const durability = [
+  { test: "Adhesion", spec: "MIL-PRF-13830B B.4.4.6", description: "Slow-pull, 90-deg" },
+  { test: "24-hr Humidity", spec: "MIL-PRF-13830B", description: "50C/95%/24-hr" },
+  { test: "Thermal Cycle", spec: "ZeCoat Modified 13830B B.4.4.4", description: "+100 C / -75 C" },
+];
 ---
 
 <Layout>
@@ -17,9 +36,10 @@ const bands = [
     title="FUV Aluminum (Magnesium Fluoride)"
     familyLabel="Protected Aluminum"
     familyHref="/coatings/protected-aluminum"
-    image="/BPD.webp"
-    description="Far-ultraviolet aluminum coating protected with a magnesium fluoride overcoat, optimized for high reflectance down to 121 nm."
+    image="/FUVMgF2.webp"
+    description="Far-ultraviolet aluminum coating protected with a magnesium fluoride overcoat, optimized for high reflectance down to 121 nm. This coating is also available as a UV-enhanced aluminum for the 200–300 nm band, designed to meet a minimum reflectance of >91% at 215 nm and 0° AOI, with a goal of >93%."
     specs={specs}
     bands={bands}
+    durability={durability}
   />
 </Layout>
