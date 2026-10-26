@@ -3,11 +3,12 @@ export const onRequest = async (context, next) => {
 
   // Pages/endpoints that require the admin password.
   // GET /api/announcements stays public — the homepage reads it.
+  const isQuotesRead = pathname.startsWith("/api/quotes");
   const isDashboard = pathname.startsWith("/admindashboard");
   const isAnnouncementWrite =
     pathname.startsWith("/api/announcements") && context.request.method !== "GET";
 
-  if (isDashboard || isAnnouncementWrite) {
+  if (isDashboard || isAnnouncementWrite || isQuotesRead) {
     const auth = context.request.headers.get("authorization") ?? "";
     const expected = "Basic " + btoa(`admin:${process.env.ADMIN_PASSWORD}`);
 

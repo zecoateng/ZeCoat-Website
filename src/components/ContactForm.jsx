@@ -19,6 +19,7 @@ import { useState } from "react";
       email: e.target.email.value.trim(),
       phone: e.target.phoneNumber.value.trim(),
       comments: e.target.comments.value.trim(),
+      website: e.target.website.value,
     };
 
     if (!data.firstName || !data.lastName || !data.email || !data.comments) {
@@ -56,27 +57,59 @@ if (!emailRegex.test(data.email)) {
     }
 
     return (
-        <div className = "forms-page">
-<div className = "inquiries-statement">
-<h1>Get in Touch</h1>
-<h3>We welcome your inquiries.  If you would like more information about our custom or off-the-shelf coatings or to request a quote, please fill out this form or email us directly. If possible, please include your technical specifications, quantity and size of the substrates you will be providing, if the mirrors will all come at one time, and when you would like the mirror coated by. 
-</h3>
-<h3>Your request will be reviewed by our office and we will get back to you within 1-2 business days.</h3>
-</div>
-<form className = "forms-list" onSubmit = {handleSubmit}>
-<div className = "name">
-<input type="text" required name="firstName" placeholder="First Name"/>
-<input type="text" required name="lastName" placeholder="Last Name"/>
-</div>
-<input type="text" name="company" placeholder="Company"/>
-<input type="text" required name="email" placeholder="Email"/>
-<input type="text" name="phoneNumber" placeholder="Phone-Number"/>
-<textarea name = "comments" required placeholder="Reason for Contact"></textarea>
-<button type = "submit" disabled={isSubmitting}>{isSubmitting ? "Sending..." : "Submit"}</button>
-</form>
-<div>
-</div>
-
-</div>
-)
+      <div className="forms-page">
+        <div className="inquiries-statement">
+          <h1>Get in Touch</h1>
+          <h3>
+            We welcome your inquiries. If you would like more information about
+            our custom or off-the-shelf coatings or to request a quote, please
+            fill out this form or email us directly. If possible, please include
+            your technical specifications, quantity and size of the substrates
+            you will be providing, if the mirrors will all come at one time, and
+            when you would like the mirror coated by.
+          </h3>
+          <h3>
+            Your request will be reviewed by our office and we will get back to
+            you within 1-2 business days.
+          </h3>
+        </div>
+        <form className="forms-list" onSubmit={handleSubmit}>
+          <div className="name">
+            <input
+              type="text"
+              required
+              name="firstName"
+              placeholder="First Name"
+            />
+            <input
+              type="text"
+              required
+              name="lastName"
+              placeholder="Last Name"
+            />
+          </div>
+          <input type="text" name="company" placeholder="Company" />
+          <input type="text" required name="email" placeholder="Email" />
+          <input type="text" name="phoneNumber" placeholder="Phone-Number" />
+          <textarea
+            name="comments"
+            required
+            placeholder="Reason for Contact"
+          ></textarea>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Submit"}
+          </button>
+          {/*this is the stuff for the honeypot */}
+          <input
+            type="text"
+            name="website"
+            tabIndex="-1"
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-9999px" }}
+          />
+        </form>
+        <div></div>
+      </div>
+    );
 }

@@ -311,14 +311,16 @@ const featuredTechnologies = [
 .cards-layout {
     margin-top: 60px;
     display: flex;
-    justify-content: space-evenly;
-    gap: clamp(1rem, 4vw, 4rem);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 3rem);
     margin-inline: 20px;
 
 }
 
-.cards-layout > * {
-    flex: 1 1 0;
+.cards-layout > :global(*) {
+    flex: 1 1 280px;
+    max-width: 400px;
     min-width: 0;
 }
 
@@ -477,8 +479,9 @@ a::after {
 }
 
 :global(.announcement-card) {
-    flex: 1;
+    flex: 1 1 280px;
     max-width: 380px;
+    min-width: 0;
     padding: 1.5rem;
     border: 1px solid #DCE2E8;
     border-radius: 8px;
@@ -550,8 +553,6 @@ a::after {
 }
 
 
-    /* Hero Buttons */
-
     .hero-buttons {
         flex-direction: column;
         align-items: stretch;
@@ -563,14 +564,11 @@ a::after {
         width: 100%;
     }
 
-    /* Section spacing */
-
     .what-we-do-section,
     .experience-section {
         padding: 3rem 1rem;
     }
 
-    /* Cards */
 
     .cards-layout {
         flex-direction: column;
@@ -580,14 +578,12 @@ a::after {
 
     }
 
-    /* Assuming cards have a fixed width */
-
-    .cards-layout > * {
+    .cards-layout > :global(*) {
+        flex: 0 0 auto;
         width: 100%;
-        max-width: 380px;
+        max-width: 400px;
     }
 
-    /* Featured headers */
 
     .featured-header {
         flex-direction: column;
@@ -598,10 +594,6 @@ a::after {
     .featured-header h1 {
         margin: 0;
     }
-
-    /* About section */
-
-    /* Headings */
 
     h1 {
         font-size: 2rem;
@@ -615,6 +607,32 @@ a::after {
         font-size: 1rem;
     }
 
+}
+
+@media (max-width: 480px) {
+    .what-we-do-section,
+    .experience-section,
+    .announcements-section {
+        margin-inline: 12px;
+        padding-inline: 4px;
+    }
+
+    .cards-layout {
+        margin-inline: 0;
+        gap: 1.5rem;
+    }
+
+    .intro-section {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .title-header {
+        font-size: 2.1rem;
+    }
+
+    :global(.announcement-card) {
+        padding: 1.25rem;
+    }
 }
 
 </style>

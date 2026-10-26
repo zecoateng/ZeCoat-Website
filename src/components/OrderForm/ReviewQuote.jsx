@@ -33,6 +33,7 @@ export default function ReviewQuote({ configuration, setStep }) {
       email: e.target.email.value,
       phone: e.target.phoneNumber.value,
       comments: e.target.comments.value,
+      website: e.target.website.value,
     };
 
     try {
@@ -64,7 +65,9 @@ export default function ReviewQuote({ configuration, setStep }) {
       {mirrors.map((config, i) => (
         <div className="rq-summary" key={config.orderNumber ?? i}>
           {mirrors.length > 1 && (
-            <div className="rq-mirror-heading">Mirror #{config.orderNumber ?? i + 1}</div>
+            <div className="rq-mirror-heading">
+              Mirror #{config.orderNumber ?? i + 1}
+            </div>
           )}
           <div className="rq-row">
             <span>Material</span>
@@ -74,7 +77,9 @@ export default function ReviewQuote({ configuration, setStep }) {
             <span>Shape</span>
             <b>{config.shape || "—"}</b>
           </div>
-          {(DIMENSION_FIELDS[config.shape] || []).some((f) => config.dimensions?.[f.key]) ? (
+          {(DIMENSION_FIELDS[config.shape] || []).some(
+            (f) => config.dimensions?.[f.key]
+          ) ? (
             (DIMENSION_FIELDS[config.shape] || []).map(
               (f) =>
                 config.dimensions?.[f.key] && (
@@ -109,16 +114,35 @@ export default function ReviewQuote({ configuration, setStep }) {
 
       <form className="rq-form" onSubmit={handleSubmit}>
         <div className="rq-name">
-          <input type="text" required name="firstName" placeholder="First Name" />
+          <input
+            type="text"
+            required
+            name="firstName"
+            placeholder="First Name"
+          />
           <input type="text" required name="lastName" placeholder="Last Name" />
         </div>
         <input type="text" name="company" placeholder="Company" />
         <input type="email" required name="email" placeholder="Email" />
         <input type="tel" name="phoneNumber" placeholder="Phone Number" />
-        <textarea name="comments" placeholder="Additional Comments" rows="4"></textarea>
+        <textarea
+          name="comments"
+          placeholder="Additional Comments"
+          rows="4"
+        ></textarea>
         <div className="button-wrapper">
-          <button type="submit" className="rq-submit" disabled = {submitting}>{ submitting ? "Sending..." : "Submit Quote Request"}</button>
+          <button type="submit" className="rq-submit" disabled={submitting}>
+            {submitting ? "Sending..." : "Submit Quote Request"}
+          </button>
         </div>
+        <input
+          type="text"
+          name="website"
+          tabIndex="-1"
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px" }}
+        />
       </form>
     </div>
   );

@@ -76,12 +76,14 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
     text-decoration: none;
     color: inherit;
     display: block;
+    height: 100%;
   }
 
   .featured-link {
     text-decoration: none;
     color: inherit;
     display: block;
+    height: 100%;
   }
 
   .card {
@@ -97,9 +99,10 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
     border: 1px solid #E2E8F0;
     border-radius: 16px;
     overflow: hidden;
-    width: 400px;
+    width: 100%;
     max-width: 400px;
-    height: 420px;
+    height: 100%;
+    min-height: 420px;
     box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -208,7 +211,6 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
 
   .flip-card {
     width: 100%;
-    width: 400px;
     max-width: 400px;
     perspective: 1200px;
     cursor: pointer;
@@ -252,6 +254,35 @@ const {imgSrc, cardTitle, cardBody, variant = "default", back = "More details co
   /* Lift the whole card on hover, matching the .featured cards below it */
   .flip-card:hover .flip-face {
     box-shadow: 0 20px 45px rgba(16, 24, 40, 0.14);
+  }
+
+  /* Small phones (iPhone SE and narrower): tighter padding, shorter images,
+     and let the card size to its content instead of a fixed minimum. */
+  @media (max-width: 480px) {
+    .card.default,
+    .card.featured {
+      min-height: 0;
+    }
+
+    .card.default .card-img-top,
+    .card.featured .card-img-top {
+      height: 180px;
+    }
+
+    .card.default .card-body,
+    .card.featured .card-body {
+      padding: 1.1rem 1.15rem 1.3rem;
+    }
+
+    .card.default .card-title,
+    .card.featured .card-title {
+      font-size: 1.15rem;
+    }
+
+    .card.default .card-text,
+    .card.featured .card-text {
+      font-size: 0.95rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
