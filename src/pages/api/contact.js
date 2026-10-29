@@ -4,6 +4,9 @@ import { getDatabase } from "@netlify/database";
 export const prerender = false;
 configDotenv();
 
+// Where website messages are delivered. Override with the CONTACT_TO_EMAIL env var (e.g. for testing).
+const RECIPIENT = process.env.CONTACT_TO_EMAIL || "engineer@zecoat.com";
+
 const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
 
 const transporter = nodemailer.createTransport({
@@ -88,7 +91,7 @@ export async function POST({ request }) {
 
         info = await transporter.sendMail({
     from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
-    to: "aquijada@zecoat.com", // list of recipients
+    to: RECIPIENT, // list of recipients
     subject: `New Quote Request — ${mirrors.length} mirror${mirrors.length > 1 ? "s" : ""}`, // subject line
       text: `
 NEW ZECOAT QUOTE REQUEST
@@ -198,7 +201,7 @@ await sql
 } if (type === "general") {
       info = await transporter.sendMail({
     from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
-    to: "aquijada@zecoat.com", // list of recipients
+    to: RECIPIENT, // list of recipients
     subject: "New Message", // subject line
       text: `
 NEW ZECOAT INQUIRY
