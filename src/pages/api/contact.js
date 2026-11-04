@@ -1,25 +1,12 @@
 import { configDotenv } from "dotenv";
-import nodemailer from "nodemailer";
 import { getDatabase } from "@netlify/database";
 export const prerender = false;
 configDotenv();
-
-// Where website messages are delivered. Override with the CONTACT_TO_EMAIL env var (e.g. for testing).
-const RECIPIENT = process.env.CONTACT_TO_EMAIL || "engineer@zecoat.com";
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sql = (strings, ...values) => getDatabase().sql(strings, ...values);
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.resend.com",
-    port: 587,
-    secure: false,
-    auth: {
-    user: "resend",
-    pass: process.env.SMTP_PASS, // Resend API key
-  },
-});
-
-// Dimension fields per shape — mirrors the configurator form exactly
 const DIMENSION_FIELDS = {
   Round: [["diameter", "Diameter (in)"]],
   Rectangle: [
@@ -46,54 +33,83 @@ function formatDimensions(config) {
 }
 
 export async function POST({ request }) {
-    const data = await request.json();
+  const data = await request.json();
 
-    const { form, configuration, type } = data;
-    const { firstName, lastName, company, email, phone: phoneNumber, comments } = form ?? {};
+  const { form, configuration, type } = data;
+  const {
+    firstName,
+    lastName,
+    company,
+    email,
+    phone: phoneNumber,
+    comments,
+  } = form ?? {};
 
-    let info;
+  //Honeypot Check
+  if (form?.website) {
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  }
 
-    try {
+  let info;
 
-      if (type === "quote") {
+  try {
+    if (type === "quote") {
+      const mirrors = Array.isArray(configuration)
+        ? configuration
+        : [configuration];
 
-        // Configuration is an array of mirrors (one per mirror added in the form)
-        const mirrors = Array.isArray(configuration) ? configuration : [configuration];
-
-        const mirrorsText = mirrors
-          .map((c) =>
-`Mirror #${c.orderNumber}
+      const mirrorsText = mirrors
+        .map(
+          (c) =>
+            `Mirror #${c.orderNumber}
   Material:   ${c.material || "-"}
   Shape:      ${c.shape || "-"}
   Dimensions: ${formatDimensions(c)}
   Coating:    ${c.coating || "-"}
   Quantity:   ${c.quantity}
   Notes:      ${c.notes || "None"}`
-          )
-          .join("\n\n");
+        )
+        .join("\n\n");
 
-        const mirrorsHtml = mirrors
-          .map(
-            (c) => `
+      const mirrorsHtml = mirrors
+        .map(
+          (c) => `
           <div style="border:1px solid #eaecf0;border-radius:10px;background:#f8fafc;padding:6px 20px;margin:0 0 14px;">
-            <p style="margin:12px 0 8px;font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Mirror #${c.orderNumber}</p>
+            <p style="margin:12px 0 8px;font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Mirror #${
+              c.orderNumber
+            }</p>
             <table role="presentation" width="100%">
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;width:120px;">Material</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${c.material || "-"}</td></tr>
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Shape</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${c.shape || "-"}</td></tr>
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Dimensions</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${formatDimensions(c)}</td></tr>
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Coating</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${c.coating || "-"}</td></tr>
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Quantity</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${c.quantity}</td></tr>
-              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Notes</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${c.notes || "None"}</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;width:120px;">Material</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                c.material || "-"
+              }</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Shape</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                c.shape || "-"
+              }</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Dimensions</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${formatDimensions(
+                c
+              )}</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Coating</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                c.coating || "-"
+              }</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Quantity</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                c.quantity
+              }</td></tr>
+              <tr><td style="padding:5px 0;font-size:13px;color:#94a3b8;">Notes</td><td style="padding:5px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                c.notes || "None"
+              }</td></tr>
             </table>
           </div>`
-          )
-          .join("");
+        )
+        .join("");
 
-        info = await transporter.sendMail({
-    from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
-    to: RECIPIENT, // list of recipients
-    subject: `New Quote Request — ${mirrors.length} mirror${mirrors.length > 1 ? "s" : ""}`, // subject line
-      text: `
+      info = await resend.emails.send({
+        from: `ZeCoat <${process.env.MAIL_FROM}>`, // sender address
+        to: [process.env.MAIL_TO], // list of recipients
+        replyTo: email,
+        subject: `New Quote Request — ${mirrors.length} mirror${
+          mirrors.length > 1 ? "s" : ""
+        }`, // subject line
+        text: `
 NEW ZECOAT QUOTE REQUEST
 
 --- Contact ---
@@ -111,7 +127,7 @@ ${comments || "None"}
 This request was submitted via the ZeCoat website coating configurator.
   `,
 
-  html: `
+        html: `
 <div style="margin:0;padding:0;background:#f4f5f7;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:32px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
     <tr><td align="center">
@@ -128,7 +144,11 @@ This request was submitted via the ZeCoat website coating configurator.
         <!-- Intro -->
         <tr><td style="padding:28px 32px 4px;">
           <h1 style="margin:0 0 6px;font-size:20px;color:#0f172a;font-weight:700;">New quote request</h1>
-          <p style="margin:0;font-size:14px;color:#64748b;">${mirrors.length} mirror${mirrors.length > 1 ? "s" : ""} submitted via the ZeCoat coating configurator.</p>
+          <p style="margin:0;font-size:14px;color:#64748b;">${
+            mirrors.length
+          } mirror${
+          mirrors.length > 1 ? "s" : ""
+        } submitted via the ZeCoat coating configurator.</p>
         </td></tr>
 
         <!-- Contact -->
@@ -139,8 +159,12 @@ This request was submitted via the ZeCoat website coating configurator.
               <table role="presentation" width="100%">
                 <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;width:90px;">Name</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${firstName} ${lastName}</td></tr>
                 <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${email}" style="color:#2563eb;text-decoration:none;font-weight:600;">${email}</a></td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${company || "-"}</td></tr>
-                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${phoneNumber || "-"}</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Company</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                  company || "-"
+                }</td></tr>
+                <tr><td style="padding:6px 0;font-size:13px;color:#94a3b8;">Phone</td><td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${
+                  phoneNumber || "-"
+                }</td></tr>
               </table>
             </td></tr>
           </table>
@@ -155,12 +179,16 @@ This request was submitted via the ZeCoat website coating configurator.
         <!-- Comments -->
         <tr><td style="padding:8px 32px 0;">
           <p style="margin:0 0 6px;font-size:12px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Additional Comments</p>
-          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${comments || "None"}</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${
+            comments || "None"
+          }</p>
         </td></tr>
 
         <!-- CTA -->
         <tr><td style="padding:24px 32px 32px;">
-          <a href="${process.env.URL}/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
+          <a href="${
+            process.env.URL
+          }/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
         </td></tr>
 
         <!-- Footer -->
@@ -172,12 +200,11 @@ This request was submitted via the ZeCoat website coating configurator.
     </td></tr>
   </table>
 </div>
-  `
-});
+  `,
+      });
 
-// Adds the inquiry to the database
-await sql
-  `
+      // Adds the inquiry to the database
+      await sql`
   INSERT INTO quotes (
   first_name,
   last_name,
@@ -197,13 +224,14 @@ await sql
       ${comments ?? null}
       )
       `;
-
-} if (type === "general") {
-      info = await transporter.sendMail({
-    from: `"ZeCoat" <${process.env.MAIL_FROM}>`, // sender address
-    to: RECIPIENT, // list of recipients
-    subject: "New Message", // subject line
-      text: `
+    }
+    if (type === "general") {
+      info = await resend.emails.send({
+        from: `ZeCoat <${process.env.MAIL_FROM}>`, // sender address
+        to: [process.env.MAIL_TO], // list of recipients
+        replyTo: email,
+        subject: "New Message", // subject line
+        text: `
 NEW ZECOAT INQUIRY
 
 Name: ${firstName} ${lastName}
@@ -217,7 +245,7 @@ ${comments}
 This message was submitted via the ZeCoat website contact form.
   `,
 
-  html:  `
+        html: `
 <div style="margin:0;padding:0;background:#f4f5f7;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:32px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
     <tr><td align="center">
@@ -255,12 +283,16 @@ This message was submitted via the ZeCoat website contact form.
         <!-- Message -->
         <tr><td style="padding:20px 32px 0;">
           <p style="margin:0 0 6px;font-size:12px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Message</p>
-          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${comments || "None"}</p>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#475467;">${
+            comments || "None"
+          }</p>
         </td></tr>
 
         <!-- CTA -->
         <tr><td style="padding:24px 32px 32px;">
-          <a href="${process.env.URL}/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
+          <a href="${
+            process.env.URL
+          }/admindashboard" style="background:#1E293B;color:#ffffff;padding:12px 26px;text-decoration:none;border-radius:8px;display:inline-block;font-size:14px;font-weight:600;">Open Admin Dashboard</a>
         </td></tr>
 
         <!-- Footer -->
@@ -272,26 +304,46 @@ This message was submitted via the ZeCoat website contact form.
     </td></tr>
   </table>
 </div>
-`
-});
-}
+`,
+      });
+    }
+    if (info.error) {
+      console.error("Resend error:", info.error);
+      return new Response("Failed to send email", { status: 500 });
+    }
 
+    // Confirmation email to the person who filled out the form
+    const confirmation = await resend.emails.send({
+      from: `ZeCoat <${process.env.MAIL_FROM}>`, // sender address
+      to: [email], // the customer
+      subject:
+        type === "quote"
+          ? "We received your quote request"
+          : "We received your message",
+      text: `Hi,
 
-  console.log("Message sent: %s", info.messageId);
-  return new Response(
-  JSON.stringify({ success: true }),
-  {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
-);
-} catch (err) {
-  console.error("Error while sending mail:", err);
-   return new Response("Failed to send email", {
-        status: 500,
+Thanks for reaching out to ZeCoat. We received your ${
+        type === "quote" ? "quote request" : "message"
+      } and will get back to you within 1-2 business days.
+
+— The ZeCoat Team`,
     });
-}
 
+    if (confirmation.error) {
+      console.error("Confirmation email error:", confirmation.error);
+    }
+
+    console.log("Message sent: %s", info.data.id);
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    console.error("Error while sending mail:", err);
+    return new Response("Failed to send email", {
+      status: 500,
+    });
+  }
 }
