@@ -55,8 +55,7 @@ There are two forms customers can use:
 
 When a customer submits either one, two things happen:
 
-1. **An email arrives** at the inbox set up to receive them
-   (currently `aquijada@zecoat.com` — see "Changing who receives emails" below).
+1. **An email arrives** at the inbox set up to receive them.
 2. **Quote requests are also saved to the database** and appear as cards on
    **zecoat.com/admindashboard**, so there is a permanent record even if the
    email is lost.
@@ -197,11 +196,6 @@ Netlify.
 
 The site sends email through **Resend** (resend.com). The key it uses can
 ONLY send email — it cannot read anyone's inbox, so it is safe by design.
-
-**Current state / remaining setup:** until the `zecoat.com` domain is
-verified inside the Resend dashboard, emails must be sent from
-`onboarding@resend.dev` and can only be delivered to the email address that
-owns the Resend account. To finish the setup:
 
 1. In Resend → Domains → add `zecoat.com`
 2. Resend shows 2–3 DNS records → whoever manages the zecoat.com domain
